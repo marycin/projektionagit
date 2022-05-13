@@ -10,10 +10,10 @@ from .forms import  ExtendedUserCreationForm,klientForm
 from .models import Produkt
 # Create your views here.
 
-def index(request):
+def base(request):
     latest_produkt_list = Produkt.objects.order_by('cena')[:5]
     context = {'latest_produkt_list' : latest_produkt_list}
-    return render(request, 'sklep/index.html',context)
+    return render(request, 'sklep/base.html',context)
 
 def detail(request, produkt_id):
     try:
@@ -34,6 +34,7 @@ def register(request):
             klient = klient_form.save(commit=False)
             klient.user = user
             klient.save()
+            return redirect('sklep:base')
     else:
         form = ExtendedUserCreationForm(request.POST)
         klient_form = klientForm(request.POST)
@@ -47,14 +48,15 @@ def login_user(request):
     if request.method=="POST":
         username = request.POST['username']
         password = request.POST['password']
-        print('eluwens')
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request,user)
-            return redirect('index')
+            print('zaje')
+            return redirect('sklep:base')
         else:
             messages.success(request,("There was an error, try again"))
-            return redirect('login_user')
+            print('guzik')
+            return redirect('sklep:login_user')
     
     return render(request, 'sklep/registration/login_user.html', {})
-    #logowanie dziala, ale strona nie chce sie przekierowac po zalogowaniu, chuj wie dlaczego? ŁOT
+    #tylko admin moze sie logowac, zmien potem nazwe na login
