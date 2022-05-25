@@ -1,3 +1,5 @@
+from distutils.command.upload import upload
+from pyexpat import model
 from django.db import models
 from django.contrib.auth.models import User
 from django.dispatch import receiver
@@ -21,17 +23,16 @@ class Klient(models.Model):
 
 
 class Pracownik(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
     data_urodzenia = models.DateField(null=True,blank=True)
     telefon = models.CharField(max_length=9,null=True,blank=True)
 
     def __str__(self):
-        return f"{self.data_urodzenia}"
+        return f"{self.user.username}"
 
     class Meta:
         verbose_name = "Pracownik"
         verbose_name_plural = "Pracownicy"
-
 
 
 class Adres(models.Model):
@@ -43,15 +44,60 @@ class Adres(models.Model):
     imie = models.CharField(max_length=50,blank=True,null=True)
     nazwisko = models.CharField(max_length=50,blank=True,null=True)
     klient = models.ForeignKey(Klient,on_delete=models.CASCADE,null=True,blank=True)
-    pracownik = models.ForeignKey(Pracownik,on_delete=models.CASCADE,null=True,blank=True)
-    
+
     def __str__(self):
-        return "%s %s %s" % (self.miejscowosc, self.ulica, self.numer_domu)
+        return f'{self.miejscowosc, self.ulica, self.numer_domu}'
 
     class Meta:
         verbose_name = "Adres"
         verbose_name_plural = "Adresy"
 
+
+class Podkategoria(models.Model):
+    nazwa = models.CharField(max_length=50)
+
+    class Meta:
+        verbose_name = "Podkategoria"
+        verbose_name_plural = "Podkategorie"
+
+    def __str__(self):
+        return f"{self.nazwa}"
+
+
+
+class Kategoria(models.Model):
+    nazwa = models.CharField(max_length=50)
+    podkategoria = models.ForeignKey('Podkategoria', on_delete=models.CASCADE)
+
+    class Meta:
+        verbose_name = "Kategoria"
+        verbose_name_plural = "Podkategorie"
+
+    def __str__(self):
+        return f"{self.nazwa}"
+
+
+class Opinie(models.Model):
+    komentarz = models.CharField(max_length=400)
+    ocena = models.IntegerField()
+    produkt = models.ForeignKey('Produkt',on_delete=models.CASCADE, null=True)
+    klient = models.ForeignKey('Klient',on_delete=models.CASCADE)
+    #usera jakos polacz
+
+    class Meta:
+        verbose_name = "Opinia"
+        verbose_name_plural = "Opinie"
+    
+    def __str__(self):
+        return f"{self.data_urodzenia}"
+
+
+class Zdjecia(models.Model):
+    zdjecie = models.ImageField(upload_to = 'produkty') #sciezka w staticu, poczytaj jeszcze
+
+    class Meta:
+        verbose_name = "Zdjecie"
+        verbose_name_plural = "Zdjecia"
 
 
 class Produkt(models.Model):
@@ -59,6 +105,9 @@ class Produkt(models.Model):
     cena = models.DecimalField(max_digits=9,decimal_places=2)
     opis = models.CharField(max_length=500, blank=True)
     ilosc_dostepnego = models.PositiveIntegerField()
+    
+    zdjecie = models.ForeignKey('Zdjecia',on_delete=models.CASCADE)
+    podkategoria = models.ForeignKey('Podkategoria',on_delete=models.CASCADE)
 
     def __str__(self):
         return f"{self.nazwa}"
