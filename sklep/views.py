@@ -12,9 +12,9 @@ from .models import Produkt
 # Create your views here.
 
 def base(request):
-    latest_produkt_list = Produkt.objects.order_by('cena')[:5]
-    context = {'latest_produkt_list' : latest_produkt_list}
-    return render(request, 'sklep/base.html',context)
+    produkt_list = Produkt.objects.all()
+    context = {'produkt_list' : produkt_list}
+    return render(request, 'sklep/base/base.html',context)
 
 def detail(request, produkt_id):
     try:
@@ -22,6 +22,15 @@ def detail(request, produkt_id):
     except Produkt.DoesNotExist:
         raise Http404('Produkt nie istnieje, łooot?')
     return render(request, 'sklep/detail.html',{
+        'produkt' : produkt
+    })
+
+def produkt_details(request,produkt_id):
+    try:
+        produkt = Produkt.objects.get(pk=produkt_id)
+    except:
+        raise Http404('Produkt nie istnieje, łooot?')
+    return render(request, 'sklep/base/base__produkt-details.html',{
         'produkt' : produkt
     })
 
