@@ -71,7 +71,7 @@ class Kategoria(models.Model):
 
     class Meta:
         verbose_name = "Kategoria"
-        verbose_name_plural = "Kategorie"
+        verbose_name_plural = "Podkategorie"
 
     def __str__(self):
         return f"{self.nazwa}"
@@ -81,18 +81,19 @@ class Opinie(models.Model):
     komentarz = models.CharField(max_length=400)
     ocena = models.IntegerField()
     produkt = models.ForeignKey('Produkt',on_delete=models.CASCADE, null=True)
-    klient = models.ForeignKey('Klient',on_delete=models.CASCADE, null=True)
+    klient = models.ForeignKey('Klient',on_delete=models.CASCADE)
+    #usera jakos polacz
 
     class Meta:
         verbose_name = "Opinia"
         verbose_name_plural = "Opinie"
     
     def __str__(self):
-        return f"{self.klient.user.username} {self.produkt.nazwa} {self.ocena}"
+        return f"{self.data_urodzenia}"
 
 
 class Zdjecia(models.Model):
-    zdjecie = models.ImageField(upload_to = 'images',null=True) #sciezka w staticu, poczytaj jeszcze
+    zdjecie = models.ImageField(upload_to = 'produkty') #sciezka w staticu, poczytaj jeszcze
 
     class Meta:
         verbose_name = "Zdjecie"
@@ -104,8 +105,9 @@ class Produkt(models.Model):
     cena = models.DecimalField(max_digits=9,decimal_places=2)
     opis = models.CharField(max_length=500, blank=True)
     ilosc_dostepnego = models.PositiveIntegerField()
-    zdjecia = models.ForeignKey('Zdjecia',on_delete=models.CASCADE,null=True)
-    podkategoria = models.ForeignKey('Podkategoria',on_delete=models.CASCADE,null=True)
+    
+    zdjecie = models.ForeignKey('Zdjecia',on_delete=models.CASCADE)
+    podkategoria = models.ForeignKey('Podkategoria',on_delete=models.CASCADE)
 
     def __str__(self):
         return f"{self.nazwa}"
