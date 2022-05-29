@@ -1,0 +1,35 @@
+{% extends 'sklep/base/base.html' %}
+{% block content %}
+<img src="{{ produkt.zdjecia.zdjecie.url }}" alt="{{ produkt.nazwa }}">
+{{ produkt.nazwa }}
+{{ produkt.cena }}
+{{ produkt.opis }}
+{{ produkt.podkategoria.nazwa }}
+<br>
+{{ produkt.pk }}
+
+{% for opinia in opinie %}
+    {% if produkt.pk == opinia.produkt.pk %}
+    <br>
+        {{ opinia.klient.user.first_name }}
+        {{ opinia.klient.user.last_name }}
+        {{ opinia.komentarz }}
+        {{ opinia.ocena }}
+    {% endif %}
+{% endfor %}
+<br><br>
+{% if user.is_authenticated %}
+
+<form method="post" action="/sklep/produkt/{{ produkt.id }}/add_opinion">
+    {% csrf_token %}
+    <input type="text" name="komentarz"><br>
+    <input type="number" min="1" max="5" name="ocena"><br>
+    <input type="submit" value="add_opinion" />
+</form>
+
+{% else %}
+
+Nie jesteś zalogowany
+
+{% endif %}
+{% endblock %}

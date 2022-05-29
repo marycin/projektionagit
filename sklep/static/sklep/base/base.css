@@ -47,6 +47,7 @@
     background-color: white;
 }
 
+
 .user-buttons{
     text-decoration: none;
     color: black;
@@ -249,6 +250,16 @@
 
 .product-name{
     font-size:1.2rem;
+}
+
+.product-name-style{
+    font-size: inherit;
+    color: black;
+    text-decoration: none;
+}
+
+.product-name-style:hover{
+    text-decoration: underline;
 }
 
 .product-price, .product-category{
