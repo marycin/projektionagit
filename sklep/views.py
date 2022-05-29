@@ -1,14 +1,14 @@
 from email import message
 from mimetypes import common_types
 from multiprocessing import context
-from django.http import Http404
+from django.http import Http404, HttpResponse
 from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 
-from .forms import  ExtendedUserCreationForm,klientForm
-from .models import Produkt
+from .forms import  ExtendedUserCreationForm,klientForm,UserDataModification
+from .models import Produkt, Zamowienie,Klient,Adres
 # Create your views here.
 
 def base(request):
@@ -22,6 +22,15 @@ def detail(request, produkt_id):
     except Produkt.DoesNotExist:
         raise Http404('Produkt nie istnieje, łooot?')
     return render(request, 'sklep/detail.html',{
+        'produkt' : produkt
+    })
+
+def produkt_details(request,produkt_id):
+    try:
+        produkt = Produkt.objects.get(pk=produkt_id)
+    except:
+        raise Http404('Produkt nie istnieje, łooot?')
+    return render(request, 'sklep/base/base__produkt-details.html',{
         'produkt' : produkt
     })
 
@@ -64,3 +73,43 @@ def login_view(request):
 def logout_view(request):
     logout(request)
     return redirect('sklep:base')
+
+
+def orders_view(request):
+    if request.user.is_authenticated:
+        try:
+            zamowienia=Zamowienie.objects.get(klient=request.user.id)
+        except:
+            zamowienia=[]
+            #return HttpResponse('nothing to show')
+        #return HttpResponse(request.user.id)
+        return render(request, 'sklep/orders_view.html',{
+            'zamowienia':zamowienia
+        })
+    else:
+        return render(request,'sklep/registration/not_logged.html')
+        #return render(request, 'sklep/user_view.html')
+
+def user_view(request):
+    if request.user.is_authenticated:
+        try: 
+            uzytkownik=Klient.objects.get(user=request.user.id)
+        except:
+            return Http404
+        try:
+            adresy=Adres.object.get(klient=request.user.id)
+        except:
+            adresy=[]
+        return render(request,'sklep/user_view.html',{
+            'data_ur':uzytkownik.data_urodzenia,
+            'telefon':uzytkownik.telefon,
+            'adresy':adresy,
+            'adres_size':len(adresy)
+        })
+        
+    else:
+        return render(request,'sklep/registration/not_logged.html')
+
+def user_modify_view(request):
+    user_mod_form=UserDataModification()
+    return HttpResponse('strona adres')
