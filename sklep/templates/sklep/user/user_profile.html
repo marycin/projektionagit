@@ -1,0 +1,21 @@
+{% extends 'sklep/base/base.html' %}
+
+{% block content %}
+
+
+{% if user.is_authenticated %}
+
+{{ user.username }}
+<form method="post" action="/sklep/update_user_password/">
+    {% csrf_token %}
+    <input type="password" name="new_password"><br>
+    <input type="submit" value="zmien haslo" />
+</form>
+
+{% else %}
+
+Nie jesteś zalogowany
+
+{% endif %}
+
+{% endblock %}

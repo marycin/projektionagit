@@ -7,7 +7,13 @@ app_name = 'sklep'
 urlpatterns = [
     path('',views.base,name='base'),
     #path('specifics/<int:produkt_id>/',views.detail, name='detail'),
+    
     path('produkt/<int:produkt_id>/',views.produkt_details,name='produkt_details'),
+    path('produkt/<int:produkt_id>/add_opinion',views.add_opinion_on_produkt,name='add_opinion_on_produkt'),
+
+    path('user_profile/',views.user_profile_view,name='user_profile'),
+    path('update_user_password/',views.update_user_password,name='update_user_password'),
+
 
     path('register/',views.register,name='register'),
     path('login_user/',views.login_view,name='login_user'),

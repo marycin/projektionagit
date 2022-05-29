@@ -82,7 +82,6 @@ class Opinie(models.Model):
     ocena = models.IntegerField()
     produkt = models.ForeignKey('Produkt',on_delete=models.CASCADE, null=True)
     klient = models.ForeignKey('Klient',on_delete=models.CASCADE, null=True)
-    #usera jakos polacz
 
     class Meta:
         verbose_name = "Opinia"
