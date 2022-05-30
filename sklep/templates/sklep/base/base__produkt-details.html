@@ -1,9 +1,0 @@
-{% extends 'sklep/base/base.html' %}
-{% block content %}
-<img src="{{ produkt.zdjecia.zdjecie.url }}" alt="{{ produkt.nazwa }}">
-{{ produkt.nazwa }}
-{{ produkt.cena }}
-{{ produkt.opis }}
-{{ produkt.podkategoria.nazwa }}
-
-{% endblock %}

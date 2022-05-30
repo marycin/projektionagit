@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm  
 from django.utils.translation import gettext_lazy as _
 
-from .models import Klient
+from .models import Klient, Opinie
 
 lata = range(1900,int(datetime.now().year)+1)
 
@@ -35,6 +35,11 @@ class ExtendedUserCreationForm(UserCreationForm):
         if commit:
             user.save()
         return user
+
+class opinieForm(forms.ModelForm):
+    class Meta:
+        model = Opinie
+        fields =('komentarz', 'ocena','produkt','klient')
 
 class UserDataModification(UserCreationForm):
     email = forms.EmailField(required=True)

@@ -16,7 +16,7 @@
             <div class="login-register-buttons">
                 {% if user.is_authenticated %}
                     <div class="login">
-                        <p>Witaj {{ user.username }}</p>
+                        <p>Witaj <a class='user-buttons' href="{% url 'sklep:user_view' %}">{{ user.first_name }}</a></p>
                     </div>
                     <div class="pausebetween">
                         <p>|</p>
@@ -106,24 +106,24 @@
                     Nowości
                 </p>
             </div>
-            {% for produkt in produkt_list %}
-
-            {{produkt_list.length}}
             <div class="product-wrapper" id="product-wrapper">
+                <div id="products">
+                    {% for produkt in produkt_list %}
                     <div id="product">
                         <div class="product-image">
                             <img src="{{ produkt.zdjecia.zdjecie.url }}">
                         </div>
                         <div class="product-information">
-                            <div class="product-name"><a class="product-name-style" href="{% url 'sklep:produkt_details' produkt.id %}">{{ produkt.nazwa }}</a></div>
+                            <div class="product-name">
+                                <a class="product-name-style" href="{% url 'sklep:produkt_details' produkt.id %}">{{ produkt.nazwa }}</a>
+                            </div>
                             <div class="product-price">{{ produkt.cena }} zł</div>
                             <div class="product-category">{{ produkt.podkategoria.nazwa }}</div>
-                            
                         </div>
                     </div>
+                    {% endfor %}
                 </div>
             </div>
-            {% endfor %}
         {% endblock %}
         </div>
     </div>

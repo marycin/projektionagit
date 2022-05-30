@@ -1,0 +1,14 @@
+{% extends 'sklep/base/base.html' %}
+
+{% block content %}
+    <p>{{user.username}}</p>
+    <p>{{data_ur}}</p>
+    <p>{{telefon}}</p>
+    <p>zapisane adresy: {{adres_size}}</p>
+    {%for adres in adresy%}
+    <p>{{adres.miejscowosc}} {{adres.ulica}} {{adres.numer_domu}} {{adres.numer_lokalu}} {{adres.kod_pocztowy}}</p>
+    {%endfor%}
+    <p><a class ='user-buttons' href="{% url 'sklep:orders_view' %}">Zamówienia</a></p>
+    <p><a class ='user-buttons' href="{% url 'sklep:user_modify' %}">modyfikuj dane</a></p>
+    <p><a class ='user-buttons' href="{% url 'sklep:user_profile' %}">zmiana hasła</a></p>
+{%endblock%}
