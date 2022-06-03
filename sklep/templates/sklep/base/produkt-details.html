@@ -20,7 +20,17 @@
 <br><br>
 {% if user.is_authenticated %}
 
-<form method="post" action="/sklep/produkt/{{ produkt.id }}/add_opinion">
+<form method="POST" action="{% url 'sklep:add_to_cart' produkt.id %}">
+    {% csrf_token %}
+    <input type="number" min='1' max="{{ produkt.ilosc_dostepnego }}" name="ilosc">
+    <input type="submit" value="add_to_cart" />
+</form>
+
+
+<br>
+<br>
+
+<form method="POST" action="{% url 'sklep:add_opinion_on_produkt' produkt.id %}">
     {% csrf_token %}
     <input type="text" name="komentarz"><br>
     <input type="number" min="1" max="5" name="ocena"><br>

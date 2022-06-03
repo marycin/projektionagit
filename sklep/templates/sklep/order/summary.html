@@ -1,0 +1,20 @@
+{% extends 'sklep/base/base.html' %}
+
+{% block content %}
+Podsumowanie<br>
+{{ zamowienie.klient.user.first_name }}<br>
+{{ zamowienie.klient.user.last_name }}<br>
+{{ zamowienie.klient.user.email }}<br>
+{{ zamowienie.klient.telefon }}<br>
+{% for p_z in zamowienie.get_pozycje_zamowienia %}
+    {{ p_z.produkt.nazwa }}<br>
+    ilosc: {{ p_z.ilosc }}<br>
+{% endfor %}
+{{ zamowienie.get_kwota_zamowienia }}
+
+{{ zamowienie.adres.miejscowosc }}
+{{ zamowienie.adres.ulica }}
+{{ zamowienie.adres.nr_domu }}
+
+
+{% endblock %}

@@ -46,7 +46,7 @@ class Adres(models.Model):
     klient = models.ForeignKey(Klient,on_delete=models.CASCADE,null=True,blank=True)
 
     def __str__(self):
-        return f'{self.miejscowosc, self.ulica, self.numer_domu}'
+        return f'{self.klient.user.first_name, self.klient.user.last_name, self.miejscowosc, self.ulica, self.numer_domu}'
 
     class Meta:
         verbose_name = "Adres"
@@ -99,6 +99,7 @@ class Zdjecia(models.Model):
         verbose_name_plural = "Zdjecia"
 
 
+
 class Produkt(models.Model):
     nazwa = models.CharField(max_length=50)
     cena = models.DecimalField(max_digits=9,decimal_places=2)
@@ -106,6 +107,7 @@ class Produkt(models.Model):
     ilosc_dostepnego = models.PositiveIntegerField()
     zdjecia = models.ForeignKey('Zdjecia',on_delete=models.CASCADE,null=True)
     podkategoria = models.ForeignKey('Podkategoria',on_delete=models.CASCADE,null=True)
+   
 
     def __str__(self):
         return f"{self.nazwa}"
@@ -115,22 +117,44 @@ class Produkt(models.Model):
         verbose_name_plural = "Produkty"
 
 
-class Zamowienie(models.Model):
-    data_zamowienia = models.DateField()
-    data_wyslania = models.DateField()
-    data_dostarczenia = models.DateField()
-    czy_oplacono = models.BooleanField()
-    adres = models.ForeignKey(Adres,on_delete=models.CASCADE)
-    klient = models.ForeignKey(Klient,on_delete=models.CASCADE,null=True,blank=True)
-    rodzaj_wysylki = models.ForeignKey('RodzajWysylki',on_delete=models.CASCADE,null=True)
-    produkt = models.ManyToManyField('Produkt')
+class PozycjaZamowienia(models.Model):
+    ilosc = models.IntegerField()
+    czy_zamowiony = models.BooleanField(default=False)
+    data_dodania = models.DateTimeField(auto_now=True)
+    data_zamowienia = models.DateTimeField(null=True)
+    produkt = models.ForeignKey('Produkt', on_delete=models.CASCADE, null=True)
 
     def __str__(self):
-        return f"{self.pk} {self.data_zamowienia}"
+        return f"{self.produkt.nazwa} {self.ilosc} {self.data_dodania}"
+    
+    class Meta:
+        verbose_name = "Pozycja zamówienia"
+        verbose_name_plural = "Pozycje zamówień"
+
+class Zamowienie(models.Model):
+    pozycje_zamowienia = models.ManyToManyField(PozycjaZamowienia)
+    data_zamowienia = models.DateField()
+    data_wyslania = models.DateField(null=True)
+    data_dostarczenia = models.DateField(null=True)
+    czy_zamowione = models.BooleanField(default=False)
+    czy_oplacono = models.BooleanField(default=False)
+    adres = models.ForeignKey(Adres,on_delete=models.CASCADE,null=True)
+    klient = models.ForeignKey(Klient,on_delete=models.CASCADE,null=True,blank=True)
+    rodzaj_wysylki = models.ForeignKey('RodzajWysylki',on_delete=models.CASCADE,null=True)
+
+    def __str__(self):
+        return f"{self.klient.user.first_name} {self.klient.user.last_name} {self.data_zamowienia}"
+
+    def get_pozycje_zamowienia(self):
+        return self.pozycje_zamowienia.all()
+
+    def get_kwota_zamowienia(self):
+        return sum([pozycja_zamowienia.produkt.cena * pozycja_zamowienia.ilosc for pozycja_zamowienia in self.pozycje_zamowienia.all()])
 
     class Meta:
         verbose_name = "Zamówienie"
         verbose_name_plural = "Zamówienia"
+
 
 class RodzajWysylki(models.Model):
     nazwa = models.CharField(max_length=50)
@@ -153,14 +177,30 @@ class RodzajePlatnosci(models.Model):
         verbose_name = "Rodzaje Platnosci"
         verbose_name_plural = "Rodzaje Platnosci"
 
+
+class KartyPlatnicze(models.Model):
+    numer = models.CharField(max_length=16)
+    cvc = models.CharField(max_length=3)
+    miesiac = models.CharField(max_length=2)
+    rok = models.CharField(max_length=2)
+    klient = models.ForeignKey('Klient',on_delete=models.CASCADE,null=True)
+
+    def __str__(self):
+        return f"{self.klient.user.first_name} {self.klient.user.last_name} {self.numer}"
+
+    class Meta:
+        verbose_name = "Karta Płatnicza"
+        verbose_name_plural = "Karty Płatnicze"
+
+
 class Platnosci(models.Model):
     kwota = models.DecimalField(max_digits=9,decimal_places=2)
-    data_zaksiegowania = models.DateTimeField()
+    data_zaksiegowania = models.DateTimeField(null=True)
     rodzaj_platnosci = models.ForeignKey(RodzajePlatnosci,on_delete=models.CASCADE,null=True,blank=True)
     zamowienie = models.OneToOneField(Zamowienie,on_delete=models.CASCADE,null=True)
 
     def __str__(self):
-        return f"{self.pk} {self.kwota} {self.data_zaksiegowania}"
+        return f"{self.zamowienie.klient.user.first_name} {self.zamowienie.klient.user.last_name} {self.kwota} {self.data_zaksiegowania}"
 
     class Meta:
         verbose_name = "Płatności"
