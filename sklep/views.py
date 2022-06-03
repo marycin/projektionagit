@@ -4,13 +4,15 @@ from mimetypes import common_types
 from multiprocessing import context
 from django.http import Http404
 from django.contrib import messages
-from django.shortcuts import render, redirect
+from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.models import User
+from datetime import datetime
+from decimal import Decimal
 
 from .forms import  ExtendedUserCreationForm,klientForm
-from .models import Produkt, Opinie,Klient
+from .models import Adres, Platnosci, PozycjaZamowienia, Produkt, Opinie,Klient, RodzajePlatnosci, Zamowienie, RodzajWysylki,KartyPlatnicze
 # Create your views here.
 
 def base(request):
@@ -106,3 +108,123 @@ def login_view(request):
 def logout_view(request):
     logout(request)
     return redirect('sklep:base')
+
+def shopping_cart(request):
+    aktualny_klient = Klient.objects.get(user=request.user)
+    aktualne_zamowienie = Zamowienie.objects.filter(
+        klient = aktualny_klient,
+        czy_zamowione=False)
+
+    czy_puste=False
+    if len(aktualne_zamowienie) ==0:
+        czy_puste=True
+        return render(request,'sklep/order/shopping_cart.html',{
+            'czy_puste' : czy_puste
+        })
+    
+    context = {
+        'aktualne_zamowienie' : aktualne_zamowienie[0],
+        'czy_puste' : czy_puste
+        }
+    return render(request,'sklep/order/shopping_cart.html',context)
+
+
+
+def add_to_cart(request, produkt_id):
+    klient = get_object_or_404(Klient, user=request.user)
+    produkt = Produkt.objects.get(id=produkt_id)
+    pozycja_zamowienia = PozycjaZamowienia.objects.create(
+        ilosc = request.POST['ilosc'], 
+        produkt = produkt)
+    klient_zamowienie, status = Zamowienie.objects.get_or_create(
+        klient = klient,
+        data_zamowienia = datetime.now()
+        ,czy_zamowione = False)
+    klient_zamowienie.pozycje_zamowienia.add(pozycja_zamowienia)
+    klient_zamowienie.save()
+    return redirect('sklep:shopping_cart')
+
+def delete_from_cart(request):
+    klient = get_object_or_404(Klient, user=request.user)
+    PozycjaZamowienia.objects.get(pk  = request.POST['to_delete']).delete()
+    zamowienie = Zamowienie.objects.get(klient = klient, czy_zamowione = False)
+    if len(zamowienie.get_pozycje_zamowienia()) ==0:
+        zamowienie.delete()
+    messages.info(request,"Usunięto produkt z koszyka")
+    return redirect('sklep:shopping_cart')
+
+def address_selection(request):
+    aktualny_klient = get_object_or_404(Klient, user=request.user)
+    lista_adresow = Adres.objects.filter(klient = aktualny_klient)
+    zamowienie= Zamowienie.objects.get(klient = aktualny_klient,czy_zamowione = False)
+    rodzaje_wysylek = RodzajWysylki.objects.all()
+    context = {
+        'klient' : aktualny_klient,
+        'lista_adresow' : lista_adresow,
+        'aktualne_zamowienie' : zamowienie,
+        'rodzaje_wysylek' : rodzaje_wysylek
+    }
+    return render(request,'sklep/order/address_selection.html', context)
+
+def checkout(request):
+    if request.method=='POST':
+        aktualny_klient = get_object_or_404(Klient, user=request.user)
+        platnosci = RodzajePlatnosci.objects.all()
+        adres = Adres.objects.get(pk = request.POST['adres'])
+        rodzaj_wysylki = RodzajWysylki.objects.get(pk = request.POST['wysylka'])
+        
+        zamowienie= Zamowienie.objects.get(
+            klient = aktualny_klient,
+            czy_zamowione = False)
+            
+        zamowienie.adres = adres
+        zamowienie.rodzaj_wysylki = rodzaj_wysylki
+        zamowienie.save()
+
+
+
+        karty_platnicze_klienta = KartyPlatnicze.objects.filter(klient = aktualny_klient)
+        print(zamowienie.adres.miejscowosc)
+        context = {
+            'klient' : aktualny_klient,
+            'aktualne_zamowienie' : zamowienie,
+            'rodzaje_platnosci' : platnosci,
+            'karty_platnicze' : karty_platnicze_klienta
+        }
+    return render(request, 'sklep/order/checkout.html',context)
+
+def order_summary(request):
+    rodzaj_platnosci = RodzajePlatnosci.objects.get(pk = request.POST['rodzaj_platnosci'])
+    aktualny_klient = get_object_or_404(Klient, user=request.user)
+
+    zamowienie= Zamowienie.objects.get(klient = aktualny_klient,czy_zamowione = False)
+    t_kwota = zamowienie.get_kwota_zamowienia()
+    platnosc = Platnosci.objects.get_or_create(
+        zamowienie = zamowienie, 
+        kwota = t_kwota,
+        rodzaj_platnosci = rodzaj_platnosci,
+        data_zaksiegowania = datetime.now())
+    zamowienie.czy_zamowione = True
+    zamowienie.czy_oplacono = True
+    zamowienie.save()
+
+    context = {
+        'zamowienie' : zamowienie,
+        'platnosc' : platnosc
+    }
+        
+    return render(request, 'sklep/order/summary.html', context)
+
+def increase_amount_of_produkt(request):
+    pozycja = PozycjaZamowienia.objects.get(pk  = request.POST['to_change'])
+    if pozycja.ilosc < pozycja.produkt.ilosc_dostepnego:
+        pozycja.ilosc = pozycja.ilosc + 1
+        pozycja.save()
+    return redirect('sklep:shopping_cart')
+
+def decrease_amount_of_produkt(request):
+    pozycja = PozycjaZamowienia.objects.get(pk  = request.POST['to_change'])
+    if pozycja.ilosc > 1:
+        pozycja.ilosc = pozycja.ilosc - 1
+        pozycja.save()
+    return redirect('sklep:shopping_cart')

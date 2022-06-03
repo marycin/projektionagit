@@ -2,7 +2,7 @@ from django.contrib import admin
 
 # Register your models here.
 
-from .models import Klient, Adres, RodzajePlatnosci,Platnosci,Produkt,Zamowienie,RodzajWysylki,Pracownik,Opinie,Zdjecia,Kategoria,Podkategoria
+from .models import Klient, Adres, RodzajePlatnosci,Platnosci,Produkt,Zamowienie,RodzajWysylki,Pracownik,Opinie,Zdjecia,Kategoria,Podkategoria, PozycjaZamowienia, KartyPlatnicze
 
 admin.site.register(Klient)
 admin.site.register(Adres)
@@ -16,3 +16,5 @@ admin.site.register(Opinie)
 admin.site.register(Zdjecia)
 admin.site.register(Kategoria)
 admin.site.register(Podkategoria)
+admin.site.register(PozycjaZamowienia)
+admin.site.register(KartyPlatnicze)

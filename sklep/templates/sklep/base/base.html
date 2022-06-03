@@ -90,9 +90,10 @@
                     </button>
                 </div>
                 <div class="shopping-basket">
-                    <button id="basket">
-                        <i class="fa fa-shopping-cart" aria-hidden="true"></i>
-
+                    <button id="basket" >
+                        <a href="{% url 'sklep:shopping_cart' %}">
+                            <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                        </a>
                     </button>
                 </div>
             </div>
