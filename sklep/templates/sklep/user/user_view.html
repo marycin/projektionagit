@@ -2,13 +2,23 @@
 
 {% block content %}
     <p>{{user.username}}</p>
+    <p>{{user.first_name}}</p>
+    <p>{{user.last_name}}</p>
     <p>{{data_ur}}</p>
     <p>{{telefon}}</p>
     <p>zapisane adresy: {{adres_size}}</p>
     {%for adres in adresy%}
-    <p>{{adres.miejscowosc}} {{adres.ulica}} {{adres.numer_domu}} {{adres.numer_lokalu}} {{adres.kod_pocztowy}}</p>
+        <p><a class ='user-buttons' href="{% url "sklep:adres_mod" adres.id %}">
+            {{adres.miejscowosc}}
+            {{adres.ulica}}
+            {{adres.numer_domu}} 
+            {%if adres.numer_lokalu != None%}
+                {{adres.numer_lokalu}}
+            {%endif%}
+            {{adres.kod_pocztowy}}
+        </a></p>
     {%endfor%}
     <p><a class ='user-buttons' href="{% url 'sklep:orders_view' %}">Zamówienia</a></p>
-    <p><a class ='user-buttons' href="{% url 'sklep:user_modify' %}">modyfikuj dane</a></p>
+    <p><a class ='user-buttons' href="{% url 'sklep:add_adres' %}">dodaj adres</a></p>
     <p><a class ='user-buttons' href="{% url 'sklep:user_profile' %}">zmiana hasła</a></p>
 {%endblock%}

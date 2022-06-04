@@ -9,7 +9,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.models import User
 
-from .forms import  ExtendedUserCreationForm,klientForm,UserDataModification
+from .forms import  ExtendedUserCreationForm,klientForm,UserDataModification,AdresForm
 from .models import Produkt, Opinie,Klient,Zamowienie,Adres
 # Create your views here.
 
@@ -128,10 +128,7 @@ def user_view(request):
             uzytkownik=Klient.objects.get(user=request.user.id)
         except:
             return Http404
-        try:
-            adresy=Adres.object.get(klient=request.user.id)
-        except:
-            adresy=[]
+        adresy=Adres.objects.filter(klient=request.user.id)
         return render(request,'sklep/user/user_view.html',{
             'data_ur':uzytkownik.data_urodzenia,
             'telefon':uzytkownik.telefon,
@@ -142,6 +139,52 @@ def user_view(request):
     else:
         return render(request,'sklep/user/not_logged.html')
 
-def user_modify_view(request):
-    user_mod_form=UserDataModification()
-    return HttpResponse('strona adres')
+def add_adres(request):
+    if request.method=='POST':
+        adres_form=AdresForm(request.POST)
+        if adres_form.is_valid():
+            print("dodawanie adresu")
+            adres=adres_form.save()
+            adres.klient=Klient.objects.get(user=request.user)
+            adres.imie=request.user.first_name
+            adres.nazwisko=request.user.last_name
+            adres.save()
+            return redirect('sklep:user_view')
+    else:
+        if request.user.is_authenticated:
+            adres_form=AdresForm()
+        else:
+            return render(request,'sklep/user/not_logged.html')
+
+    return render(request,'sklep/user/user_adres.html',{
+        'adres_form':adres_form,
+    })
+
+def egz_adres_modify_view(request,adres_id):
+    adres=Adres.objects.get(id=adres_id)
+    if request.method=='POST':
+        adres_form=AdresForm(request.POST)
+        if adres_form.is_valid():
+            print("modyfikowanie adresu")
+            adres.miejscowosc=adres_form.cleaned_data['miejscowosc']
+            adres.ulica=adres_form.cleaned_data['ulica']
+            adres.kod_pocztowy=adres_form.cleaned_data['kod_pocztowy']
+            adres.numer_domu=adres_form.cleaned_data['numer_domu']
+            adres.numer_lokalu=adres_form.cleaned_data['numer_lokalu']
+            adres.save()
+            return redirect('sklep:user_view')
+    else:
+        if request.user.is_authenticated:
+            adres_form=AdresForm(initial={
+                'miejscowosc':adres.miejscowosc,
+                'ulica':adres.ulica,
+                'kod_pocztowy':adres.kod_pocztowy,
+                'numer_domu':adres.numer_domu,
+                'numer_lokalu':adres.numer_lokalu,
+            })
+        else:
+            return render(request,'sklep/user/not_logged.html')
+
+    return render(request,'sklep/user/user_adres.html',{
+        'adres_form':adres_form,
+    })

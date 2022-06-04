@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm  
 from django.utils.translation import gettext_lazy as _
 
-from .models import Klient, Opinie
+from .models import Adres, Klient, Opinie
 
 lata = range(1900,int(datetime.now().year)+1)
 
@@ -60,3 +60,8 @@ class UserDataModification(UserCreationForm):
         if commit:
             user.save()
         return user
+
+class AdresForm(forms.ModelForm):
+    class Meta:
+        model=Adres
+        fields=('miejscowosc','ulica','kod_pocztowy','numer_domu','numer_lokalu')
