@@ -185,6 +185,13 @@ def egz_adres_modify_view(request,adres_id):
         else:
             return render(request,'sklep/user/not_logged.html')
 
-    return render(request,'sklep/user/user_adres.html',{
+    return render(request,'sklep/user/user_egz_adres.html',{
         'adres_form':adres_form,
+        'adres_id':adres.id,
     })
+
+def del_adres(request,adres_id):
+    adres=Adres.objects.get(id=adres_id)
+    if request.method=='POST':
+        adres.delete()
+    return redirect('sklep:user_view')

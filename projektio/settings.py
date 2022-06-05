@@ -76,8 +76,14 @@ WSGI_APPLICATION = 'projektio.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        #'ENGINE': 'django.db.backends.sqlite3',
+        #'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE':'django.db.backends.postgresql',
+        'NAME':'io_sklep',
+        'USER':'postgres',
+        'PASSWORD':'Mnbvcxz+1',
+        'HOST':'localhost',
+        'PORT':'5432'
     }
 }
 
