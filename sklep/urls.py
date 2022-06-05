@@ -25,5 +25,6 @@ urlpatterns = [
     path('checkout/',views.checkout,name='checkout'),
     path('order_summary',views.order_summary,name='order_summary'),
     path('decrease_amout_of_produkt',views.decrease_amount_of_produkt,name='decrease_amount'),
-    path('increase_amout_of_produkt',views.increase_amount_of_produkt,name='increase_amount')
+    path('increase_amout_of_produkt',views.increase_amount_of_produkt,name='increase_amount'),
+    path('searchProduct/', views.searchBar, name='searchProduct')
 ]

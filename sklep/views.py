@@ -228,3 +228,19 @@ def decrease_amount_of_produkt(request):
         pozycja.ilosc = pozycja.ilosc - 1
         pozycja.save()
     return redirect('sklep:shopping_cart')
+
+
+#Karolina - szukanie produktów
+
+def searchBar(request):
+    if request.method == 'GET':
+        query = request.GET.get('query')
+        if query:
+            produkt_list = Produkt.objects.filter(nazwa__icontains=query)
+            return render(request, 'sklep/base/searchProduct.html', {'produkt_list':produkt_list})
+        else:
+            print("Brak infoemacji")
+            return render(request, 'sklep/base/searchProduct.html', {})
+
+
+    

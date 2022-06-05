@@ -1,4 +1,5 @@
 from datetime import datetime
+from itertools import product
 from sklep.models import Klient
 from django.contrib.auth.models import User
 from django import forms  
@@ -40,3 +41,4 @@ class opinieForm(forms.ModelForm):
     class Meta:
         model = Opinie
         fields =('komentarz', 'ocena','produkt','klient')
+
