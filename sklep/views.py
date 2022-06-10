@@ -233,15 +233,15 @@ def decrease_amount_of_produkt(request):
 #/////////////////////////////////////////////////////////////////////////////////////
 
 def orders_view(request):
+
     if request.user.is_authenticated:
-        try:
-            zamowienia=Zamowienie.objects.get(klient=request.user.id)
-        except:
-            zamowienia=[]
-            #return HttpResponse('nothing to show')
+        curr_klient=Klient.objects.get(user=request.user.id)
+        zamowienia=Zamowienie.objects.filter(klient=curr_klient)
+        ilosc=len(zamowienia)
         #return HttpResponse(request.user.id)
         return render(request, 'sklep/user/orders_view.html',{
-            'zamowienia':zamowienia
+            'zamowienia':zamowienia,
+            'ilosc':ilosc
         })
     else:
         return redirect('sklep:base')
