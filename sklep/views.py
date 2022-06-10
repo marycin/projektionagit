@@ -325,24 +325,34 @@ def user_dat_mod(request):
     if request.user.is_authenticated:
         klient=Klient.objects.get(user=request.user)
         if request.method=='POST':
-            klient_form=UserDataModification(request.POST)
-            if klient_form.is_valid():
+            user_form=UserDataModification(request.POST)
+            klient_form=klientForm(request.POST)
+            if user_form.is_valid():
                 print('zmieniam dane')
-                klient.user.username=klient_form.cleaned_data['username']
-                klient.user.email=klient_form.cleaned_data['email']
-                klient.user.first_name=klient_form.cleaned_data['first_name']
-                klient.user.last_name=klient_form.cleaned_data['last_name']
+                klient.user.username=user_form.cleaned_data['username']
+                klient.user.email=user_form.cleaned_data['email']
+                klient.user.first_name=user_form.cleaned_data['first_name']
+                klient.user.last_name=user_form.cleaned_data['last_name']
                 klient.user.save()
-                return redirect('sklep:user_view')
+            if klient_form.is_valid():
+                klient.telefon=klient_form.cleaned_data['telefon']
+                klient.data_urodzenia=klient_form.cleaned_data['data_urodzenia']
+                klient.save()
+            return redirect('sklep:user_view')
         else:
-            klient_form=UserDataModification(initial={
+            user_form=UserDataModification(initial={
                 'username':klient.user.username,
                 'email':klient.user.email,
                 'first_name':klient.user.first_name,
                 'last_name':klient.user.last_name,
             })
+            klient_form=klientForm(initial={
+                'telefon':klient.telefon,
+                'data_urodzenia':klient.data_urodzenia
+            })
         return render(request,'sklep/user/user_dat_mod.html',{
-        'user_mod_form':klient_form,
+        'user_mod_form':user_form,
+        'klient_mod_form':klient_form
     })
     else:
         return redirect('sklep:base')
