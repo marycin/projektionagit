@@ -16,7 +16,7 @@
             <div class="login-register-buttons">
                 {% if user.is_authenticated %}
                     <div class="login">
-                        <p>Witaj <a class='user-buttons' href="{% url 'sklep:user_profile' %}">{{ user.first_name }}</a></p>
+                        <p>Witaj <a class='user-buttons' href="{% url 'sklep:user_view' %}">{{ user.first_name }}</a></p>
                     </div>
                     <div class="pausebetween">
                         <p>|</p>

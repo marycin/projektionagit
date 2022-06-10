@@ -1,0 +1,7 @@
+{% extends 'sklep/base/base.html' %}
+
+{% block content %}
+    {%for zamowienie in Zamowienia%}
+        <p>zamowienie{{zamowienie.data_zamowienia}}</p>
+    {% endfor %}
+{%endblock%}

@@ -11,7 +11,7 @@ from django.contrib.auth.models import User
 from datetime import datetime
 from decimal import Decimal
 
-from .forms import  ExtendedUserCreationForm,klientForm
+from .forms import  ExtendedUserCreationForm,klientForm,UserDataModification,AdresForm
 from .models import Adres, Platnosci, PozycjaZamowienia, Produkt, Opinie,Klient, RodzajePlatnosci, Zamowienie, RodzajWysylki,KartyPlatnicze
 # Create your views here.
 
@@ -228,3 +228,95 @@ def decrease_amount_of_produkt(request):
         pozycja.ilosc = pozycja.ilosc - 1
         pozycja.save()
     return redirect('sklep:shopping_cart')
+
+
+#/////////////////////////////////////////////////////////////////////////////////////
+
+def orders_view(request):
+    if request.user.is_authenticated:
+        try:
+            zamowienia=Zamowienie.objects.get(klient=request.user.id)
+        except:
+            zamowienia=[]
+            #return HttpResponse('nothing to show')
+        #return HttpResponse(request.user.id)
+        return render(request, 'sklep/user/orders_view.html',{
+            'zamowienia':zamowienia
+        })
+    else:
+        return render(request,'sklep/user/not_logged.html')
+        #return render(request, 'sklep/user_view.html')
+
+def user_view(request):
+    if request.user.is_authenticated:
+        try: 
+            uzytkownik=Klient.objects.get(user=request.user.id)
+        except:
+            return Http404
+        adresy=Adres.objects.filter(klient=request.user.id)
+        return render(request,'sklep/user/user_view.html',{
+            'data_ur':uzytkownik.data_urodzenia,
+            'telefon':uzytkownik.telefon,
+            'adresy':adresy,
+            'adres_size':len(adresy)
+        })
+        
+    else:
+        return render(request,'sklep/user/not_logged.html')
+
+def add_adres(request):
+    if request.method=='POST':
+        adres_form=AdresForm(request.POST)
+        if adres_form.is_valid():
+            print("dodawanie adresu")
+            adres=adres_form.save()
+            adres.klient=Klient.objects.get(user=request.user)
+            adres.imie=request.user.first_name
+            adres.nazwisko=request.user.last_name
+            adres.save()
+            return redirect('sklep:user_view')
+    else:
+        if request.user.is_authenticated:
+            adres_form=AdresForm()
+        else:
+            return render(request,'sklep/user/not_logged.html')
+
+    return render(request,'sklep/user/user_adres.html',{
+        'adres_form':adres_form,
+    })
+
+def egz_adres_modify_view(request,adres_id):
+    adres=Adres.objects.get(id=adres_id)
+    if request.method=='POST':
+        adres_form=AdresForm(request.POST)
+        if adres_form.is_valid():
+            print("modyfikowanie adresu")
+            adres.miejscowosc=adres_form.cleaned_data['miejscowosc']
+            adres.ulica=adres_form.cleaned_data['ulica']
+            adres.kod_pocztowy=adres_form.cleaned_data['kod_pocztowy']
+            adres.numer_domu=adres_form.cleaned_data['numer_domu']
+            adres.numer_lokalu=adres_form.cleaned_data['numer_lokalu']
+            adres.save()
+            return redirect('sklep:user_view')
+    else:
+        if request.user.is_authenticated:
+            adres_form=AdresForm(initial={
+                'miejscowosc':adres.miejscowosc,
+                'ulica':adres.ulica,
+                'kod_pocztowy':adres.kod_pocztowy,
+                'numer_domu':adres.numer_domu,
+                'numer_lokalu':adres.numer_lokalu,
+            })
+        else:
+            return render(request,'sklep/user/not_logged.html')
+
+    return render(request,'sklep/user/user_egz_adres.html',{
+        'adres_form':adres_form,
+        'adres_id':adres.id,
+    })
+
+def del_adres(request,adres_id):
+    adres=Adres.objects.get(id=adres_id)
+    if request.method=='POST':
+        adres.delete()
+    return redirect('sklep:user_view')
