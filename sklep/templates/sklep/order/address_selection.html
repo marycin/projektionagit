@@ -1,0 +1,35 @@
+{% extends 'sklep/base/base.html' %}
+{% block content %}
+{{ klient.user.first_name }}<br>
+{{ klient.user.last_name }}<br>
+{{ klient.user.email }}<br>
+{{ klient.telefon }}<br>
+<br><br>
+
+{% for p_z in aktualne_zamowienie.get_pozycje_zamowienia %}
+    {{ p_z.produkt.nazwa }}<br>
+    ilosc: {{ p_z.ilosc }}<br>
+{% endfor %}
+<br>{{ aktualne_zamowienie.get_kwota_zamowienia }}<br><br>
+<form method="POST" action="{% url 'sklep:checkout' %}">
+{% csrf_token %}
+<select name="adres">
+{% for adres in lista_adresow %}
+<option value="{{ adres.id }}">{{ adres.miejscowosc }}, {{ adres.ulica }} {{ adres.numer_domu }} 
+   {% if adres.numer_lokalu %}, {{ adres.numer_lokalu }} {% endif %}, {{ adres.kod_pocztowy }}</option>
+{% endfor %}
+</select>
+
+<select name="wysylka">
+    {% for wysylka in rodzaje_wysylek %}
+    <option value="{{ wysylka.id }}">
+        {{ wysylka.nazwa }}
+    </option>
+    {% endfor %}
+</select>
+<button type="submit">
+    elo wale wiadro 
+</button>
+</form>
+<br><br>
+{% endblock %}

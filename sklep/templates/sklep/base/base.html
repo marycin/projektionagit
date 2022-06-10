@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" text="type/css" href="{% static 'sklep/base/base.css' %}">
     <link href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.css"  rel="stylesheet"  type='text/css'>
+    <link rel = "stylesheet" href="{% static '/sklep/base/style.css' %}">
     <title>ProjektIO</title>
 </head>
 <body>
@@ -79,7 +80,49 @@
                             <li><a href='#'>Podkategoria</a></li>
                         </ol>
                     </div>
-                    
+
+                    <div class="category-element">
+                        <p class="main-category"><a href='#'>Filtry</a></p>
+                        <ol>
+                            <label for="#">Marka:</label>
+
+                            <select id="#">
+                                <option value="#"> </option>
+                              <option value="#">Nike</option>
+                              <option value="#">Adaś</option>
+                            </select>
+
+                            <label for="#">Rozmiar:</label>
+
+                            <select id="#">
+                                <option value="#"> </option>
+                              <option value="#">36</option>
+                              <option value="#">38</option>
+                            </select>
+
+                            <div class = "wrapper">
+                                <div class = "price_input">
+                                    <div class = "field">
+                                        <span for="#">Min</span>
+                                       <input type = "number" class = "input-min" value = "0"> 
+                                    </div>
+                                    <div class = "field">
+                                        <span> Max</span>
+                                       <input type = "number" class = "input-max" value = "2000"> 
+                                    </div>
+                                </div>
+                                <div class = "slider">
+                                    <div class = "progress">
+                                    </div>
+                                </div>
+                            <div class = "range_input">
+                                <input type ="range" class = "range_min" min = "0" max = "10000" value = "0">
+                                <input type ="range" class = "range_max" min = "0" max = "10000" value = "2000">
+                            </div>
+                            </div>
+                        </ol>
+                    </div>
+
                 </div>
             </div>
             <div class="bottom-header-right-side">
@@ -90,9 +133,10 @@
                     </button>
                 </div>
                 <div class="shopping-basket">
-                    <button id="basket">
-                        <i class="fa fa-shopping-cart" aria-hidden="true"></i>
-
+                    <button id="basket" >
+                        <a href="{% url 'sklep:shopping_cart' %}">
+                            <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                        </a>
                     </button>
                 </div>
             </div>
