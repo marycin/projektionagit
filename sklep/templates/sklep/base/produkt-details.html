@@ -1,45 +1,105 @@
 {% extends 'sklep/base/base.html' %}
+{% load static %}
+{% block style %}
+<link rel="stylesheet" text="type/css" href="{% static 'sklep/base/produkt-details.css' %}">
+{% endblock %}
+
+{% block title %}
+    {{ produkt.nazwa }}
+{% endblock %}
 {% block content %}
-<img src="{{ produkt.zdjecia.zdjecie.url }}" alt="{{ produkt.nazwa }}">
-{{ produkt.nazwa }}
-{{ produkt.cena }}
-{{ produkt.opis }}
-{{ produkt.podkategoria.nazwa }}
-<br>
-{{ produkt.pk }}
+<div class="show-produkt">
+    <div class="produkt-left-side">
+        <div class="photo-slider">
 
-{% for opinia in opinie %}
-    {% if produkt.pk == opinia.produkt.pk %}
-    <br>
-        {{ opinia.klient.user.first_name }}
-        {{ opinia.klient.user.last_name }}
-        {{ opinia.komentarz }}
-        {{ opinia.ocena }}
-    {% endif %}
-{% endfor %}
-<br><br>
-{% if user.is_authenticated %}
-
-<form method="POST" action="{% url 'sklep:add_to_cart' produkt.id %}">
-    {% csrf_token %}
-    <input type="number" min='1' max="{{ produkt.ilosc_dostepnego }}" name="ilosc">
-    <input type="submit" value="add_to_cart" />
-</form>
-
-
-<br>
-<br>
-
-<form method="POST" action="{% url 'sklep:add_opinion_on_produkt' produkt.id %}">
-    {% csrf_token %}
-    <input type="text" name="komentarz"><br>
-    <input type="number" min="1" max="5" name="ocena"><br>
-    <input type="submit" value="add_opinion" />
-</form>
-
-{% else %}
-
-Nie jesteś zalogowany
-
-{% endif %}
+            <div class="produkt-photo">
+                <div class="button-left">
+                    <button id="slider-left"> <b>&#60;</b> </button>
+                </div>
+                <img src="{{ produkt.zdjecia.zdjecie.url }}" alt="{{ produkt.nazwa }}">
+                <div class="button-right">
+                    <button id="slider-left"><b>&#62;</b></button>
+                </div>
+                <div class="radio-photo-buttons">
+                    <input type="radio" checked name="produkt-photo">
+                    <input type="radio" name="produkt-photo">
+                    <input type="radio" name="produkt-photo">
+                </div>
+            </div>
+            
+        </div>
+        <div class="produkt-opinions">
+            <h2>OCENY I OPINIE</h2>
+            <div class="add-opinion">
+                {% if user.is_authenticated %}
+                <h3>Dodaj opinię</h3>
+                <form method="POST" action="{% url 'sklep:add_opinion_on_produkt' produkt.id %}">
+                    {% csrf_token %}
+                    <textarea id="text-opinion" name="komentarz" cols="40" rows="5" maxlength="400" ></textarea>
+                    <input type="number" min="1" max="5" name="ocena">
+                    <button type="submit" value="add-opinion" id="add-opinion-btn">Dodaj opinię</button>
+                </form>
+                {% else %}
+                <h3><a href="{% url 'sklep:login_user' %}">Zaloguj się, aby dodać opinię</a></h3>
+                {% endif %}
+            </div>
+            <div class="opinion">
+                {% for opinia in opinie %}
+                    {% if produkt.pk == opinia.produkt.pk %}
+                    <div class="user-first-and-last-name">
+                        {{ opinia.klient.user.first_name }} {{ opinia.klient.user.last_name }}
+                    </div>
+                    <div class="opinion-rate">
+                        {{ opinia.ocena }}
+                    </div>
+                    <div class="opinion-description">
+                        {{ opinia.komentarz }}
+                    </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <div class="produkt-right-side">
+        <div class="produkt-name-and-price">
+            <div class="produkt-name">
+                <h2>{{ produkt.nazwa }}</h2>
+            </div>
+            <div class="produkt-price">
+                {{ produkt.cena }}
+            </div>
+        </div>
+        <div class="produkt-description">
+            {{ produkt.opis }}
+        </div>
+        <div class="produkt-size">
+            <h3>Dostępne rozmiary</h3>
+            <div class="select-size">
+                <input type="radio" name="produkt-size" id="s36" checked/>
+                <input type="radio" name="produkt-size" id="s37" />
+                <input type="radio" name="produkt-size" id="s38" />
+                <input type="radio" name="produkt-size" id="s39" />
+                <input type="radio" name="produkt-size" id="s40" />
+              
+                <label for="s36">36</label>
+                <label for="s37">37</label>
+                <label for="s38">38</label>
+                <label for="s39">39</label>
+                <label for="s40">40</label>                        
+              </div>
+        </div>
+        <div class="produkt-add-to-cart">
+            {% if user.is_authenticated %}
+            <form method="POST" action="{% url 'sklep:add_to_cart' produkt.id %}">
+                {% csrf_token %}
+                <button type ='submit' value="add_to_cart" class="add-to-cart-btn">          
+                    Dodaj do koszyka
+                </button>
+            </form>
+            {% else %}
+            <h3><a href="{% url 'sklep:login_user' %}">Zaloguj się, aby kupić produkt</a></h3>
+            {% endif %}
+        </div>
+    </div>
+</div>
 {% endblock %}

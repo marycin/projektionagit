@@ -134,7 +134,7 @@ def add_to_cart(request, produkt_id):
     klient = get_object_or_404(Klient, user=request.user)
     produkt = Produkt.objects.get(id=produkt_id)
     pozycja_zamowienia = PozycjaZamowienia.objects.create(
-        ilosc = request.POST['ilosc'], 
+        ilosc = 1,
         produkt = produkt)
     klient_zamowienie, status = Zamowienie.objects.get_or_create(
         klient = klient,

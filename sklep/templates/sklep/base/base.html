@@ -7,7 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" text="type/css" href="{% static 'sklep/base/base.css' %}">
     <link href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.css"  rel="stylesheet"  type='text/css'>
-    <title>ProjektIO</title>
+    {% block style %}{% endblock %}
+    <title>{% block title %}ProjektIO {% endblock %}</title>
 </head>
 <body>
     <div class="header">
@@ -126,6 +127,9 @@
                 </div>
             </div>
         {% endblock %}
+        </div>
+        <div class="stopka">
+            <p>Kerch sp. z o.o. od 1831 roku</p>
         </div>
     </div>
 <script src="{% static 'sklep/base/base.js' %}"></script>

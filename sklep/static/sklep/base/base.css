@@ -116,6 +116,7 @@
 
 .category-element:hover > ol{
     display: block;
+    z-index: 10;
 }
 
 .category-element li{
@@ -217,6 +218,15 @@
     padding-bottom:20px;
 }
 
+.stopka{
+    width:100%;
+    background-color: black;
+    color:#ddd;
+    font-size: 1.3rem;
+    margin-top: 20px;
+    padding: 40px;
+}
+
 
 
 #products{
@@ -260,7 +270,7 @@
 }
 
 .product-name-style:hover{
-    text-decoration: underline;
+    text-decoration: underline 1px solid black;
 }
 
 .product-price, .product-category{
@@ -270,6 +280,8 @@
 .hide{
     display: none!important;
 }
+
+
 
 /* media */
 
@@ -345,4 +357,5 @@
         grid-template-columns: repeat(4, 1fr);
     }
 }
+
 
