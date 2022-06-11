@@ -2,7 +2,7 @@ from email import message
 from lib2to3.pgen2.token import OP
 from mimetypes import common_types
 from multiprocessing import context
-from django.http import Http404
+from django.http import Http404, HttpResponse
 from django.contrib import messages
 from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth import authenticate, login, logout
@@ -11,7 +11,7 @@ from django.contrib.auth.models import User
 from datetime import datetime
 from decimal import Decimal
 
-from .forms import  ExtendedUserCreationForm,klientForm
+from .forms import  ExtendedUserCreationForm,klientForm,UserDataModification,AdresForm
 from .models import Adres, Platnosci, PozycjaZamowienia, Produkt, Opinie,Klient, RodzajePlatnosci, Zamowienie, RodzajWysylki,KartyPlatnicze
 # Create your views here.
 
@@ -87,7 +87,7 @@ def update_user_password(request):
         new_password = request.POST['new_password']
         usr.set_password(new_password)
         usr.save()
-        return redirect('sklep:base')
+        return redirect('sklep:user_view')
 
 def login_view(request):
     if request.method=="POST":
@@ -230,17 +230,129 @@ def decrease_amount_of_produkt(request):
     return redirect('sklep:shopping_cart')
 
 
-#Karolina - szukanie produktów
+#/////////////////////////////////////////////////////////////////////////////////////
 
-def searchBar(request):
-    if request.method == 'GET':
-        query = request.GET.get('query')
-        if query:
-            produkt_list = Produkt.objects.filter(nazwa__icontains=query)
-            return render(request, 'sklep/base/searchProduct.html', {'produkt_list':produkt_list})
+def orders_view(request):
+
+    if request.user.is_authenticated:
+        curr_klient=Klient.objects.get(user=request.user.id)
+        zamowienia=Zamowienie.objects.filter(klient=curr_klient)
+        ilosc=len(zamowienia)
+        #return HttpResponse(request.user.id)
+        return render(request, 'sklep/user/orders_view.html',{
+            'zamowienia':zamowienia,
+            'ilosc':ilosc
+        })
+    else:
+        return redirect('sklep:base')
+        #return render(request, 'sklep/user_view.html')
+
+def user_view(request):
+    if request.user.is_authenticated:
+        try: 
+            uzytkownik=Klient.objects.get(user=request.user.id)
+        except:
+            return Http404
+        adresy=Adres.objects.filter(klient=request.user.id)
+        return render(request,'sklep/user/user_view.html',{
+            'data_ur':uzytkownik.data_urodzenia,
+            'telefon':uzytkownik.telefon,
+            'adresy':adresy,
+            'adres_size':len(adresy)
+        })
+        
+    else:
+        return redirect('sklep:base')
+
+def add_adres(request):
+    if request.method=='POST':
+        adres_form=AdresForm(request.POST)
+        if adres_form.is_valid():
+            print("dodawanie adresu")
+            adres=adres_form.save()
+            adres.klient=Klient.objects.get(user=request.user)
+            adres.imie=request.user.first_name
+            adres.nazwisko=request.user.last_name
+            adres.save()
+            return redirect('sklep:user_view')
+    else:
+        if request.user.is_authenticated:
+            adres_form=AdresForm()
         else:
-            print("Brak infoemacji")
-            return render(request, 'sklep/base/searchProduct.html', {})
+            return redirect('sklep:base')
 
+    return render(request,'sklep/user/user_adres.html',{
+        'adres_form':adres_form,
+    })
 
-    
+def egz_adres_modify_view(request,adres_id):
+    adres=Adres.objects.get(id=adres_id)
+    if request.method=='POST':
+        adres_form=AdresForm(request.POST)
+        if adres_form.is_valid():
+            print("modyfikowanie adresu")
+            adres.miejscowosc=adres_form.cleaned_data['miejscowosc']
+            adres.ulica=adres_form.cleaned_data['ulica']
+            adres.kod_pocztowy=adres_form.cleaned_data['kod_pocztowy']
+            adres.numer_domu=adres_form.cleaned_data['numer_domu']
+            adres.numer_lokalu=adres_form.cleaned_data['numer_lokalu']
+            adres.save()
+            return redirect('sklep:user_view')
+    else:
+        if request.user.is_authenticated:
+            adres_form=AdresForm(initial={
+                'miejscowosc':adres.miejscowosc,
+                'ulica':adres.ulica,
+                'kod_pocztowy':adres.kod_pocztowy,
+                'numer_domu':adres.numer_domu,
+                'numer_lokalu':adres.numer_lokalu,
+            })
+        else:
+            return redirect('sklep:base')
+
+    return render(request,'sklep/user/user_egz_adres.html',{
+        'adres_form':adres_form,
+        'adres_id':adres.id,
+    })
+
+def del_adres(request,adres_id):
+    adres=Adres.objects.get(id=adres_id)
+    if request.method=='POST':
+        adres.delete()
+    return redirect('sklep:user_view')
+
+def user_dat_mod(request):
+    if request.user.is_authenticated:
+        klient=Klient.objects.get(user=request.user)
+        if request.method=='POST':
+            user_form=UserDataModification(request.POST)
+            klient_form=klientForm(request.POST)
+            if user_form.is_valid():
+                print('zmieniam dane')
+                klient.user.username=user_form.cleaned_data['username']
+                klient.user.email=user_form.cleaned_data['email']
+                klient.user.first_name=user_form.cleaned_data['first_name']
+                klient.user.last_name=user_form.cleaned_data['last_name']
+                klient.user.save()
+            if klient_form.is_valid():
+                klient.telefon=klient_form.cleaned_data['telefon']
+                klient.data_urodzenia=klient_form.cleaned_data['data_urodzenia']
+                klient.save()
+            return redirect('sklep:user_view')
+        else:
+            user_form=UserDataModification(initial={
+                'username':klient.user.username,
+                'email':klient.user.email,
+                'first_name':klient.user.first_name,
+                'last_name':klient.user.last_name,
+            })
+            klient_form=klientForm(initial={
+                'telefon':klient.telefon,
+                'data_urodzenia':klient.data_urodzenia
+            })
+        return render(request,'sklep/user/user_dat_mod.html',{
+        'user_mod_form':user_form,
+        'klient_mod_form':klient_form
+    })
+    else:
+        return redirect('sklep:base')

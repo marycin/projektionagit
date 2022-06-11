@@ -1,0 +1,13 @@
+{% extends 'sklep/base/base.html' %}
+
+{% block content %}
+    <p>{{ilosc}}</p>
+    {%for zamowienie in zamowienia%}
+        <p>zamowienie 
+            {{zamowienie.data_zamowienia}} 
+            {{zamowienie.adres.miejscowosc}} 
+            {{zamowienie.adres.ulica}} 
+            {{zamowienie.adres.numer_domu}}
+        </p>
+    {% endfor %}
+{%endblock%}

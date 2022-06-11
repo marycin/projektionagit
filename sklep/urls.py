@@ -26,5 +26,11 @@ urlpatterns = [
     path('order_summary',views.order_summary,name='order_summary'),
     path('decrease_amout_of_produkt',views.decrease_amount_of_produkt,name='decrease_amount'),
     path('increase_amout_of_produkt',views.increase_amount_of_produkt,name='increase_amount'),
-    path('searchProduct/', views.searchBar, name='searchProduct')
+
+    path('user_site/',views.user_view ,name='user_view'),
+    path('orders_site/',views.orders_view,name='orders_view'),
+    path('add_adres/',views.add_adres,name='add_adres'),
+    path('adres/<int:adres_id>/',views.egz_adres_modify_view,name="adres_mod"),
+    path('adres_del/<int:adres_id>',views.del_adres,name="del_adres"),
+    path('user_mod/',views.user_dat_mod,name='user_dat_mod')
 ]
