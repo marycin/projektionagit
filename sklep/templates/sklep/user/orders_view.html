@@ -3,11 +3,14 @@
 {% block content %}
     <p>{{ilosc}}</p>
     {%for zamowienie in zamowienia%}
-        <p>zamowienie 
-            {{zamowienie.data_zamowienia}} 
-            {{zamowienie.adres.miejscowosc}} 
-            {{zamowienie.adres.ulica}} 
-            {{zamowienie.adres.numer_domu}}
+        <p>
+            <a href="{% url "sklep:order_detail" zamowienie.id%}">
+                zamowienie 
+                {{zamowienie.data_zamowienia}} 
+                {{zamowienie.adres.miejscowosc}} 
+                {{zamowienie.adres.ulica}} 
+                {{zamowienie.adres.numer_domu}}
+            </a>
         </p>
     {% endfor %}
 {%endblock%}

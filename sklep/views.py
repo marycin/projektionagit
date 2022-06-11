@@ -356,3 +356,18 @@ def user_dat_mod(request):
     })
     else:
         return redirect('sklep:base')
+
+def zamowienie_szcz(request,id_zamowienia):
+    if request.user.is_authenticated:
+        zamowienie=Zamowienie.objects.get(id=id_zamowienia)
+        Pozycja_Zamowienia=zamowienie.pozycje_zamowienia.all()
+        kwota_zamowienia=zamowienie.get_kwota_zamowienia()
+        
+        return render(request,'sklep/user/order_detail.html',{
+            'zamowienie':zamowienie,
+            'pozycja_zamowienia':Pozycja_Zamowienia,
+            'kwota':kwota_zamowienia,
+        })
+    else:
+        return redirect('sklep:base')
+    

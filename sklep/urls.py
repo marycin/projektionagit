@@ -31,6 +31,7 @@ urlpatterns = [
     path('orders_site/',views.orders_view,name='orders_view'),
     path('add_adres/',views.add_adres,name='add_adres'),
     path('adres/<int:adres_id>/',views.egz_adres_modify_view,name="adres_mod"),
-    path('adres_del/<int:adres_id>',views.del_adres,name="del_adres"),
-    path('user_mod/',views.user_dat_mod,name='user_dat_mod')
+    path('adres_del/<int:adres_id>/',views.del_adres,name="del_adres"),
+    path('user_mod/',views.user_dat_mod,name='user_dat_mod'),
+    path('zamowienie_szcz/<int:id_zamowienia>/',views.zamowienie_szcz,name='order_detail'),
 ]

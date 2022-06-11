@@ -1,0 +1,18 @@
+{% extends 'sklep/base/base.html' %}
+
+{% block content %}
+    <p> kwota za całe zamówienie: {{kwota}}</p>
+    <p> data zamówienia {{zamowienie.data_zamowienia}}</p>
+    <p> data wysłania {{zamowienie.data_wysłania}}</p>
+    <p> data dostarczenia {{zamowienie.data_dostarczenia}}</p>
+    <p> adres {{zamowienie.adres.miejscowosc}} {{zamowienie.adres.ulica}} {{zamowienie.adres.numer_domu}}</p>
+    <p> rodzaj wysyłki {{zamowienie.rodzaj_wysylki.nazwa}}</p>
+    <p>zamówione produkty
+    {%for pozycja in pozycja_zamowienia %}
+        <li>
+            {{pozycja.ilosc}}
+            <a href="{%url "sklep:produkt_details" pozycja.produkt.id%}">{{pozycja.produkt.nazwa}}</a>
+        </li>
+    {% endfor %}
+    </p>
+{%endblock%}
