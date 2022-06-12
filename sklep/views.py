@@ -10,6 +10,7 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 from datetime import datetime
 from decimal import Decimal
+import re
 
 from .forms import  ExtendedUserCreationForm,klientForm
 from .models import Adres, Platnosci, PozycjaZamowienia, Produkt, Opinie,Klient, Produkt_Rozmiar, RodzajePlatnosci, Zamowienie, RodzajWysylki,KartyPlatnicze
@@ -251,12 +252,21 @@ def decrease_amount_of_produkt(request):
 def searchBar(request):
     if request.method == 'GET':
         query = request.GET.get('query')
-        temp = query.split()
-        query1 = temp[0];
-        query2 = temp[1];
-        if query:
-            produkt_list = Produkt.objects.filter(marka__icontains=query1) or Produkt.objects.filter(model__icontains=query1) or Produkt.objects.filter(marka__icontains=query2) or Produkt.objects.filter(model__icontains=query2)
-            return render(request, 'sklep/base/searchProduct.html', {'produkt_list':produkt_list})
+        dopasowanie = re.search(' ', query)
+        if dopasowanie:
+            temp = query.split()
+            query1 = temp[0];
+            query2 = temp[1];
+            if query:
+                produkt_list = Produkt.objects.filter(marka__icontains=query1) or Produkt.objects.filter(model__icontains=query1) or Produkt.objects.filter(marka__icontains=query2) or Produkt.objects.filter(model__icontains=query2)
+                return render(request, 'sklep/base/searchProduct.html', {'produkt_list':produkt_list})
+            else:
+                print("Brak produktu")
+                return render(request, 'sklep/base/searchProduct.html', {})
         else:
-            print("Brak produktu")
-            return render(request, 'sklep/base/searchProduct.html', {})
+            if query:
+                produkt_list = Produkt.objects.filter(marka__icontains=query) or Produkt.objects.filter(model__icontains=query)
+                return render(request, 'sklep/base/searchProduct.html', {'produkt_list':produkt_list})
+            else:
+                print("Brak produktu")
+                return render(request, 'sklep/base/searchProduct.html', {})
