@@ -293,7 +293,7 @@ def user_view(request):
             uzytkownik=Klient.objects.get(user=request.user.id)
         except:
             return Http404
-        adresy=Adres.objects.filter(klient=request.user.id)
+        adresy=Adres.objects.filter(klient = uzytkownik)
         return render(request,'sklep/user/user_view.html',{
             'data_ur':uzytkownik.data_urodzenia,
             'telefon':uzytkownik.telefon,

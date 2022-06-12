@@ -1,5 +1,5 @@
 {% extends 'sklep/base/base.html' %}
-{%load static%}
+{% load static %}
 
 {% block content %}
     <div class="prof-uz">
@@ -35,13 +35,13 @@
             {%for adres in adresy%}
                 <tr>
                 
-                   <td><a class ='user-buttons' href="{% url "sklep:adres_mod" adres.id %}"> {{adres.miejscowosc}} </a></td>
+                   <td><a class ='user-buttons' href='{% url "sklep:adres_mod" adres.id %}'> {{adres.miejscowosc}} </a></td>
                     <td>{{adres.ulica}}</td>
                     <td>{{adres.numer_domu}} </td>
                     <td>
-                        {%if adres.numer_lokalu != None%}
+                        {% if adres.numer_lokalu != None %}
                             {{adres.numer_lokalu}}
-                        {%endif%}
+                        {% endif %}
                     </td>
                     <td>{{adres.kod_pocztowy}}</td>
                 <tr>
@@ -50,4 +50,4 @@
         
     </div>
 
-{%endblock%}
+{% endblock %}
