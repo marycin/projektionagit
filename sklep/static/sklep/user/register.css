@@ -1,0 +1,129 @@
+:root {
+    --htmlFontSize: 100%;
+  
+    --bodyBackgroundColor: #ffffff;
+    --bodyColor: var(--baseColor);
+    --bodyFontFamily: "Open Sans";
+    --bodyFontFamilyFallback: sans-serif;
+    --bodyFontSize: 0.875rem;
+    --bodyFontWeight: 400;
+    --bodyLineHeight: 1.5;
+    --formGap: 0.875rem;
+
+    
+    --loginColor: rgb(255, 255, 255);
+  
+    --loginInputBackgroundColor: #0077ff00;
+    --loginInputHoverBackgroundColor: #e3e3e37f;
+  
+    --loginLabelBackgroundColor: #363b41;
+  
+    --loginSubmitBackgroundColor: #000000;
+    --loginSubmitColor: #eee;
+    --loginSubmitHoverBackgroundColor: #2b2b2b;
+  }
+
+    
+  html {
+    box-sizing: border-box;
+    font-size: var(--htmlFontSize);
+  }
+  
+  body {
+    background-color: var(--bodyBackgroundColor);
+    color: var(--bodyColor);
+    font-family: var(--bodyFontFamily), var(--bodyFontFamilyFallback);
+    font-size: var(--bodyFontSize);
+    font-weight: var(--bodyFontWeight);
+    line-height: var(--bodyLineHeight);
+    margin: 0;
+    min-block-size: 100vh;
+    display: grid;
+    place-items: center;
+  }
+
+  .grid {
+
+    inline-size: 90%;
+    margin-inline: auto;
+    max-inline-size: 20rem;
+
+  }
+
+  .logo{
+    
+    text-decoration: none;
+
+    margin:15%;
+    text-transform: uppercase;
+    font-size: 10vh;
+    color: rgb(84, 84, 84);
+  }
+
+    
+  input {
+    background-image: none;
+    border: 0;
+    color: inherit;
+    font: inherit;
+    margin: 0;
+    outline: 0;
+    padding: 0;
+    transition: background-color 0.3s;
+  }
+
+  input[type="submit"] {
+    cursor: pointer;
+    inline-size: 100%;
+    padding: 1rem;
+    background-color: var(--loginSubmitBackgroundColor);
+    color: var(--loginSubmitColor);
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+
+input[type="submit"]:focus,
+input[type="submit"]:hover {
+    background-color: var(--loginSubmitHoverBackgroundColor);
+  }
+
+  .form {
+    display: grid;
+    gap: var(--formGap);
+  }
+
+  a {
+    color: var(--anchorColor);
+    outline: 0;
+    text-decoration: none;
+  }
+  
+  a:focus,
+  a:hover {
+    text-decoration: underline;
+  }
+
+
+
+  .form {
+    display: grid;
+    gap: var(--formGap);
+  }
+
+
+  
+
+  .hidden {
+    border: 0;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+  }
+
+  .form__input {
+    flex: 1;
+  }

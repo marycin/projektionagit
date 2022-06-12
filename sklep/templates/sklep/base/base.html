@@ -12,97 +12,12 @@
 </head>
 <body>
     <div class="header">
-        <div class="top-header">
-            <div class="logo">logo</div>
-            <div class="login-register-buttons">
-                {% if user.is_authenticated %}
-                    <div class="login">
-                        <p>Witaj <a class='user-buttons' href="{% url 'sklep:user_view' %}">{{ user.first_name }}</a></p>
-                    </div>
-                    <div class="pausebetween">
-                        <p>|</p>
-                    </div>
-                    <div class="register">
-                        <p><a class ='user-buttons' href="{% url 'sklep:logout_user' %}">Log Out</a></p>
-                    </div>
-                {% else %}
-                    <div class="login">
-                        <button id="login">
-                            <a class="user-buttons" href="{% url 'sklep:login_user' %}">LOGOWANIE</a>
-                        </button>
-                    </div>
-                    <div class="pausebetween">
-                        <p>|</p>
-                    </div>
-                    <div class="register">
-                        <button id="register">
-                            <a class ='user-buttons' href="{% url 'sklep:register' %}">REJESTRACJA</a>
-                        </button>
-                    </div>
-                {% endif %}
-            </div>
-        </div>
-        <div class="bottom-header">
-            <div class="bottom-header-left-side">
-
-                <div class="category-button-box hide" id="category-btn-box">
-                    <button id="show-hide-categories">
-                        <i class="fa fa-bars" aria-hidden="true"></i>
-                    </button>
-                    <p>Kategorie</p>
-                </div>
-                <div class="categories" id="category-list">
-                    
-                    <div class="category-element">
-                        <p class="main-category"><a href='#'>DAMSKIE</a></p>
-                        <ol>
-                            <li><a href='#'>Podkategoria</a></li>
-                            <li><a href='#'>Podkategoria</a></li>
-                            <li><a href='#'>Podkategoria</a></li>
-                            <li><a href='#'>Podkategoria</a></li>
-                        </ol>
-                    </div>
-                    <div class="category-element">
-                        <p class="main-category"><a href='#'>MĘSKIE</a></p>
-                        <ol>
-                            <li><a href='#'>Podkategoria</a></li>
-                            <li><a href='#'>Podkategoria</a></li>
-                            <li><a href='#'>Podkategoria</a></li>
-                            <li><a href='#'>Podkategoria</a></li>
-                        </ol>
-                    </div>
-                    <div class="category-element">
-                        <p class="main-category"><a href='#'>DZIECIĘCE</a></p>
-                        <ol>
-                            <li><a href='#'>Podkategoria</a></li>
-                            <li><a href='#'>Podkategoria</a></li>
-                            <li><a href='#'>Podkategoria</a></li>
-                            <li><a href='#'>Podkategoria</a></li>
-                        </ol>
-                    </div>
-                    
-                </div>
-            </div>
-            <div class="bottom-header-right-side">
-                <div class="search-box">
-                    <input type="text" class="search-control" placeholder="Szukaj..." id="search-input">
-                    <button class="search-btn">
-                        <i class="fa fa-search" aria-hidden="true"></i>
-                    </button>
-                </div>
-                <div class="shopping-basket">
-                    <button id="basket" >
-                        <a href="{% url 'sklep:shopping_cart' %}">
-                            <i class="fa fa-shopping-cart" aria-hidden="true"></i>
-                        </a>
-                    </button>
-                </div>
-            </div>
-        </div>
+        {%include 'sklep/base/nav.html'%}
     </div>
+    {% block content %}
     <div class="containerforbackground">
         <div class="container">
-        {% block content %}
+
             <div id="product-information">
                 <p>
                     Nowości
@@ -117,7 +32,7 @@
                         </div>
                         <div class="product-information">
                             <div class="product-name">
-                                <a class="product-name-style" href="{% url 'sklep:produkt_details' produkt.id %}">{{ produkt.nazwa }}</a>
+                                <a class="product-name-style" href="{% url 'sklep:produkt_details' produkt.id %}">{{ produkt.marka }} {{ produkt.model }}</a>
                             </div>
                             <div class="product-price">{{ produkt.cena }} zł</div>
                             <div class="product-category">{{ produkt.podkategoria.nazwa }}</div>

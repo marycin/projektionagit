@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block title %}
-    {{ produkt.nazwa }}
+{{ produkt.marka }} {{ produkt.model }} 
 {% endblock %}
 {% block content %}
 <div class="show-produkt">
@@ -16,7 +16,7 @@
                 <div class="button-left">
                     <button id="slider-left"> <b>&#60;</b> </button>
                 </div>
-                <img src="{{ produkt.zdjecia.zdjecie.url }}" alt="{{ produkt.nazwa }}">
+                <img src="{{ produkt.zdjecia.zdjecie.url }}" alt="{{ produkt.marka }} {{ produkt.model }} ">
                 <div class="button-right">
                     <button id="slider-left"><b>&#62;</b></button>
                 </div>
@@ -63,7 +63,7 @@
     <div class="produkt-right-side">
         <div class="produkt-name-and-price">
             <div class="produkt-name">
-                <h2>{{ produkt.nazwa }}</h2>
+                <h2>{{ produkt.marka }} {{ produkt.model }}</h2>
             </div>
             <div class="produkt-price">
                 {{ produkt.cena }}

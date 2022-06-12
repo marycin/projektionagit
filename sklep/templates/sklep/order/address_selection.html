@@ -7,7 +7,7 @@
 <br><br>
 
 {% for p_z in aktualne_zamowienie.get_pozycje_zamowienia %}
-    {{ p_z.produkt.nazwa }}<br>
+    {{ p_z.produkt.marka }} {{ p_z.produkt.model }}<br>
     ilosc: {{ p_z.ilosc }}<br>
 {% endfor %}
 <br>{{ aktualne_zamowienie.get_kwota_zamowienia }}<br><br>

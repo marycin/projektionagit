@@ -1,6 +1,8 @@
 <nav>
     <div class="top-header">
-        <div class="logo">logo</div>
+        <div class="logo">
+            <a href="{% url 'sklep:base' %}"> logo </a>
+            </div>
         <div class="login-register-buttons">
             {% if user.is_authenticated %}
                 <div class="login">

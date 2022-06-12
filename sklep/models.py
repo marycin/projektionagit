@@ -8,7 +8,6 @@ from django.db.models.signals import post_save
 
 # Create your models here.
 
-
 class Klient(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE,null=True)
     data_urodzenia = models.DateField(null=True,blank=True)
@@ -101,7 +100,8 @@ class Zdjecia(models.Model):
 
 
 class Produkt(models.Model):
-    nazwa = models.CharField(max_length=50)
+    marka = models.CharField(max_length=50)
+    model = models.CharField(max_length=50)
     cena = models.DecimalField(max_digits=9,decimal_places=2)
     opis = models.CharField(max_length=500, blank=True)
     ilosc_dostepnego = models.PositiveIntegerField()
@@ -110,7 +110,7 @@ class Produkt(models.Model):
    
 
     def __str__(self):
-        return f"{self.nazwa}"
+        return f"{self.marka} {self.model}"
 
     class Meta:
         verbose_name = "Produkt"
@@ -125,7 +125,7 @@ class PozycjaZamowienia(models.Model):
     produkt = models.ForeignKey('Produkt', on_delete=models.CASCADE, null=True)
 
     def __str__(self):
-        return f"{self.produkt.nazwa} {self.ilosc} {self.data_dodania}"
+        return f"{self.produkt.marka} {self.produkt.model} {self.ilosc} {self.data_dodania}"
     
     class Meta:
         verbose_name = "Pozycja zamówienia"
@@ -158,6 +158,7 @@ class Zamowienie(models.Model):
 
 class RodzajWysylki(models.Model):
     nazwa = models.CharField(max_length=50)
+    cena = models.DecimalField(max_digits=9,decimal_places=2)
     
     def __str__(self):
         return f"{self.nazwa}"
@@ -205,4 +206,3 @@ class Platnosci(models.Model):
     class Meta:
         verbose_name = "Płatności"
         verbose_name_plural = "Płatności"    
-
