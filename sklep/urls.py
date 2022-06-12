@@ -25,7 +25,7 @@ urlpatterns = [
     path('checkout/',views.checkout,name='checkout'), #Kateryna
     path('order_summary',views.order_summary,name='order_summary'), #Kateryna
 
-    
+
     #path('decrease_amout_of_produkt',views.decrease_amount_of_produkt,name='decrease_amount'),
     #path('increase_amout_of_produkt',views.increase_amount_of_produkt,name='increase_amount'),
 
@@ -38,5 +38,4 @@ urlpatterns = [
     path('adres_del/<int:adres_id>/',views.del_adres,name="del_adres"), #Maciek
     path('user_mod/',views.user_dat_mod,name='user_dat_mod'), #Grzesiu
     path('zamowienie_szcz/<int:id_zamowienia>/',views.zamowienie_szcz,name='order_detail'), #Grzesiu
-
 ]
