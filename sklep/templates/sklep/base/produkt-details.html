@@ -1,7 +1,8 @@
 {% extends 'sklep/base/base.html' %}
 {% block content %}
-<img src="{{ produkt.zdjecia.zdjecie.url }}" alt="{{ produkt.nazwa }}">
-{{ produkt.nazwa }}
+<img src="{{ produkt.zdjecia.zdjecie.url }}" alt="{{ produkt.marka }}">
+{{ produkt.marka }}
+{{ produkt.model }}
 {{ produkt.cena }}
 {{ produkt.opis }}
 {{ produkt.podkategoria.nazwa }}

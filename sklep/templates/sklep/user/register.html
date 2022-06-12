@@ -1,9 +1,147 @@
-<form method="POST" action="">
-    {% csrf_token %}
-    <h3>Register Profile</h3>
-    {{ form.as_p }}
-    {{ klient_form.as_p }}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" text="type/css" href="{% static 'sklep/user/login_user.css' %}">
+    <link href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.css"  rel="stylesheet"  type='text/css'>
+    <title>Rejestracja</title>
+</head>
 
-    <hr>
-    <input id="form-button" class="btn btn-success btn-block" type="submit" value="Create Profile">
-</form>
+<body class="align">
+
+  <div class="grid">
+      <div class="logo"> <a href="{% url 'sklep:base' %}"> logo </a> </div>
+    <form method="POST" class="form login">
+      {% csrf_token %}
+      <div class="form__field">
+        <label for="login__username"><svg class="icon">
+            <use xlink:href="#icon-user"></use>
+          </svg><span class="hidden">Nazwa użytkownika</span>
+
+        </label>
+        {{ form.username }}
+      </div>
+
+      <div class="form__field">
+        <label for="login__password"><svg class="icon">
+            <use xlink:href="#icon-mail"></use>
+          </svg><span class="hidden">Email</span>
+        </label>
+        {{ form.email }}
+        
+      </div>
+
+      <div class="form__field">
+        <label for="login__password"><svg class="icon">
+            <use xlink:href="#icon-user"></use>
+          </svg><span class="hidden">Imie</span>
+        </label>
+        {{ form.first_name }}
+        
+      </div>
+
+      <div class="form__field">
+        <label for="login__password"><svg class="icon">
+            <use xlink:href="#icon-user"></use>
+          </svg><span class="hidden">Nazwisko</span>
+        </label>
+        {{ form.last_name }}
+        
+      </div>
+
+      <div class="form__field">
+        <label for="login__password"><svg class="icon">
+            <use xlink:href="#icon-lock"></use>
+          </svg><span class="hidden">Hasło</span>
+        </label>
+        {{ form.password1 }}
+        
+      </div>
+      <div class="form__field">
+        <label for="login__password"><svg class="icon">
+            <use xlink:href="#icon-lock"></use>
+          </svg><span class="hidden">Powtórz hasło</span>
+        </label>
+        {{ form.password2 }}
+        
+      </div>
+
+      <div class="form__field">
+        <label for="login__password"><svg class="icon">
+            <use xlink:href="#icon-phone"></use>
+          </svg><span class="hidden">Telefon</span>
+        </label>
+        {{ klient_form.telefon }}
+        
+      </div>
+
+      <div class="form__field">
+        <label for="login__password"><svg class="icon">
+            <use xlink:href="#icon-cal"></use>
+          </svg><span class="hidden">Telefon</span>
+        </label>
+        {{ klient_form.data_urodzenia }}
+        
+      </div>
+
+      <div class="form__field">
+        <input type="submit" value="Stwórz konto">
+      </div>
+
+    </form>
+
+      <p class="text--center">Masz już konto? <a href="{% url 'sklep:login_user' %}">Zaloguj się</a> <svg class="icon">
+        <use xlink:href="#icon-arrow-right"></use>
+      </svg></p>
+
+  </div>
+
+  <svg class="icons">
+
+    <symbol id="icon-arrow-right" viewBox="0 0 1792 1792">
+      <path d="M1600 960q0 54-37 91l-651 651q-39 37-91 37-51 0-90-37l-75-75q-38-38-38-91t38-91l293-293H245q-52 0-84.5-37.5T128 1024V896q0-53 32.5-90.5T245 768h704L656 474q-38-36-38-90t38-90l75-75q38-38 90-38 53 0 91 38l651 651q37 35 37 90z" />
+    </symbol>
+
+    <symbol id="icon-lock" viewBox="0 0 1792 1792">
+      <path d="M640 768h512V576q0-106-75-181t-181-75-181 75-75 181v192zm832 96v576q0 40-28 68t-68 28H416q-40 0-68-28t-28-68V864q0-40 28-68t68-28h32V576q0-184 132-316t316-132 316 132 132 316v192h32q40 0 68 28t28 68z" />
+    </symbol>
+
+    <symbol id="icon-user" viewBox="0 0 1792 1792">
+      <path d="M1600 1405q0 120-73 189.5t-194 69.5H459q-121 0-194-69.5T192 1405q0-53 3.5-103.5t14-109T236 1084t43-97.5 62-81 85.5-53.5T538 832q9 0 42 21.5t74.5 48 108 48T896 971t133.5-21.5 108-48 74.5-48 42-21.5q61 0 111.5 20t85.5 53.5 62 81 43 97.5 26.5 108.5 14 109 3.5 103.5zm-320-893q0 159-112.5 271.5T896 896 624.5 783.5 512 512t112.5-271.5T896 128t271.5 112.5T1280 512z" />
+    </symbol>
+
+    <symbol id="icon-mail" viewBox="0 0 512 512">
+        <path d="M464 64C490.5 64 512 85.49 512 112C512 127.1 504.9 141.3 492.8 150.4L275.2 313.6C263.8 322.1 248.2 322.1 236.8 313.6L19.2 150.4C7.113 141.3 0 127.1 0 112C0 85.49 21.49 64 48 64H464zM217.6 339.2C240.4 356.3 271.6 356.3 294.4 339.2L512 176V384C512 419.3 483.3 448 448 448H64C28.65 448 0 419.3 0 384V176L217.6 339.2z"/>
+    </symbol>
+
+    <symbol id="icon-phone" viewBox="0 0 512 512">
+      <path d="M511.2 387l-23.25 100.8c-3.266 14.25-15.79 24.22-30.46 24.22C205.2 512 0 306.8 0 54.5c0-14.66 9.969-27.2 24.22-30.45l100.8-23.25C139.7-2.602 154.7 5.018 160.8 18.92l46.52 108.5c5.438 12.78 1.77 27.67-8.98 36.45L144.5 207.1c33.98 69.22 90.26 125.5 159.5 159.5l44.08-53.8c8.688-10.78 23.69-14.51 36.47-8.975l108.5 46.51C506.1 357.2 514.6 372.4 511.2 387z"/>
+    </symbol>
+
+    <symbol id="icon-cal" viewBox="0 0 448 512">
+      <path d="M96 32C96 14.33 110.3 0 128 0C145.7 0 160 14.33 160 32V64H288V32C288 14.33 302.3 0 320 0C337.7 0 352 14.33 352 32V64H400C426.5 64 448 85.49 448 112V160H0V112C0 85.49 21.49 64 48 64H96V32zM448 464C448 490.5 426.5 512 400 512H48C21.49 512 0 490.5 0 464V192H448V464z"/>
+    </symbol>
+    </svg>
+
+
+  <script>
+    var form_fields = document.getElementsByTagName('input')
+    form_fields[1].placeholder='Nazwa użytkownika...';
+    form_fields[2].placeholder='Email...';
+    form_fields[3].placeholder='Imie...';
+    form_fields[4].placeholder='Nazwisko...';
+    form_fields[5].placeholder='Hasło...';
+    form_fields[6].placeholder='Powtórz hasło...';
+    form_fields[7].placeholder='Telefon...';
+    
+    
+    for (var field in form_fields){	
+    form_fields[field].className += ' form-control'
+    }
+    </script>
+</body>
+
+
