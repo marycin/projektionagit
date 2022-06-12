@@ -15,6 +15,15 @@
 
 }
 
+.not-logged{
+    color:black;
+    text-decoration: none;
+}
+
+.not-logged:hover{
+    text-decoration: underline 1px solid black;
+}
+
 .produkt-right-side{
     margin-top:20px;
     width:30vw;

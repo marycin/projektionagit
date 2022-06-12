@@ -110,22 +110,24 @@ def logout_view(request):
     return redirect('sklep:base')
 
 def shopping_cart(request):
-    aktualny_klient = Klient.objects.get(user=request.user)
-    aktualne_zamowienie = Zamowienie.objects.filter(
-        klient = aktualny_klient,
-        czy_zamowione=False)
-
-    czy_puste=False
-    if len(aktualne_zamowienie) ==0:
-        czy_puste=True
-        return render(request,'sklep/order/shopping_cart.html',{
+    context = {}
+    if request.user.is_authenticated:
+        aktualny_klient = Klient.objects.get(user=request.user)
+        aktualne_zamowienie = Zamowienie.objects.filter(
+            klient = aktualny_klient,
+            czy_zamowione=False)
+        
+        czy_puste=False
+        if len(aktualne_zamowienie) ==0:
+            czy_puste=True
+            return render(request,'sklep/order/shopping_cart.html',{
+                'czy_puste' : czy_puste
+            })
+ 
+        context = {
+            'aktualne_zamowienie' : aktualne_zamowienie[0],
             'czy_puste' : czy_puste
-        })
-    
-    context = {
-        'aktualne_zamowienie' : aktualne_zamowienie[0],
-        'czy_puste' : czy_puste
-        }
+            }
     return render(request,'sklep/order/shopping_cart.html',context)
 
 
@@ -133,13 +135,17 @@ def shopping_cart(request):
 def add_to_cart(request, produkt_id):
     klient = get_object_or_404(Klient, user=request.user)
     produkt = Produkt.objects.get(id=produkt_id)
-    pozycja_zamowienia = PozycjaZamowienia.objects.create(
-        ilosc = 1,
-        produkt = produkt)
     klient_zamowienie, status = Zamowienie.objects.get_or_create(
         klient = klient,
         data_zamowienia = datetime.now()
         ,czy_zamowione = False)
+
+    pozycja_zamowienia = PozycjaZamowienia.objects.create(
+        ilosc = 1,
+        produkt = produkt)
+    
+    
+    
     klient_zamowienie.pozycje_zamowienia.add(pozycja_zamowienia)
     klient_zamowienie.save()
     return redirect('sklep:shopping_cart')

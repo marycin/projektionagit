@@ -40,7 +40,7 @@
                     <button type="submit" value="add-opinion" id="add-opinion-btn">Dodaj opinię</button>
                 </form>
                 {% else %}
-                <h3><a href="{% url 'sklep:login_user' %}">Zaloguj się, aby dodać opinię</a></h3>
+                <h3><a class="not-logged" href="{% url 'sklep:login_user' %}">Zaloguj się, aby dodać opinię</a></h3>
                 {% endif %}
             </div>
             <div class="opinion">
@@ -97,7 +97,7 @@
                 </button>
             </form>
             {% else %}
-            <h3><a href="{% url 'sklep:login_user' %}">Zaloguj się, aby kupić produkt</a></h3>
+            <h3><a class="not-logged" href="{% url 'sklep:login_user' %}">Zaloguj się, aby kupić produkt</a></h3>
             {% endif %}
         </div>
     </div>
