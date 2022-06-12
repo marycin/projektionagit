@@ -74,24 +74,19 @@
         </div>
         <div class="produkt-size">
             <h3>Dostępne rozmiary</h3>
-            <div class="select-size">
-                <input type="radio" name="produkt-size" id="s36" checked/>
-                <input type="radio" name="produkt-size" id="s37" />
-                <input type="radio" name="produkt-size" id="s38" />
-                <input type="radio" name="produkt-size" id="s39" />
-                <input type="radio" name="produkt-size" id="s40" />
-              
-                <label for="s36">36</label>
-                <label for="s37">37</label>
-                <label for="s38">38</label>
-                <label for="s39">39</label>
-                <label for="s40">40</label>                        
-              </div>
-        </div>
-        <div class="produkt-add-to-cart">
             {% if user.is_authenticated %}
             <form method="POST" action="{% url 'sklep:add_to_cart' produkt.id %}">
                 {% csrf_token %}
+            <div class="select-size">
+                {% for r in rozmiar %}
+                {% if r.ilosc_dostepnego > 0 %}
+                <input type="radio" name="produkt-size" id="s{{ r.rozmiar }}" value="{{ r.rozmiar }}" />
+                <label for="s{{ r.rozmiar }}">{{ r.rozmiar }}</label>
+                {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+        <div class="produkt-add-to-cart">
                 <button type ='submit' value="add_to_cart" class="add-to-cart-btn">          
                     Dodaj do koszyka
                 </button>

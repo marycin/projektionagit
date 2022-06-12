@@ -12,7 +12,7 @@ from datetime import datetime
 from decimal import Decimal
 
 from .forms import  ExtendedUserCreationForm,klientForm
-from .models import Adres, Platnosci, PozycjaZamowienia, Produkt, Opinie,Klient, RodzajePlatnosci, Zamowienie, RodzajWysylki,KartyPlatnicze
+from .models import Adres, Platnosci, PozycjaZamowienia, Produkt, Opinie,Klient, Produkt_Rozmiar, RodzajePlatnosci, Zamowienie, RodzajWysylki,KartyPlatnicze
 # Create your views here.
 
 def base(request):
@@ -32,11 +32,13 @@ def detail(request, produkt_id):
 def produkt_details(request,produkt_id):
     try:
         produkt = Produkt.objects.get(pk=produkt_id)
+        rozmiar = Produkt_Rozmiar.objects.filter(produkt = produkt)
         opinie = Opinie.objects.all()
     except:
         raise Http404('Produkt nie istnieje, łooot?')
     return render(request, 'sklep/base/produkt-details.html',{
         'produkt' : produkt,
+        'rozmiar' : rozmiar,
         'opinie' : opinie
     })
 
@@ -135,16 +137,26 @@ def shopping_cart(request):
 def add_to_cart(request, produkt_id):
     klient = get_object_or_404(Klient, user=request.user)
     produkt = Produkt.objects.get(id=produkt_id)
+    wybrany_rozmiar = request.POST['produkt-size']
     klient_zamowienie, status = Zamowienie.objects.get_or_create(
         klient = klient,
-        data_zamowienia = datetime.now()
-        ,czy_zamowione = False)
+        data_zamowienia = datetime.now(),
+        czy_zamowione = False)
 
     pozycja_zamowienia = PozycjaZamowienia.objects.create(
         ilosc = 1,
-        produkt = produkt)
-    
-    
+        produkt = produkt,
+        rozmiar = wybrany_rozmiar)
+
+    for p_z in klient_zamowienie.get_pozycje_zamowienia():
+        print(p_z.produkt.pk, p_z.rozmiar)
+        print(pozycja_zamowienia.produkt.pk, pozycja_zamowienia.rozmiar)
+        if (int(p_z.produkt.pk) == int(pozycja_zamowienia.produkt.pk) and int(p_z.rozmiar) == int(pozycja_zamowienia.rozmiar)):
+            pozycja_zamowienia.delete()
+            p_z.ilosc +=1
+            p_z.save()
+            klient_zamowienie.save()
+            return redirect('sklep:shopping_cart')
     
     klient_zamowienie.pozycje_zamowienia.add(pozycja_zamowienia)
     klient_zamowienie.save()

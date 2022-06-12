@@ -14,10 +14,10 @@
     <div class="header">
         {%include 'sklep/base/nav.html'%}
     </div>
-    {% block content %}
+    
     <div class="containerforbackground">
         <div class="container">
-
+            {% block content %}
             <div id="product-information">
                 <p>
                     Nowości
@@ -41,7 +41,7 @@
                     {% endfor %}
                 </div>
             </div>
-        {% endblock %}
+            {% endblock %}
         </div>
         <div class="stopka">
             <p>Kerch sp. z o.o. od 1831 roku</p>

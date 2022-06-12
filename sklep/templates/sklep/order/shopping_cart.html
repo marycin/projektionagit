@@ -8,16 +8,10 @@
             </p>
         {% else %}
             {% for p_z in aktualne_zamowienie.get_pozycje_zamowienia %}
-            {{ p_z.produkt.nazwa }}<br>
-            <form method="POST" action="{% url 'sklep:decrease_amount' %}">
-                {% csrf_token %}
-            <button type="submit" name="to_change" value="{{ p_z.id }}" >zmniejsz</button>
-            </form>
-            {{ p_z.ilosc }}<br>
-            <form method="POST" action="{% url 'sklep:increase_amount' %}">
-                {% csrf_token %}
-            <button type="submit" name="to_change" value="{{ p_z.id }}" >zwieksz</button>
-            </form>
+            {{ p_z.produkt.marka }} {{ p_z.produkt.model }}<br>
+            rozmiar {{ p_z.rozmiar }}<br>
+
+            ilosc {{ p_z.ilosc }}<br>
             <form method="POST" action="{% url 'sklep:delete_from_cart' %}">
                 {% csrf_token %}
             <button name="to_delete" value="{{ p_z.id }}" type="submit">

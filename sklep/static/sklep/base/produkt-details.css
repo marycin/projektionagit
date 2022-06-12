@@ -82,7 +82,10 @@
   #s37:checked ~ label[for="s37"],
   #s38:checked ~ label[for="s38"],
   #s39:checked ~ label[for="s39"],
-  #s40:checked ~ label[for="s40"] {
+  #s40:checked ~ label[for="s40"],
+  #s41:checked ~ label[for="s41"],
+  #s42:checked ~ label[for="s42"],
+  #s43:checked ~ label[for="s43"] {
     background:black;
     color: #ffffff;
 }

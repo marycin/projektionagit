@@ -87,7 +87,7 @@ class Opinie(models.Model):
         verbose_name_plural = "Opinie"
     
     def __str__(self):
-        return f"{self.klient.user.username} {self.produkt.nazwa} {self.ocena}"
+        return f"{self.klient.user.username} {self.produkt.marka} {self.produkt.model} {self.ocena}"
 
 
 class Zdjecia(models.Model):
@@ -97,17 +97,36 @@ class Zdjecia(models.Model):
         verbose_name = "Zdjecie"
         verbose_name_plural = "Zdjecia"
 
+class Rozmiar(models.Model):
+    rozmiar = models.CharField(max_length=5)
 
+    class Meta:
+        verbose_name = "Rozmiar"
+        verbose_name_plural = "Rozmiary"
+    
+    def __str__(self):
+        return f"{self.rozmiar}"
+
+class Produkt_Rozmiar(models.Model):
+    ilosc_dostepnego = models.PositiveIntegerField()
+    produkt = models.ForeignKey('Produkt',on_delete=models.CASCADE,null=True)
+    rozmiar = models.ForeignKey('Rozmiar',on_delete=models.CASCADE,null=True)
+    
+    class Meta:
+        verbose_name = "Produkt_Rozmiar"
+        verbose_name_plural = "Produkty i rozmiary"
+    
+    def __str__(self):
+        return f"{self.rozmiar.rozmiar} {self.produkt.marka} {self.produkt.model}"
 
 class Produkt(models.Model):
     marka = models.CharField(max_length=50)
     model = models.CharField(max_length=50)
     cena = models.DecimalField(max_digits=9,decimal_places=2)
     opis = models.CharField(max_length=500, blank=True)
-    ilosc_dostepnego = models.PositiveIntegerField()
     zdjecia = models.ForeignKey('Zdjecia',on_delete=models.CASCADE,null=True)
     podkategoria = models.ForeignKey('Podkategoria',on_delete=models.CASCADE,null=True)
-   
+
 
     def __str__(self):
         return f"{self.marka} {self.model}"
@@ -123,9 +142,12 @@ class PozycjaZamowienia(models.Model):
     data_dodania = models.DateTimeField(auto_now=True)
     data_zamowienia = models.DateTimeField(null=True)
     produkt = models.ForeignKey('Produkt', on_delete=models.CASCADE, null=True)
+    rozmiar = models.IntegerField(null=True)
 
     def __str__(self):
         return f"{self.produkt.marka} {self.produkt.model} {self.ilosc} {self.data_dodania}"
+    
+    
     
     class Meta:
         verbose_name = "Pozycja zamówienia"
