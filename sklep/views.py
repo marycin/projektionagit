@@ -12,7 +12,7 @@ from datetime import datetime
 from decimal import Decimal
 import re
 
-from .forms import  ExtendedUserCreationForm,klientForm
+from .forms import  ExtendedUserCreationForm,klientForm,UserDataModification,AdresForm
 from .models import Adres, Platnosci, PozycjaZamowienia, Produkt, Opinie,Klient, Produkt_Rozmiar, RodzajePlatnosci, Zamowienie, RodzajWysylki,KartyPlatnicze
 # Create your views here.
 
@@ -271,6 +271,59 @@ def searchBar(request):
             else:
                 print("Brak produktu")
                 return render(request, 'sklep/base/searchProduct.html', {})
+
+def orders_view(request):
+
+    if request.user.is_authenticated:
+        curr_klient=Klient.objects.get(user=request.user.id)
+        zamowienia=Zamowienie.objects.filter(klient=curr_klient)
+        ilosc=len(zamowienia)
+        #return HttpResponse(request.user.id)
+        return render(request, 'sklep/user/orders_view.html',{
+            'zamowienia':zamowienia,
+            'ilosc':ilosc
+        })
+    else:
+        return redirect('sklep:base')
+        #return render(request, 'sklep/user_view.html')
+
+def user_view(request):
+    if request.user.is_authenticated:
+        try: 
+            uzytkownik=Klient.objects.get(user=request.user.id)
+        except:
+            return Http404
+        adresy=Adres.objects.filter(klient=request.user.id)
+        return render(request,'sklep/user/user_view.html',{
+            'data_ur':uzytkownik.data_urodzenia,
+            'telefon':uzytkownik.telefon,
+            'adresy':adresy,
+            'adres_size':len(adresy)
+        })
+        
+    else:
+        return redirect('sklep:base')
+
+def add_adres(request):
+    if request.method=='POST':
+        adres_form=AdresForm(request.POST)
+        if adres_form.is_valid():
+            print("dodawanie adresu")
+            adres=adres_form.save()
+            adres.klient=Klient.objects.get(user=request.user)
+            adres.imie=request.user.first_name
+            adres.nazwisko=request.user.last_name
+            adres.save()
+            return redirect('sklep:user_view')
+    else:
+        if request.user.is_authenticated:
+            adres_form=AdresForm()
+        else:
+            return redirect('sklep:base')
+
+    return render(request,'sklep/user/user_adres.html',{
+        'adres_form':adres_form,
+    })
 
 def egz_adres_modify_view(request,adres_id):
     adres=Adres.objects.get(id=adres_id)
