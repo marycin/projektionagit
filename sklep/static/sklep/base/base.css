@@ -359,3 +359,79 @@
 }
 
 
+/*maciek poczatek */
+.horizontal-list{
+    list-style: none;
+}
+
+.horizontal-list li{
+    display: inline-block;
+    padding: 0 0.5rem;
+    min-width: 12rem;
+    text-align: center;
+}
+.horizontal-list li:not(:last-child){
+    border-right: 1 px solid black;
+}
+
+div.prof-uz{
+    font-size: 40px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+div.prof-uz-menu{
+    font-size: 20px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    margin-top:10px;
+    margin-bottom: 10px;
+    
+}
+
+ul.horizontal-list{
+    list-style: none;
+}
+
+ul.horizontal-list li{
+    display: inline-block;
+    padding: 0 0.5rem;
+    min-width: 12rem;
+    text-align: center;
+}
+ul.horizontal-list li:not(:last-child){
+    border-right: 1 px solid black;
+}
+table.user-adres td {
+    border: 1px solid black;
+    text-align: center;
+    min-width: 10rem;
+}
+
+ul.user-dat{
+    list-style: none;
+}
+
+ul.user-dat li{
+    padding: 0 0.5rem;
+    min-width: 12rem;
+    text-align: left;
+    margin-bottom: 10px;
+}
+ul.user-dat li.linia{
+    display: inline-block;
+    padding: 0 0.5rem;
+    min-width: 12rem;
+    text-align: left;
+}
+
+div.prof-uz-dane{
+    font-size: 20px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    margin-top:10px;
+    margin-bottom: 10px;
+    
+}
+
+/*maciek koniec */

@@ -264,9 +264,98 @@ def searchBar(request):
                 print("Brak produktu")
                 return render(request, 'sklep/base/searchProduct.html', {})
         else:
+
             if query:
                 produkt_list = Produkt.objects.filter(marka__icontains=query) or Produkt.objects.filter(model__icontains=query)
                 return render(request, 'sklep/base/searchProduct.html', {'produkt_list':produkt_list})
             else:
                 print("Brak produktu")
                 return render(request, 'sklep/base/searchProduct.html', {})
+
+def egz_adres_modify_view(request,adres_id):
+    adres=Adres.objects.get(id=adres_id)
+    if request.method=='POST':
+        adres_form=AdresForm(request.POST)
+        if adres_form.is_valid():
+            print("modyfikowanie adresu")
+            adres.miejscowosc=adres_form.cleaned_data['miejscowosc']
+            adres.ulica=adres_form.cleaned_data['ulica']
+            adres.kod_pocztowy=adres_form.cleaned_data['kod_pocztowy']
+            adres.numer_domu=adres_form.cleaned_data['numer_domu']
+            adres.numer_lokalu=adres_form.cleaned_data['numer_lokalu']
+            adres.save()
+            return redirect('sklep:user_view')
+    else:
+        if request.user.is_authenticated:
+            adres_form=AdresForm(initial={
+                'miejscowosc':adres.miejscowosc,
+                'ulica':adres.ulica,
+                'kod_pocztowy':adres.kod_pocztowy,
+                'numer_domu':adres.numer_domu,
+                'numer_lokalu':adres.numer_lokalu,
+            })
+        else:
+            return redirect('sklep:base')
+
+    return render(request,'sklep/user/user_egz_adres.html',{
+        'adres_form':adres_form,
+        'adres_id':adres.id,
+    })
+
+def del_adres(request,adres_id):
+    adres=Adres.objects.get(id=adres_id)
+    if request.method=='POST':
+        adres.delete()
+    return redirect('sklep:user_view')
+
+def user_dat_mod(request):
+    if request.user.is_authenticated:
+        klient=Klient.objects.get(user=request.user)
+        if request.method=='POST':
+            user_form=UserDataModification(request.POST)
+            klient_form=klientForm(request.POST)
+            if user_form.is_valid():
+                print('zmieniam dane')
+                klient.user.username=user_form.cleaned_data['username']
+                klient.user.email=user_form.cleaned_data['email']
+                klient.user.first_name=user_form.cleaned_data['first_name']
+                klient.user.last_name=user_form.cleaned_data['last_name']
+                klient.user.save()
+            if klient_form.is_valid():
+                klient.telefon=klient_form.cleaned_data['telefon']
+                klient.data_urodzenia=klient_form.cleaned_data['data_urodzenia']
+                klient.save()
+            return redirect('sklep:user_view')
+        else:
+            user_form=UserDataModification(initial={
+                'username':klient.user.username,
+                'email':klient.user.email,
+                'first_name':klient.user.first_name,
+                'last_name':klient.user.last_name,
+            })
+            klient_form=klientForm(initial={
+                'telefon':klient.telefon,
+                'data_urodzenia':klient.data_urodzenia
+            })
+        return render(request,'sklep/user/user_dat_mod.html',{
+        'user_mod_form':user_form,
+        'klient_mod_form':klient_form
+    })
+    else:
+        return redirect('sklep:base')
+
+def zamowienie_szcz(request,id_zamowienia):
+    if request.user.is_authenticated:
+        zamowienie=Zamowienie.objects.get(id=id_zamowienia)
+        Pozycja_Zamowienia=zamowienie.pozycje_zamowienia.all()
+        kwota_zamowienia=zamowienie.get_kwota_zamowienia()
+        
+        return render(request,'sklep/user/order_detail.html',{
+            'zamowienie':zamowienie,
+            'pozycja_zamowienia':Pozycja_Zamowienia,
+            'kwota':kwota_zamowienia,
+        })
+    else:
+        return redirect('sklep:base')
+    
+
