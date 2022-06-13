@@ -4,6 +4,7 @@
 <form method="POST" action="">
     {% csrf_token %}
     <h3>zmień dane</h3>
+    {{user_nick_form.as_ul}}
     {{ user_mod_form.as_ul }}
     {{klient_mod_form.as_ul}}
     <hr>

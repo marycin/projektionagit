@@ -134,6 +134,7 @@
   .form__field {
     border: 0.01rem solid rgb(51, 51, 51);
     display: flex;
+    color:black;
   }
   
   .form__input {

@@ -49,9 +49,14 @@ class UserDataModification(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ('username','email','first_name','last_name')
+        fields = ('email','first_name','last_name')#'username',
 
 class AdresForm(forms.ModelForm):
     class Meta:
         model=Adres
         fields=('miejscowosc','ulica','kod_pocztowy','numer_domu','numer_lokalu')
+
+class UserNickMod(forms.ModelForm):
+    class Meta:
+        model=User
+        fields=('username',)

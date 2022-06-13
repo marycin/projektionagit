@@ -12,7 +12,7 @@ from datetime import datetime
 from decimal import Decimal
 import re
 
-from .forms import  ExtendedUserCreationForm,klientForm,UserDataModification,AdresForm
+from .forms import  ExtendedUserCreationForm,klientForm,UserDataModification,AdresForm,UserNickMod
 from .models import Adres, Platnosci, PozycjaZamowienia, Produkt, Opinie,Klient, Produkt_Rozmiar, RodzajePlatnosci, Zamowienie, RodzajWysylki,KartyPlatnicze
 # Create your views here.
 
@@ -367,21 +367,28 @@ def user_dat_mod(request):
         if request.method=='POST':
             user_form=UserDataModification(request.POST)
             klient_form=klientForm(request.POST)
+            user_nick_form=UserNickMod(request.POST)
+            if user_nick_form.is_valid():
+                klient.user.username=user_nick_form.cleaned_data['username']
             if user_form.is_valid():
                 print('zmieniam dane')
-                klient.user.username=user_form.cleaned_data['username']
+                #klient.user.username=user_form.cleaned_data['username']
                 klient.user.email=user_form.cleaned_data['email']
                 klient.user.first_name=user_form.cleaned_data['first_name']
                 klient.user.last_name=user_form.cleaned_data['last_name']
                 klient.user.save()
             if klient_form.is_valid():
+                print("form klient")
                 klient.telefon=klient_form.cleaned_data['telefon']
                 klient.data_urodzenia=klient_form.cleaned_data['data_urodzenia']
                 klient.save()
             return redirect('sklep:user_view')
         else:
-            user_form=UserDataModification(initial={
+            user_nick_form=UserNickMod(initial={
                 'username':klient.user.username,
+            })
+            user_form=UserDataModification(initial={
+                #'username':klient.user.username,
                 'email':klient.user.email,
                 'first_name':klient.user.first_name,
                 'last_name':klient.user.last_name,
@@ -392,7 +399,8 @@ def user_dat_mod(request):
             })
         return render(request,'sklep/user/user_dat_mod.html',{
         'user_mod_form':user_form,
-        'klient_mod_form':klient_form
+        'klient_mod_form':klient_form,
+        'user_nick_form':user_nick_form,
     })
     else:
         return redirect('sklep:base')
