@@ -1,0 +1,491 @@
+#zdjęcia
+
+	NA TERAZ!!!
+
+insert into sklep_zdjecia values(1, 'images/damskie/1/1.1.jpg');
+insert into sklep_zdjecia values(2, 'images/damskie/1/1.2.jpg');
+insert into sklep_zdjecia values(3, 'images/damskie/1/1.3.jpg');
+
+insert into sklep_zdjecia values(4, 'images/damskie/2/2.1.jpg');
+insert into sklep_zdjecia values(5, 'images/damskie/2/2.2.jpg');
+insert into sklep_zdjecia values(6, 'images/damskie/2/2.3.jpg');
+
+insert into sklep_zdjecia values(7, 'images/damskie/3/3.1.jpg');
+insert into sklep_zdjecia values(8, 'images/damskie/3/3.2.jpg');
+insert into sklep_zdjecia values(9, 'images/damskie/3/3.3.jpg');
+
+insert into sklep_zdjecia values(10, 'images/damskie/4/4.1.jpg');
+insert into sklep_zdjecia values(11, 'images/damskie/4/4.2.jpg');
+insert into sklep_zdjecia values(12, 'images/damskie/4/4.3.jpg');
+
+insert into sklep_zdjecia values(13, 'images/meskie/1/1.1.jpg');
+insert into sklep_zdjecia values(14, 'images/meskie/1/1.2.jpg');
+insert into sklep_zdjecia values(15, 'images/meskie/1/1.3.jpg');
+
+insert into sklep_zdjecia values(16, 'images/meskie/2/2.1.jpg');
+insert into sklep_zdjecia values(17, 'images/meskie/2/2.2.jpg');
+insert into sklep_zdjecia values(18, 'images/meskie/2/2.3.jpg');
+
+insert into sklep_zdjecia values(19, 'images/meskie/3/3.1.jpg');
+insert into sklep_zdjecia values(20, 'images/meskie/3/3.2.jpg');
+insert into sklep_zdjecia values(21, 'images/meskie/3/3.3.jpg');
+
+insert into sklep_zdjecia values(22, 'images/meskie/4/4.1.jpg');
+insert into sklep_zdjecia values(23, 'images/meskie/4/4.2.jpg');
+insert into sklep_zdjecia values(24, 'images/meskie/4/4.3.jpg');
+
+insert into sklep_zdjecia values(25, 'images/dzieciece/1/1.1.jpg');
+insert into sklep_zdjecia values(26, 'images/dzieciece/1/1.2.jpg');
+insert into sklep_zdjecia values(27, 'images/dzieciece/1/1.3.jpg');
+
+insert into sklep_zdjecia values(28, 'images/dzieciece/2/2.1.jpg');
+insert into sklep_zdjecia values(29, 'images/dzieciece/2/2.2.jpg');
+insert into sklep_zdjecia values(30, 'images/dzieciece/2/2.3.jpg');
+
+insert into sklep_zdjecia values(31, 'images/dzieciece/3/3.1.jpg');
+insert into sklep_zdjecia values(32, 'images/dzieciece/3/3.2.jpg');
+insert into sklep_zdjecia values(33, 'images/dzieciece/3/3.3.jpg');
+
+insert into sklep_zdjecia values(34, 'images/dzieciece/4/4.1.jpg');
+insert into sklep_zdjecia values(34, 'images/dzieciece/4/4.2.jpg');
+insert into sklep_zdjecia values(36, 'images/dzieciece/4/4.3.jpg');
+
+	PÓŹNIEJ!!!
+
+insert into sklep_zdjecia values(1, 'images/damskie/1/1.1.jpg');
+insert into sklep_zdjecia values(2, 'images/damskie/1/1.2.jpg');
+insert into sklep_zdjecia values(3, 'images/damskie/1/1.3.jpg');
+
+insert into sklep_zdjecia values(4, 'images/damskie/2/2.1.jpg');
+insert into sklep_zdjecia values(5, 'images/damskie/2/2.2.jpg');
+insert into sklep_zdjecia values(6, 'images/damskie/2/2.3.jpg');
+
+insert into sklep_zdjecia values(7, 'images/damskie/3/3.1.jpg');
+insert into sklep_zdjecia values(8, 'images/damskie/3/3.2.jpg');
+insert into sklep_zdjecia values(9, 'images/damskie/3/3.3.jpg');
+
+insert into sklep_zdjecia values(10, 'images/damskie/4/4.1.jpg');
+insert into sklep_zdjecia values(11, 'images/damskie/4/4.2.jpg');
+insert into sklep_zdjecia values(12, 'images/damskie/4/4.3.jpg');
+
+insert into sklep_zdjecia values(13, 'images/damskie/5/5.1.jpg');
+insert into sklep_zdjecia values(14, 'images/damskie/5/5.2.jpg');
+insert into sklep_zdjecia values(15, 'images/damskie/5/5.3.jpg');
+
+insert into sklep_zdjecia values(16, 'images/damskie/6/6.1.jpg');
+insert into sklep_zdjecia values(17, 'images/damskie/6/6.2.jpg');
+insert into sklep_zdjecia values(18, 'images/damskie/6/6.3.jpg');
+
+insert into sklep_zdjecia values(19, 'images/damskie/7/7.1.jpg');
+insert into sklep_zdjecia values(20, 'images/damskie/7/7.2.jpg');
+insert into sklep_zdjecia values(21, 'images/damskie/7/7.3.jpg');
+
+insert into sklep_zdjecia values(22, 'images/damskie/8/8.1.jpg');
+insert into sklep_zdjecia values(23, 'images/damskie/8/8.2.jpg');
+insert into sklep_zdjecia values(24, 'images/damskie/8/8.3.jpg');
+
+insert into sklep_zdjecia values(25, 'images/damskie/9/9.1.jpg');
+insert into sklep_zdjecia values(26, 'images/damskie/9/9.2.jpg');
+insert into sklep_zdjecia values(27, 'images/damskie/9/9.3.jpg');
+
+insert into sklep_zdjecia values(28, 'images/damskie/10/10.1.jpg');
+insert into sklep_zdjecia values(29, 'images/damskie/10/10.2.jpg');
+insert into sklep_zdjecia values(30, 'images/damskie/10/10.3.jpg');
+
+insert into sklep_zdjecia values(31, 'images/meskie/1/1.1.jpg');
+insert into sklep_zdjecia values(32, 'images/meskie/1/1.2.jpg');
+insert into sklep_zdjecia values(33, 'images/meskie/1/1.3.jpg');
+
+insert into sklep_zdjecia values(34, 'images/meskie/2/2.1.jpg');
+insert into sklep_zdjecia values(35, 'images/meskie/2/2.2.jpg');
+insert into sklep_zdjecia values(36, 'images/meskie/2/2.3.jpg');
+
+insert into sklep_zdjecia values(37, 'images/meskie/3/3.1.jpg');
+insert into sklep_zdjecia values(38, 'images/meskie/3/3.2.jpg');
+insert into sklep_zdjecia values(39, 'images/meskie/3/3.3.jpg');
+
+insert into sklep_zdjecia values(40, 'images/meskie/4/4.1.jpg');
+insert into sklep_zdjecia values(41, 'images/meskie/4/4.2.jpg');
+insert into sklep_zdjecia values(42, 'images/meskie/4/4.3.jpg');
+
+insert into sklep_zdjecia values(43, 'images/meskie/5/5.1.jpg');
+insert into sklep_zdjecia values(44, 'images/meskie/5/5.2.jpg');
+insert into sklep_zdjecia values(45, 'images/meskie/5/5.3.jpg');
+
+insert into sklep_zdjecia values(46, 'images/meskie/6/6.1.jpg');
+insert into sklep_zdjecia values(47, 'images/meskie/6/6.2.jpg');
+insert into sklep_zdjecia values(48, 'images/meskie/6/6.3.jpg');
+
+insert into sklep_zdjecia values(49, 'images/meskie/7/7.1.jpg');
+insert into sklep_zdjecia values(40, 'images/meskie/7/7.2.jpg');
+insert into sklep_zdjecia values(51, 'images/meskie/7/7.3.jpg');
+
+insert into sklep_zdjecia values(52, 'images/meskie/8/8.1.jpg');
+insert into sklep_zdjecia values(53, 'images/meskie/8/8.2.jpg');
+insert into sklep_zdjecia values(54, 'images/meskie/8/8.3.jpg');
+
+insert into sklep_zdjecia values(55, 'images/meskie/9/9.1.jpg');
+insert into sklep_zdjecia values(56, 'images/meskie/9/9.2.jpg');
+insert into sklep_zdjecia values(57, 'images/meskie/9/9.3.jpg');
+
+insert into sklep_zdjecia values(58, 'images/meskie/10/10.1.jpg');
+insert into sklep_zdjecia values(59, 'images/meskie/10/10.2.jpg');
+insert into sklep_zdjecia values(50, 'images/meskie/10/10.3.jpg');
+
+
+insert into sklep_zdjecia values(61, 'images/dzieciece/1/1.1.jpg');
+insert into sklep_zdjecia values(62, 'images/dzieciece/1/1.2.jpg');
+insert into sklep_zdjecia values(63, 'images/dzieciece/1/1.3.jpg');
+
+insert into sklep_zdjecia values(64, 'images/dzieciece/2/2.1.jpg');
+insert into sklep_zdjecia values(65, 'images/dzieciece/2/2.2.jpg');
+insert into sklep_zdjecia values(66, 'images/dzieciece/2/2.3.jpg');
+
+insert into sklep_zdjecia values(67, 'images/dzieciece/3/3.1.jpg');
+insert into sklep_zdjecia values(68, 'images/dzieciece/3/3.2.jpg');
+insert into sklep_zdjecia values(69, 'images/dzieciece/3/3.3.jpg');
+
+insert into sklep_zdjecia values(70, 'images/dzieciece/4/4.1.jpg');
+insert into sklep_zdjecia values(71, 'images/dzieciece/4/4.2.jpg');
+insert into sklep_zdjecia values(72, 'images/dzieciece/4/4.3.jpg');
+
+insert into sklep_zdjecia values(73, 'images/dzieciece/5/5.1.jpg');
+insert into sklep_zdjecia values(74, 'images/dzieciece/5/5.2.jpg');
+insert into sklep_zdjecia values(75, 'images/dzieciece/5/5.3.jpg');
+
+insert into sklep_zdjecia values(76, 'images/dzieciece/6/6.1.jpg');
+insert into sklep_zdjecia values(77, 'images/dzieciece/6/6.2.jpg');
+insert into sklep_zdjecia values(78, 'images/dzieciece/6/6.3.jpg');
+
+insert into sklep_zdjecia values(79, 'images/dzieciece/7/7.1.jpg');
+insert into sklep_zdjecia values(70, 'images/dzieciece/7/7.2.jpg');
+insert into sklep_zdjecia values(71, 'images/dzieciece/7/7.3.jpg');
+
+insert into sklep_zdjecia values(72, 'images/dzieciece/8/8.1.jpg');
+insert into sklep_zdjecia values(73, 'images/dzieciece/8/8.2.jpg');
+insert into sklep_zdjecia values(74, 'images/dzieciece/8/8.3.jpg');
+
+insert into sklep_zdjecia values(75, 'images/dzieciece/9/9.1.jpg');
+insert into sklep_zdjecia values(76, 'images/dzieciece/9/9.2.jpg');
+insert into sklep_zdjecia values(77, 'images/dzieciece/9/9.3.jpg');
+
+insert into sklep_zdjecia values(78, 'images/dzieciece/10/10.1.jpg');
+insert into sklep_zdjecia values(79, 'images/dzieciece/10/10.2.jpg');
+insert into sklep_zdjecia values(70, 'images/dzieciece/10/10.3.jpg');
+
+
+#podkategorie
+
+insert into sklep_podkategoria values(1, 'sportowe');
+insert into sklep_podkategoria values(2, 'klapki');
+insert into sklep_podkategoria values(3, 'sandały'); #zmienieć!!!
+insert into sklep_podkategoria values(4, 'sneakersy');
+insert into sklep_podkategoria values(6, 'piłka nożna');
+insert into sklep_podkategoria values(7, 'na obcasie');
+insert into sklep_podkategoria values(8, 'trampki');
+insert into sklep_podkategoria values(9, 'górskie');
+insert into sklep_podkategoria values(10, 'kapcie');
+insert into sklep_podkategoria values(11, 'japonki');
+
+
+#kategoria
+
+insert into sklep_kategoria values(1, 'męskie', 6);
+insert into sklep_kategoria values(2. 'damskie', 3);
+insert into sklep_kategoria values(3, 'dziecięce', 1);
+
+
+#rodzaj wysyłki
+
+insert into sklep_rodzajwysylki values(1, 'Paczkomat', 9.99);
+insert into sklep_rodzajwysylki values(2, 'Na miejscu', 0);
+insert into sklep_rodzajwysylki values(3, 'Kurier DPD', 12.99);
+insert into sklep_rodzajwysylki values(4, 'Ruch', 8.99);
+insert into sklep_rodzajwysylki values(5, 'Kurier UPS', 11.99);
+
+
+#rodzaje płatności
+
+insert into sklep_rodzajeplatnosci values(1, 'karta płatnicza');
+insert into sklep_rodzajeplatnosci values(2, 'przelew');
+insert into sklep_rodzajeplatnosci values(3, 'BLIK');
+insert into sklep_rodzajeplatnosci values(4, 'Google Pay');
+insert into sklep_rodzajeplatnosci values(5, 'PayPal');
+
+
+#Użytkowników ręcznie, bo jest problem!
+
+#Produkty - jeszcze nie wszystkie na razie po 4 z każdej kategorii
+
+insert into sklep_produkt values(1, 'Adidas', 'Galaxy', 199.99, 'Marka : adidas
+Model : GALAXY 5 GW0773
+Kategoria : Obuwie sportowe
+Kolor : Różowy
+Technologie : Ortholite
+Typ noska : Okrągły
+Podszewka : materiał tekstylny
+Zawiera nietekstylne części pochodzenia zwierzęcego : Nie
+Sezon : Cały rok
+Podeszwa : Wysokogatunkowe tworzywo
+Wysokość całkowita buta : 10 cm
+Grubość podeszwy : 3 cm
+Inne : Sznurówki z materiału
+Metoda konserwacji : Wilgotna szmatka
+Materiał : Włókienniczy
+Waga buta w gramach (najmniejszy rozmiar) : 230
+Styl : Sportowy
+', 1, 1);
+
+insert into sklep_produkt values(2, 'Sprandi', 'Gold', 169.99, 'Marka : Sprandi
+Model : Gold
+Kategoria : Obuwie sportowe
+Kolor : Niebieski
+Szerokość buta : Szeroka
+Typ noska : Okrągły
+Podszewka : materiał tekstylny
+Zawiera nietekstylne części pochodzenia zwierzęcego : Tak
+Sezon : Cały rok
+Podeszwa : Wysokogatunkowe tworzywo
+Wysokość całkowita buta : 12 cm
+Grubość podeszwy : 3.5 cm
+Inne : Sznurówki z materiału
+Metoda konserwacji : Spray
+Materiał : Skóra
+Waga buta w gramach (najmniejszy rozmiar) : 286
+Styl : Sportowy
+', 1, 4);
+
+insert into sklep_produkt values(3, 'Adidas', 'Racer', 139.99, Marka : adidas
+Model : Racer
+Kategoria : Obuwie sportowe
+Kolor : Czarny
+Technologie : Cloudfoam
+Typ noska : Okrągły
+Podszewka : materiał tekstylny
+Zawiera nietekstylne części pochodzenia zwierzęcego : Nie
+Sezon : Cały rok
+Podeszwa : Wysokogatunkowe tworzywo
+Wysokość całkowita buta : 9.5
+Grubość podeszwy : 2.5 cm
+Inne : Sznurówki z materiału
+Metoda konserwacji : Wilgotna szmatka
+Materiał : Włókienniczy
+Waga buta w gramach (najmniejszy rozmiar) : 178
+Styl : Sportowy
+', 1, 7);
+
+
+insert into sklep_produkt values(4, ' Jenny Fairy ', 'Grand', 99.99, ' Marka : Jenny Fairy
+Model : Grand
+Kategoria : Sandały
+Kolor : Czerwony
+Typ noska : Otwarty
+Podszewka : syntetyk
+Zawiera nietekstylne części pochodzenia zwierzęcego : Nie
+Sezon : Lato
+Podeszwa : Wysokogatunkowe tworzywo
+Materiał obcasa : Pokryty materiałem
+Wysokość całkowita buta : 15.5
+Wysokość obcasa : 8,5 cm
+Metoda konserwacji : Spray
+Materiał : Syntetyk
+Waga buta w gramach (najmniejszy rozmiar) : 258
+Styl : Casualny/codzienny
+', 3, 10);
+
+insert into sklep_produkt values(5, ' Adidas', 'Duramo', 159.99, ' Marka : adidas
+Model : DURAMO
+Kategoria : Obuwie sportowe
+Kolor : Granatowy
+Technologie : Lightmotion
+Typ noska : Okrągły
+Podszewka : materiał tekstylny
+Zawiera nietekstylne części pochodzenia zwierzęcego : Nie
+Sezon : Cały rok
+Podeszwa : Wysokogatunkowe tworzywo
+Wysokość całkowita buta : 12 cm
+Grubość podeszwy : 3 cm
+Inne : Sznurówki z materiału
+Metoda konserwacji : Wilgotna szmatka
+Materiał : Włókienniczy
+Waga buta w gramach (najmniejszy rozmiar) : 280
+Styl : Sportowy
+', 1, 13);
+
+insert into sklep_produkt values(6, ' Adidas', ' QUESTAR ', 119.99, ' Marka : adidas
+Model : QUESTAR
+Kategoria : Obuwie sportowe
+Kolor : Biały
+Technologie : Geofit
+Typ noska : Okrągły
+Podszewka : materiał tekstylny
+Zawiera nietekstylne części pochodzenia zwierzęcego : Nie
+Sezon : Cały rok
+Podeszwa : Wysokogatunkowe tworzywo
+Wysokość całkowita buta : 12.5
+Grubość podeszwy : 3.5 cm
+Inne : Sznurówki z materiału
+Metoda konserwacji : Wilgotna szmatka
+Materiał : Włókienniczy
+Waga buta w gramach (najmniejszy rozmiar) : 306
+Styl : Sportowy
+', 1, 16);
+
+insert into sklep_produkt values(7, ' Adidas', ' QUESTAR ', 299.99, ' Marka : adidas
+Model : QUESTAR 
+Kategoria : Obuwie sportowe
+Kolor : Czarny
+Technologie : Geofit
+Typ noska : Okrągły
+Podszewka : materiał tekstylny
+Zawiera nietekstylne części pochodzenia zwierzęcego : Nie
+Sezon : Cały rok
+Podeszwa : Wysokogatunkowe tworzywo
+Wysokość całkowita buta : 12 cm
+Grubość podeszwy : 4 cm
+Inne : Sznurówki z materiału
+Metoda konserwacji : Wilgotna szmatka
+Materiał : Włókienniczy
+Waga buta w gramach (najmniejszy rozmiar) : 322
+Styl : Sportowy
+', 1, 19);
+
+
+insert into sklep_produkt values(8, ' Reebok', ' Ridgerider ', 299.99, ' Marka : Reebok
+Model : RIDGERIDER
+Kategoria : Obuwie sportowe
+Kolor : Zielony
+Technologie : Ortholite
+Typ noska : Okrągły
+Podszewka : materiał tekstylny
+Zawiera nietekstylne części pochodzenia zwierzęcego : Nie
+Sezon : Cały rok
+Podeszwa : Wysokogatunkowe tworzywo
+Wysokość całkowita buta : 12 cm
+Grubość podeszwy : 2.5 cm
+Inne : Sznurówki z materiału
+Metoda konserwacji : Wilgotna szmatka
+Materiał : Syntetyk
+Waga buta w gramach (najmniejszy rozmiar) : 306
+Styl : Sportowy
+', 1, 22);
+
+
+insert into sklep_produkt values(9, ' Twisty', 'Galaxy', 159.99, ' Marka : Twisty
+Model : Galaxy
+Kategoria : Sandały
+Kolor : Różowy
+Technologie : Shock Absorber
+Podszewka : syntetyk
+Zawiera nietekstylne części pochodzenia zwierzęcego : Tak
+Sezon : Lato
+Podeszwa : Wysokogatunkowe tworzywo
+Wysokość całkowita buta : 7.5
+Grubość podeszwy : 1.5 cm
+Metoda konserwacji : Spray lub krem
+Materiał : Syntetyk
+Waga buta w gramach (najmniejszy rozmiar) : 74
+Styl : Casualny/codzienny
+', 3, 25);
+
+insert into sklep_produkt values(10, ' Nelli', ' Blu ', 99.99, ' Marka : Nelli
+Model : Blu
+Kategoria : Sandały
+Kolor : Różowy jasny
+Typ noska : Okrągły
+Podszewka : syntetyk
+Zawiera nietekstylne części pochodzenia zwierzęcego : Nie
+Sezon : Lato
+Podeszwa : Wysokogatunkowe tworzywo
+Materiał obcasa : Wysokogatunkowe tworzywo
+Wysokość całkowita buta : 7 cm
+Wysokość obcasa : 1,5 cm
+Metoda konserwacji : Spray
+Materiał : Syntetyk
+Waga buta w gramach (najmniejszy rozmiar) : 110
+Styl : Casualny/codzienny
+', 3, 28);
+
+insert into sklep_produkt values(11, ' Ricosta', ' Rarla ', 299.99, ' Marka : Ricosta
+Model : Rarla
+Kategoria : Sandały
+Kolor : Granatowy
+Typ noska : Otwarty
+Podszewka : skóra
+Zawiera nietekstylne części pochodzenia zwierzęcego : Tak
+Sezon : Lato
+Podeszwa : Wysokogatunkowe tworzywo
+Wysokość całkowita buta : 6 cm
+Grubość podeszwy : 1.5 cm
+Metoda konserwacji : Spray lub krem
+Materiał : Skóra
+Waga buta w gramach (najmniejszy rozmiar) : 92
+Styl : Casualny/codzienny
+Eco : Cholewka została wykonana ze skóry z certyfikowanej garbarni LWG (Leather Working Group). Podeszwa PU z recyklingu, a podszewka ze skóry garbowanej bezchromowo.
+', 3, 31);
+
+insert into sklep_produkt values(12, ' Sprandi', ' Space ', 179.99, ' Marka : Sprandi
+Model : Space
+Kategoria : Obuwie sportowe
+Kolor : Żółty
+Technologie : Light Outsole
+Szerokość buta : Szeroka
+Typ noska : Okrągły
+Podszewka : materiał tekstylny
+Zawiera nietekstylne części pochodzenia zwierzęcego : Nie
+Sezon : Cały rok
+Podeszwa : Wysokogatunkowe tworzywo
+Wysokość całkowita buta : 9.5
+Grubość podeszwy : 3 cm
+Inne : Gumowy klin w cholewce
+Metoda konserwacji : Spray
+Materiał : Syntetyk
+Waga buta w gramach (najmniejszy rozmiar) : 162
+Styl : Casualny/codzienny
+', 1, 34);
+
+
+#rozmairy - będzie więcej
+
+insert into sklep_rozmiar values(2, 37);
+insert into sklep_rozmiar values(3, 38);
+insert into sklep_rozmiar values(4, 39);
+insert into sklep_rozmiar values(5, 40);
+insert into sklep_rozmiar values(6, 41);
+
+#rozmairy_produkty - będzie więcej, dodawać po kolei rozmiary!!!
+
+insert into sklep_produkt_rozmiar values(2, 10, 2, 1);
+insert into sklep_produkt_rozmiar values(3, 10, 2, 2);
+insert into sklep_produkt_rozmiar values(4, 10, 2, 4);
+
+insert into sklep_produkt_rozmiar values(5, 10, 3, 2);
+insert into sklep_produkt_rozmiar values(6, 10, 3, 4);
+insert into sklep_produkt_rozmiar values(7, 10, 3, 1);
+
+insert into sklep_produkt_rozmiar values(8, 10, 4, 2);
+insert into sklep_produkt_rozmiar values(9, 10, 4, 4);
+
+insert into sklep_produkt_rozmiar values(10, 10, 5, 2);
+insert into sklep_produkt_rozmiar values(11, 10, 5, 4);
+
+insert into sklep_produkt_rozmiar values(12, 10, 6, 2);
+insert into sklep_produkt_rozmiar values(13, 10, 6, 4);
+
+insert into sklep_produkt_rozmiar values(14, 10, 7, 2);
+insert into sklep_produkt_rozmiar values(15, 10, 7, 4);
+
+insert into sklep_produkt_rozmiar values(16, 10, 8, 1);
+insert into sklep_produkt_rozmiar values(17, 10, 8, 3);
+
+insert into sklep_produkt_rozmiar values(18, 10, 9, 1);
+insert into sklep_produkt_rozmiar values(19, 10, 9, 3);
+
+insert into sklep_produkt_rozmiar values(20, 10, 10, 1);
+insert into sklep_produkt_rozmiar values(21, 10, 10, 3);
+
+insert into sklep_produkt_rozmiar values(22, 10, 11, 1);
+insert into sklep_produkt_rozmiar values(23, 10, 11, 3);
+
+insert into sklep_produkt_rozmiar values(24, 10, 12, 1);
+insert into sklep_produkt_rozmiar values(25, 10, 12, 3);
