@@ -41,9 +41,11 @@
                 <p>Kategorie</p>
             </div>
             <div class="categories" id="category-list">
-                
                 <div class="category-element">
                     <p class="main-category"><a href='#'>DAMSKIE</a></p>
+                    <p class="main-category">
+                        <a href= "{%url 'sklep:filter_view' 'DAMSKIE'%}" onclick="{% with filters='DAMSKIE' %}{% endwith %}" >DAMSKIE</a>
+                    </p>
                     <ol>
                         <li><a href='#'>Podkategoria</a></li>
                         <li><a href='#'>Podkategoria</a></li>

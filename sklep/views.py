@@ -3,6 +3,7 @@ from lib2to3.pgen2.token import OP
 from mimetypes import common_types
 from multiprocessing import context
 from django.http import Http404
+from django.http import Http404, HttpResponse
 from django.contrib import messages
 from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth import authenticate, login, logout
@@ -11,12 +12,15 @@ from django.contrib.auth.models import User
 from datetime import datetime
 from decimal import Decimal
 import re
+from django.contrib.sessions.backends.db import SessionStore
 
 from .forms import  ExtendedUserCreationForm,klientForm,UserDataModification,AdresForm,UserNickMod
 from .models import Adres, Platnosci, PozycjaZamowienia, Produkt, Opinie,Klient, Produkt_Rozmiar, RodzajePlatnosci, Zamowienie, RodzajWysylki,KartyPlatnicze
+from .models import Adres, Platnosci, Podkategoria, PozycjaZamowienia, Produkt, Opinie,Klient, Produkt_Rozmiar, RodzajePlatnosci, Zamowienie, RodzajWysylki,KartyPlatnicze
 # Create your views here.
 
 def base(request):
+    request.session['fiters']=''
     produkt_list = Produkt.objects.all().order_by('-id')[:10]
     context = {'produkt_list' : produkt_list}
     return render(request, 'sklep/base/base.html',context)
@@ -446,4 +450,17 @@ def zamowienie_szcz(request,id_zamowienia):
     else:
         return redirect('sklep:base')
     
+def filter_view(request,filter):
+    request.session['fiters']=filter
+    #zamowienia=Zamowienie.objects.filter(klient=curr_klient)
+    try:
+        podkategoria=Podkategoria.objects.get(nazwa=filter)
+    except:
+        podkategoria=[]
+    try:
+        produkt_list = Produkt.objects.filter(podkategoria = podkategoria)
+    except:
+        produkt_list=[]
 
+    context = {'produkt_list' : produkt_list, 'filters':request.session['temp_filter']}
+    return render(request, 'sklep/base/base.html',context)
