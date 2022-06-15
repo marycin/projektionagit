@@ -77,11 +77,11 @@ WSGI_APPLICATION = 'projektio.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'sklep',
+        'NAME': 'sklep_io',
         'USER': 'postgres',
-        'PASSWORD': 'admin',
+        'PASSWORD': 'Mnbvcxz+1',
         'HOST': 'localhost',
-        'PORT': '5433'
+        'PORT': '5432'
     }
 }
 
