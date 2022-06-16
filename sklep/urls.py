@@ -40,5 +40,5 @@ urlpatterns = [
     path('zamowienie_szcz/<int:id_zamowienia>/',views.zamowienie_szcz,name='order_detail'), #Grzesiu
 
 
-    path('filtr/<slug:filter>/',views.filter_view,name='filter_view'),
+    path('filtr/<str:filter>/',views.filter_view,name='filter_view'),
 ]

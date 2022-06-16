@@ -1,3 +1,4 @@
+from ast import Str
 from email import message
 from lib2to3.pgen2.token import OP
 from mimetypes import common_types
@@ -15,12 +16,36 @@ import re
 from django.contrib.sessions.backends.db import SessionStore
 
 from .forms import  ExtendedUserCreationForm,klientForm,UserDataModification,AdresForm,UserNickMod
-from .models import Adres, Platnosci, PozycjaZamowienia, Produkt, Opinie,Klient, Produkt_Rozmiar, RodzajePlatnosci, Zamowienie, RodzajWysylki,KartyPlatnicze
+from .models import Adres, Kategoria, Platnosci, PozycjaZamowienia, Produkt, Opinie,Klient, Produkt_Rozmiar, RodzajePlatnosci, Zamowienie, RodzajWysylki,KartyPlatnicze
 from .models import Adres, Platnosci, Podkategoria, PozycjaZamowienia, Produkt, Opinie,Klient, Produkt_Rozmiar, RodzajePlatnosci, Zamowienie, RodzajWysylki,KartyPlatnicze
 # Create your views here.
 
-def base(request):
+def base(request): #
     request.session['fiters']=''
+    request.session['kategorie']=[]
+    podkategorie=[]
+    try:
+        kategorie=Kategoria.objects.all()
+    except:
+        kategorie=[]
+
+    for kat in kategorie:
+        try:
+            print(kat.nazwa)
+            request.session['kategorie'].append(kat.nazwa)
+            podkategorie=Podkategoria.objects.filter(kategoria=kat)
+            request.session[kat.nazwa]=[]
+            for podkat in podkategorie:
+                print(podkat.nazwa)
+                request.session[kat.nazwa].append(podkat.nazwa)
+        except:
+            podkategorie=[]
+
+    for kat in request.session['kategorie']:
+        for podkat in request.session[kat]:
+            print(podkat)
+
+
     produkt_list = Produkt.objects.all().order_by('-id')[:10]
     context = {'produkt_list' : produkt_list}
     return render(request, 'sklep/base/base.html',context)
@@ -455,12 +480,14 @@ def filter_view(request,filter):
     #zamowienia=Zamowienie.objects.filter(klient=curr_klient)
     try:
         podkategoria=Podkategoria.objects.get(nazwa=filter)
+        try:
+            produkt_list = Produkt.objects.filter(podkategoria = podkategoria)
+        except:
+            produkt_list=[]
     except:
         podkategoria=[]
-    try:
-        produkt_list = Produkt.objects.filter(podkategoria = podkategoria)
-    except:
         produkt_list=[]
 
-    context = {'produkt_list' : produkt_list, 'filters':request.session['temp_filter']}
+
+    context = {'produkt_list' : produkt_list, 'filters':request.session['fiters']}
     return render(request, 'sklep/base/base.html',context)

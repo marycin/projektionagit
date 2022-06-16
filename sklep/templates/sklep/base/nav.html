@@ -41,37 +41,38 @@
                 <p>Kategorie</p>
             </div>
             <div class="categories" id="category-list">
-                <div class="category-element">
-                    <p class="main-category"><a href='#'>DAMSKIE</a></p>
-                    <p class="main-category">
-                        <a href= "{%url 'sklep:filter_view' 'DAMSKIE'%}" onclick="{% with filters='DAMSKIE' %}{% endwith %}" >DAMSKIE</a>
-                    </p>
-                    <ol>
-                        <li><a href='#'>Podkategoria</a></li>
-                        <li><a href='#'>Podkategoria</a></li>
-                        <li><a href='#'>Podkategoria</a></li>
-                        <li><a href='#'>Podkategoria</a></li>
-                    </ol>
-                </div>
-                <div class="category-element">
-                    <p class="main-category"><a href='#'>MĘSKIE</a></p>
-                    <ol>
-                        <li><a href='#'>Podkategoria</a></li>
-                        <li><a href='#'>Podkategoria</a></li>
-                        <li><a href='#'>Podkategoria</a></li>
-                        <li><a href='#'>Podkategoria</a></li>
-                    </ol>
-                </div>
-                <div class="category-element">
-                    <p class="main-category"><a href='#'>DZIECIĘCE</a></p>
-                    <ol>
-                        <li><a href='#'>Podkategoria</a></li>
-                        <li><a href='#'>Podkategoria</a></li>
-                        <li><a href='#'>Podkategoria</a></li>
-                        <li><a href='#'>Podkategoria</a></li>
-                    </ol>
-                </div>
-                
+
+                    <div class="category-element">
+                        <p class="main-category">
+                            <a href= "{%url 'sklep:filter_view' 'damskie'%}" >damskie</a>
+                        </p>
+                        <ol>
+                            {%for podkat in request.session.damskie%}
+                                <li><a href="{%url 'sklep:filter_view' podkat%}">{{podkat}}</a></li>
+                            {%endfor%}
+                        </ol>
+                    </div>
+                    <div class="category-element">
+                        <p class="main-category">
+                            <a href= "{%url 'sklep:filter_view' 'męskie'%}" >męskie</a>
+                        </p>
+                        <ol>
+                            {%for podkat in request.session.męskie%}
+                                <li><a href="{%url 'sklep:filter_view' podkat%}">{{podkat}}</a></li>
+                            {%endfor%}
+                        </ol>
+                    </div>
+                    <div class="category-element">
+                        <p class="main-category">
+                            <a href= "{%url 'sklep:filter_view' 'dziecięce'%}" >dziecięce</a>
+                        </p>
+                        <ol>
+                            {%for podkat in request.session.dzieciece%}
+                                <li><a href="{%url 'sklep:filter_view' podkat%}">{{podkat}}</a></li>
+                            {%endfor%}
+                        </ol>
+                    </div>
+                        
             </div>
         </div>
         <div class="bottom-header-right-side">
