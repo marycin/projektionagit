@@ -451,42 +451,8 @@ def zamowienie_szcz(request,id_zamowienia):
         return redirect('sklep:base')
     
 def filter_view(request,filter):
-    request.session['fiters']=filter
-    #request.session['fiters']=''
-    #request.session['kategorie']=[]
-    #podkategorie=[]
-    #try:
-    #    kategorie=Kategoria.objects.all()
-    #except:
-    #    kategorie=[]
-    #for kat in kategorie:
-    #    try:
-    #        print(kat.nazwa)
-    #        request.session['kategorie'].append(kat.nazwa)
-    #        podkategorie=Podkategoria.objects.filter(kategoria=kat)
-    #        request.session[kat.nazwa]=[]
-    #        for podkat in podkategorie:
-    #            print(podkat.nazwa)
-    #            request.session[kat.nazwa].append(podkat.nazwa)
-    #    except:
-    #        podkategorie=[]
-    #
-    #for kat in request.session['kategorie']:
-    #    for podkat in request.session[kat]:
-    #        print(podkat)
-    #zamowienia=Zamowienie.objects.filter(klient=curr_klient)
-
-    #try:
-    #    podkategoria=Podkategoria.objects.get(nazwa=filter)
-    #    try:
-    #        produkt_list = Produkt.objects.filter(podkategoria = podkategoria)
-    #    except:
-    #        produkt_list=[]
-    #except:
-    #    podkategoria=[]
-    #    produkt_list=[]
+    
     produkt_list=[]
-    my_filter_qs=Produkt()
     try:
         kategoria=Kategoria.objects.get(nazwa=filter)
 
@@ -505,26 +471,60 @@ def filter_view(request,filter):
     except:
         produkt_list=[]
     
-    
+    marki=[]
+    for produkt in produkt_list:
+        if not(produkt.marka in marki):
+            marki.append(produkt.marka)
 
     color=request.GET.get('color')
+    marka=request.GET.get('marka')
     podkategoria_nazwa=request.GET.get('podkategoria')
- 
+    cena_min=request.GET.get("cena_min")
+    cena_max=request.GET.get("cena_max")
+
     if podkategoria_nazwa !='' and podkategoria_nazwa is not None:
-        print('filtruje')
-        try:
-            podkategoria=Podkategoria.objects.get(nazwa=podkategoria_nazwa)
-            #produkt_list=produkt_list.filter(podkategoria=podkategoria)
-            my_filter_qs=my_filter_qs | Produkt(podkategoria=podkategoria)
-        except:
-            podkategoria=[]
+        podkategoria=Podkategoria.objects.get(nazwa=podkategoria_nazwa)
+        lista_buf=[]
+        for produkt in produkt_list:
+            if podkategoria==produkt.podkategoria:
+                lista_buf.append(produkt)
+        produkt_list=lista_buf
+
     print(color)
     if color !='' and color is not None:
-        print('filtruje')
-        #produkt_list=produkt_list.filter(opis__icontains=color)
-        #my_filter_qs=my_filter_qs | Produkt(opis_icontains=color)
+        lista_buf=[]
+        for produkt in produkt_list:
+            if color in produkt.opis:
+                lista_buf.append(produkt)
+        produkt_list=lista_buf
 
-    produkt_list=Produkt.objects.filter(my_filter_qs)
+    print(marka)
+    if marka !='' and marka is not None:
+        lista_buf=[]
+        for produkt in produkt_list:
+            if marka == produkt.marka:
+                lista_buf.append(produkt)
+        produkt_list=lista_buf
 
-    context = {'produkt_list' : produkt_list, 'podkategorie':podkategorie}
+    print(cena_min)
+    if cena_min !='' and cena_min is not None:
+        lista_buf=[]
+        for produkt in produkt_list:
+            if int(cena_min) <= produkt.cena:
+                lista_buf.append(produkt)
+        produkt_list=lista_buf
+
+    print(cena_max)
+    if cena_max !='' and cena_max is not None:
+        lista_buf=[]
+        for produkt in produkt_list:
+            if int(cena_max) >= produkt.cena:
+                lista_buf.append(produkt)
+        produkt_list=lista_buf
+
+    context = {
+        'produkt_list' : produkt_list,
+        'podkategorie':podkategorie,
+        'marki': marki
+    }
     return render(request, 'sklep/base/category.html',context)
