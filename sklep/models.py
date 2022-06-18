@@ -45,7 +45,7 @@ class Adres(models.Model):
     klient = models.ForeignKey(Klient,on_delete=models.CASCADE,null=True,blank=True)
 
     def __str__(self):
-        return f'{self.klient.user.first_name, self.klient.user.last_name, self.miejscowosc, self.ulica, self.numer_domu}'
+        return f'{self.miejscowosc, self.ulica, self.numer_domu}'
 
     class Meta:
         verbose_name = "Adres"

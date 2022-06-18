@@ -15,11 +15,14 @@
 <br>{{ aktualne_zamowienie.get_kwota_zamowienia }}<br><br>
 <form method="POST" action="{% url 'sklep:checkout' %}">
 {% csrf_token %}
-<select name="adres">
+<select name="adres" id="adres-selection">
 {% for adres in lista_adresow %}
 <option value="{{ adres.id }}">{{ adres.miejscowosc }}, {{ adres.ulica }} {{ adres.numer_domu }} 
    {% if adres.numer_lokalu %}, {{ adres.numer_lokalu }} {% endif %}, {{ adres.kod_pocztowy }}</option>
 {% endfor %}
+<option class="adres-item" value="new-adress">
+    Dodaj adres
+</option>
 </select>
 <br>
 Wybierz rodzaj wysyłki<br>
@@ -28,8 +31,17 @@ Wybierz rodzaj wysyłki<br>
     <option data-shipping="{{ wysylka.id }}" class="shipping-item" value="{{ wysylka.id }}">
         {{ wysylka.nazwa }}, Cena: {{ wysylka.cena }}
     </option>
+    
     {% endfor %}
 </select>
+
+<div id="new-adress" style="display:none"><br>
+    Miejscowosc <input type="text" name="miejscowosc"/><br>
+    ulica<input type="text" name="ulica"/><br>
+    numer domu <input type="text" name="numer_domu"/><br>
+    numer lokalu <input type="text" name="numer_lokalu"/><br>
+    kod pocztowy <input type="text" name="kod_pocztowy"/><br>
+</div>
 <button type="submit">
     Przejdz dalej
 </button>

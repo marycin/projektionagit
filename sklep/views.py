@@ -187,6 +187,7 @@ def address_selection(request):
     lista_adresow = Adres.objects.filter(klient = aktualny_klient)
     zamowienie= Zamowienie.objects.get(klient = aktualny_klient,czy_zamowione = False)
     rodzaje_wysylek = RodzajWysylki.objects.all()
+
     context = {
         'klient' : aktualny_klient,
         'lista_adresow' : lista_adresow,
@@ -199,14 +200,23 @@ def checkout(request):
     if request.method=='POST':
         aktualny_klient = get_object_or_404(Klient, user=request.user)
         platnosci = RodzajePlatnosci.objects.all()
-        adres = Adres.objects.get(pk = request.POST['adres'])
+        
         rodzaj_wysylki = RodzajWysylki.objects.get(pk = request.POST['wysylka'])
         
         zamowienie= Zamowienie.objects.get(
             klient = aktualny_klient,
             czy_zamowione = False)
         full_kwota = zamowienie.get_kwota_zamowienia() + rodzaj_wysylki.cena
-          
+        if request.POST['adres'] == 'new-adress':
+            adres = Adres.objects.create(
+                miejscowosc = request.POST['miejscowosc'],
+                ulica = request.POST['ulica'],
+                numer_domu = request.POST['numer_domu'],
+                numer_lokalu = request.POST['numer_lokalu'],
+                kod_pocztowy = request.POST['kod_pocztowy']
+            )
+        else:
+            adres = Adres.objects.get(pk = request.POST['adres'])  
         zamowienie.adres = adres
         zamowienie.rodzaj_wysylki = rodzaj_wysylki
         zamowienie.save()
