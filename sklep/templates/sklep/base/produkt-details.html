@@ -36,7 +36,36 @@
                 <form method="POST" action="{% url 'sklep:add_opinion_on_produkt' produkt.id %}">
                     {% csrf_token %}
                     <textarea id="text-opinion" name="komentarz" cols="40" rows="5" maxlength="400" ></textarea>
-                    <input type="number" min="1" max="5" name="ocena">
+
+                    <div class="rating">
+                       
+                        <input name="ocena" id="e5" type="radio" value="5">
+                        <label for="e5">
+                        </a>☆
+                        </label>
+
+                        
+                        <input name="ocena" id="e4" type="radio" value="4">
+                        <label for="e4">
+                        </a>☆
+                        </label>
+
+                        <input name="ocena" id="e3" type="radio" value="3">
+                        <label for="e3">
+                        </a>☆
+                        </label>
+
+                        <input name="ocena" id="e2" type="radio" value="2">
+                        <label for="e2">
+                        </a>☆
+                        </label>
+
+                        <input name="ocena" id="e1" type="radio" value="1">
+                        <label for="1">
+                        </a>☆
+                        </label>
+
+                    </div>
                     <button type="submit" value="add-opinion" id="add-opinion-btn">Dodaj opinię</button>
                 </form>
                 {% else %}

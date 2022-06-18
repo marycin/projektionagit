@@ -46,7 +46,7 @@
   .icon {
     block-size: 1em;
     display: inline-block;
-    fill: var(--iconFill);
+    fill: white;
     inline-size: 1em;
     vertical-align: middle;
   }
@@ -127,12 +127,19 @@
   
   .form input[type="password"],
   .form input[type="text"],
+  .form input[type="email"],
   .form input[type="submit"] {
     inline-size: 100%;
   }
   
   .form__field {
     border: 0.01rem solid rgb(51, 51, 51);
+    display: flex;
+    color:black;
+  }
+
+  .form__field_date{
+    border: auto solid rgb(51, 51, 51);
     display: flex;
     color:black;
   }
@@ -164,6 +171,7 @@
   .login label,
   .login input[type="text"],
   .login input[type="password"],
+  .login input[type="email"],
   .login input[type="submit"] {
 
     padding: 1rem;
@@ -178,6 +186,7 @@
   }
   
   .login input[type="password"],
+  .login input[type="email"],
   .login input[type="text"] {
     background-color: var(--loginInputBackgroundColor);
     border-bottom-left-radius: 0;
@@ -186,6 +195,8 @@
   
   .login input[type="password"]:focus,
   .login input[type="password"]:hover,
+  .login input[type="email"]:focus,
+  .login input[type="email"]:hover,
   .login input[type="text"]:focus,
   .login input[type="text"]:hover {
     background-color: var(--loginInputHoverBackgroundColor);
