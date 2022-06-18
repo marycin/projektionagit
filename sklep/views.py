@@ -131,9 +131,9 @@ def shopping_cart(request):
             return render(request,'sklep/order/shopping_cart.html',{
                 'czy_puste' : czy_puste
             })
- 
+        zamowienie_do_zwrotu = aktualne_zamowienie[0]
         context = {
-            'aktualne_zamowienie' : aktualne_zamowienie[0],
+            'aktualne_zamowienie' : zamowienie_do_zwrotu,
             'czy_puste' : czy_puste
             }
     return render(request,'sklep/order/shopping_cart.html',context)
@@ -152,7 +152,8 @@ def add_to_cart(request, produkt_id):
     pozycja_zamowienia = PozycjaZamowienia.objects.create(
         ilosc = 1,
         produkt = produkt,
-        rozmiar = wybrany_rozmiar)
+        rozmiar = wybrany_rozmiar,
+        data_dodania = datetime.now())
 
     for p_z in klient_zamowienie.get_pozycje_zamowienia():
         print(p_z.produkt.pk, p_z.rozmiar)
