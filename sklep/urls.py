@@ -40,4 +40,7 @@ urlpatterns = [
     path('adres_del/<int:adres_id>/',views.del_adres,name="del_adres"), #Maciek
     path('user_mod/',views.user_dat_mod,name='user_dat_mod'), #Grzesiu
     path('zamowienie_szcz/<int:id_zamowienia>/',views.zamowienie_szcz,name='order_detail'), #Grzesiu
+
+
+    path('filtr/<str:filter>/',views.filter_view,name='filter_view'),
 ]

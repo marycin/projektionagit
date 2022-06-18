@@ -1,8 +1,10 @@
+from ast import Str
 from email import message
 from lib2to3.pgen2.token import OP
 from mimetypes import common_types
 from multiprocessing import context
 from django.http import Http404
+from django.http import Http404, HttpResponse
 from django.contrib import messages
 from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth import authenticate, login, logout
@@ -13,15 +15,17 @@ import json
 from datetime import datetime
 from decimal import Decimal
 import re
+from django.contrib.sessions.backends.db import SessionStore
 
 from numpy import full
 
 
 from .forms import  ExtendedUserCreationForm,klientForm,UserDataModification,AdresForm,UserNickMod
-from .models import Adres, Platnosci, PozycjaZamowienia, Produkt, Opinie,Klient, Produkt_Rozmiar, RodzajePlatnosci, Zamowienie, RodzajWysylki,KartyPlatnicze
+from .models import Adres, Kategoria, Platnosci, PozycjaZamowienia, Produkt, Opinie,Klient, Produkt_Rozmiar, RodzajePlatnosci, Zamowienie, RodzajWysylki,KartyPlatnicze
+from .models import Adres, Platnosci, Podkategoria, PozycjaZamowienia, Produkt, Opinie,Klient, Produkt_Rozmiar, RodzajePlatnosci, Zamowienie, RodzajWysylki,KartyPlatnicze
 # Create your views here.
 
-def base(request):
+def base(request): #
     produkt_list = Produkt.objects.all().order_by('-id')[:10]
     context = {'produkt_list' : produkt_list}
     return render(request, 'sklep/base/base.html',context)
@@ -340,6 +344,10 @@ def add_adres(request):
             adres.nazwisko=request.user.last_name
             adres.save()
             return redirect('sklep:user_view')
+        else:
+            return render(request,'sklep/user/user_adres.html',{
+            'adres_form':adres_form,
+            })
     else:
         if request.user.is_authenticated:
             adres_form=AdresForm()
@@ -363,6 +371,11 @@ def egz_adres_modify_view(request,adres_id):
             adres.numer_lokalu=adres_form.cleaned_data['numer_lokalu']
             adres.save()
             return redirect('sklep:user_view')
+        else:
+            return render(request,'sklep/user/user_egz_adres.html',{
+            'adres_form':adres_form,
+            'adres_id':adres.id,
+            })
     else:
         if request.user.is_authenticated:
             adres_form=AdresForm(initial={
@@ -393,20 +406,38 @@ def user_dat_mod(request):
             user_form=UserDataModification(request.POST)
             klient_form=klientForm(request.POST)
             user_nick_form=UserNickMod(request.POST)
+            isvalid=True
+            userError='A user with that username already exists.'
             if user_nick_form.is_valid():
                 klient.user.username=user_nick_form.cleaned_data['username']
+            elif user_nick_form['username'].errors[0] in userError and klient.user.username==user_nick_form.data['username']:
+                isvalid=True
+                user_nick_form.errors.clear()
+            else:
+                isvalid=False
             if user_form.is_valid():
                 print('zmieniam dane')
-                #klient.user.username=user_form.cleaned_data['username']
                 klient.user.email=user_form.cleaned_data['email']
                 klient.user.first_name=user_form.cleaned_data['first_name']
                 klient.user.last_name=user_form.cleaned_data['last_name']
                 klient.user.save()
+            else:
+                isvalid=False
+                
             if klient_form.is_valid():
                 print("form klient")
                 klient.telefon=klient_form.cleaned_data['telefon']
                 klient.data_urodzenia=klient_form.cleaned_data['data_urodzenia']
                 klient.save()
+            else:
+                isvalid=False
+
+            if isvalid==False:
+                        return render(request,'sklep/user/user_dat_mod.html',{
+                        'user_mod_form':user_form,
+                        'klient_mod_form':klient_form,
+                        'user_nick_form':user_nick_form,
+                        })
             return redirect('sklep:user_view')
         else:
             user_nick_form=UserNickMod(initial={
@@ -444,4 +475,81 @@ def zamowienie_szcz(request,id_zamowienia):
     else:
         return redirect('sklep:base')
     
+def filter_view(request,filter):
+    
+    produkt_list=[]
+    try:
+        kategoria=Kategoria.objects.get(nazwa=filter)
 
+        try:
+            podkategorie=Podkategoria.objects.filter(kategoria=kategoria)
+        except:
+            podkategorie=[]
+
+        for podkategoria in podkategorie:
+            print(podkategoria.nazwa)
+            try:
+                produkty=Produkt.objects.filter(podkategoria = podkategoria)
+            except:
+                produkty=[]
+            produkt_list.extend(produkty)
+    except:
+        produkt_list=[]
+    
+    marki=[]
+    for produkt in produkt_list:
+        if not(produkt.marka in marki):
+            marki.append(produkt.marka)
+
+    color=request.GET.get('color')
+    marka=request.GET.get('marka')
+    podkategoria_nazwa=request.GET.get('podkategoria')
+    cena_min=request.GET.get("cena_min")
+    cena_max=request.GET.get("cena_max")
+
+    if podkategoria_nazwa !='' and podkategoria_nazwa is not None:
+        podkategoria=Podkategoria.objects.get(nazwa=podkategoria_nazwa)
+        lista_buf=[]
+        for produkt in produkt_list:
+            if podkategoria==produkt.podkategoria:
+                lista_buf.append(produkt)
+        produkt_list=lista_buf
+
+    print(color)
+    if color !='' and color is not None:
+        lista_buf=[]
+        for produkt in produkt_list:
+            if color in produkt.opis:
+                lista_buf.append(produkt)
+        produkt_list=lista_buf
+
+    print(marka)
+    if marka !='' and marka is not None:
+        lista_buf=[]
+        for produkt in produkt_list:
+            if marka == produkt.marka:
+                lista_buf.append(produkt)
+        produkt_list=lista_buf
+
+    print(cena_min)
+    if cena_min !='' and cena_min is not None:
+        lista_buf=[]
+        for produkt in produkt_list:
+            if int(cena_min) <= produkt.cena:
+                lista_buf.append(produkt)
+        produkt_list=lista_buf
+
+    print(cena_max)
+    if cena_max !='' and cena_max is not None:
+        lista_buf=[]
+        for produkt in produkt_list:
+            if int(cena_max) >= produkt.cena:
+                lista_buf.append(produkt)
+        produkt_list=lista_buf
+
+    context = {
+        'produkt_list' : produkt_list,
+        'podkategorie':podkategorie,
+        'marki': marki
+    }
+    return render(request, 'sklep/base/category.html',context)

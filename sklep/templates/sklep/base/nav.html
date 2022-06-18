@@ -41,35 +41,23 @@
                 <p>Kategorie</p>
             </div>
             <div class="categories" id="category-list">
-                
-                <div class="category-element">
-                    <p class="main-category"><a href='#'>DAMSKIE</a></p>
-                    <ol>
-                        <li><a href='#'>Podkategoria</a></li>
-                        <li><a href='#'>Podkategoria</a></li>
-                        <li><a href='#'>Podkategoria</a></li>
-                        <li><a href='#'>Podkategoria</a></li>
-                    </ol>
-                </div>
-                <div class="category-element">
-                    <p class="main-category"><a href='#'>MĘSKIE</a></p>
-                    <ol>
-                        <li><a href='#'>Podkategoria</a></li>
-                        <li><a href='#'>Podkategoria</a></li>
-                        <li><a href='#'>Podkategoria</a></li>
-                        <li><a href='#'>Podkategoria</a></li>
-                    </ol>
-                </div>
-                <div class="category-element">
-                    <p class="main-category"><a href='#'>DZIECIĘCE</a></p>
-                    <ol>
-                        <li><a href='#'>Podkategoria</a></li>
-                        <li><a href='#'>Podkategoria</a></li>
-                        <li><a href='#'>Podkategoria</a></li>
-                        <li><a href='#'>Podkategoria</a></li>
-                    </ol>
-                </div>
-                
+
+                    <div class="category-element">
+                        <p class="main-category">
+                            <a href= "{%url 'sklep:filter_view' 'damskie'%}" >damskie</a>
+                        </p>
+                    </div>
+                    <div class="category-element">
+                        <p class="main-category">
+                            <a href= "{%url 'sklep:filter_view' 'męskie'%}" >męskie</a>
+                        </p>
+                    </div>
+                    <div class="category-element">
+                        <p class="main-category">
+                            <a href= "{%url 'sklep:filter_view' 'dziecięce'%}" >dziecięce</a>
+                        </p>
+                    </div>
+                        
             </div>
         </div>
         <div class="bottom-header-right-side">

@@ -54,7 +54,7 @@ class Adres(models.Model):
 
 class Podkategoria(models.Model):
     nazwa = models.CharField(max_length=50)
-
+    kategoria = models.ForeignKey('Kategoria', on_delete=models.CASCADE,null=True)
     class Meta:
         verbose_name = "Podkategoria"
         verbose_name_plural = "Podkategorie"
@@ -66,7 +66,7 @@ class Podkategoria(models.Model):
 
 class Kategoria(models.Model):
     nazwa = models.CharField(max_length=50)
-    podkategoria = models.ForeignKey('Podkategoria', on_delete=models.CASCADE)
+    
 
     class Meta:
         verbose_name = "Kategoria"
