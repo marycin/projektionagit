@@ -78,8 +78,8 @@
 
 </div>
 
-    <div id="prof-uz-adress">
-        <div class="adress-center">
+<div id="prof-uz-adress">
+    <div class="adress-center">
         <div>
             zapisane adresy: {{adres_size}}
         </div>
@@ -107,36 +107,35 @@
 
             </tr>
             {%for adres in adresy%}
-                <tr>
+            <tr>
                 
-                   <td class="adres-dec">
+                <td class="adres-dec">
                     <a class ='user-buttons' href='{% url "sklep:adres_mod" adres.id %}'> 
                         {{adres.miejscowosc}} 
                     </a>
-                    </td>
+                </td>
 
-                    <td class="adres-dec">
-                        {{adres.ulica}}
-                    </td>
+                <td class="adres-dec">
+                    {{adres.ulica}}
+                </td>
 
-                    <td class="adres-dec">
-                        {{adres.numer_domu}} 
-                    </td>
+                <td class="adres-dec">
+                    {{adres.numer_domu}} 
+                </td>
 
-                    <td class="adres-dec">
-                        {% if adres.numer_lokalu != None %}
-                            {{adres.numer_lokalu}}
-                        {% endif %}
-                    </td>
+                <td class="adres-dec">
+                    {% if adres.numer_lokalu != None %}
+                        {{adres.numer_lokalu}}
+                    {% endif %}
+                </td>
 
-                    <td class="adres-dec2">
-                        {{adres.kod_pocztowy}}
-                    </td>
+                <td class="adres-dec2">
+                    {{adres.kod_pocztowy}}
+                </td>
 
-                <tr>
+            </tr>
             {%endfor%}
-            <table>
-        </div>
+        </table>
     </div>
-
+</div>
 {% endblock %}
