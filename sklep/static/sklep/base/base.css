@@ -437,3 +437,41 @@ div.prof-uz-dane{
 }
 
 /*maciek koniec */
+
+/*div.sidebar{
+    height: 100%;
+    width: 150px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    padding-top: 40px;
+    background-color: lightblue;
+}
+
+div.sidebar div {
+    padding: 8px;
+    font-size: 24px;
+    display: block;
+}
+    
+div.body_text {
+    margin-left: 150px;
+    font-size: 18px;
+}*/
+
+div.grid_container {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    grid-gap: 8px;
+    padding: 8px;
+    }
+    
+div.sidebar{
+    grid-row-start: 1;
+    grid-row-end: 7; /* substitute this value for your sidebar’s vertical row height */
+    background-color: lightblue;
+    height: 200px;
+    position: sticky;
+    top: 0px;
+    text-align: center;
+}

@@ -21,31 +21,6 @@ from .models import Adres, Platnosci, Podkategoria, PozycjaZamowienia, Produkt, 
 # Create your views here.
 
 def base(request): #
-    request.session['fiters']=''
-    request.session['kategorie']=[]
-    podkategorie=[]
-    try:
-        kategorie=Kategoria.objects.all()
-    except:
-        kategorie=[]
-
-    for kat in kategorie:
-        try:
-            print(kat.nazwa)
-            request.session['kategorie'].append(kat.nazwa)
-            podkategorie=Podkategoria.objects.filter(kategoria=kat)
-            request.session[kat.nazwa]=[]
-            for podkat in podkategorie:
-                print(podkat.nazwa)
-                request.session[kat.nazwa].append(podkat.nazwa)
-        except:
-            podkategorie=[]
-
-    for kat in request.session['kategorie']:
-        for podkat in request.session[kat]:
-            print(podkat)
-
-
     produkt_list = Produkt.objects.all().order_by('-id')[:10]
     context = {'produkt_list' : produkt_list}
     return render(request, 'sklep/base/base.html',context)
@@ -477,17 +452,79 @@ def zamowienie_szcz(request,id_zamowienia):
     
 def filter_view(request,filter):
     request.session['fiters']=filter
+    #request.session['fiters']=''
+    #request.session['kategorie']=[]
+    #podkategorie=[]
+    #try:
+    #    kategorie=Kategoria.objects.all()
+    #except:
+    #    kategorie=[]
+    #for kat in kategorie:
+    #    try:
+    #        print(kat.nazwa)
+    #        request.session['kategorie'].append(kat.nazwa)
+    #        podkategorie=Podkategoria.objects.filter(kategoria=kat)
+    #        request.session[kat.nazwa]=[]
+    #        for podkat in podkategorie:
+    #            print(podkat.nazwa)
+    #            request.session[kat.nazwa].append(podkat.nazwa)
+    #    except:
+    #        podkategorie=[]
+    #
+    #for kat in request.session['kategorie']:
+    #    for podkat in request.session[kat]:
+    #        print(podkat)
     #zamowienia=Zamowienie.objects.filter(klient=curr_klient)
+
+    #try:
+    #    podkategoria=Podkategoria.objects.get(nazwa=filter)
+    #    try:
+    #        produkt_list = Produkt.objects.filter(podkategoria = podkategoria)
+    #    except:
+    #        produkt_list=[]
+    #except:
+    #    podkategoria=[]
+    #    produkt_list=[]
+    produkt_list=[]
+    my_filter_qs=Produkt()
     try:
-        podkategoria=Podkategoria.objects.get(nazwa=filter)
+        kategoria=Kategoria.objects.get(nazwa=filter)
+
         try:
-            produkt_list = Produkt.objects.filter(podkategoria = podkategoria)
+            podkategorie=Podkategoria.objects.filter(kategoria=kategoria)
         except:
-            produkt_list=[]
+            podkategorie=[]
+
+        for podkategoria in podkategorie:
+            print(podkategoria.nazwa)
+            try:
+                produkty=Produkt.objects.filter(podkategoria = podkategoria)
+            except:
+                produkty=[]
+            produkt_list.extend(produkty)
     except:
-        podkategoria=[]
         produkt_list=[]
+    
+    
 
+    color=request.GET.get('color')
+    podkategoria_nazwa=request.GET.get('podkategoria')
+ 
+    if podkategoria_nazwa !='' and podkategoria_nazwa is not None:
+        print('filtruje')
+        try:
+            podkategoria=Podkategoria.objects.get(nazwa=podkategoria_nazwa)
+            #produkt_list=produkt_list.filter(podkategoria=podkategoria)
+            my_filter_qs=my_filter_qs | Produkt(podkategoria=podkategoria)
+        except:
+            podkategoria=[]
+    print(color)
+    if color !='' and color is not None:
+        print('filtruje')
+        #produkt_list=produkt_list.filter(opis__icontains=color)
+        #my_filter_qs=my_filter_qs | Produkt(opis_icontains=color)
 
-    context = {'produkt_list' : produkt_list, 'filters':request.session['fiters']}
-    return render(request, 'sklep/base/base.html',context)
+    produkt_list=Produkt.objects.filter(my_filter_qs)
+
+    context = {'produkt_list' : produkt_list, 'podkategorie':podkategorie}
+    return render(request, 'sklep/base/category.html',context)
