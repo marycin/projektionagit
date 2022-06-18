@@ -1,7 +1,8 @@
 <nav>
     <div class="top-header">
         <div class="logo">
-            <a href="{% url 'sklep:base' %}"> logo </a>
+            <a href="{% url 'sklep:base' %}">logo</a>
+            <img src="logo.svg" />
             </div>
         <div class="login-register-buttons">
             {% if user.is_authenticated %}
@@ -41,7 +42,6 @@
                 <p>Kategorie</p>
             </div>
             <div class="categories" id="category-list">
-                
                 <div class="category-element">
                     <p class="main-category"><a href='#'>DAMSKIE</a></p>
                     <ol>
@@ -68,8 +68,12 @@
                         <li><a href='#'>Podkategoria</a></li>
                         <li><a href='#'>Podkategoria</a></li>
                     </ol>
+
+
+
+                    
                 </div>
-                
+
             </div>
         </div>
         <div class="bottom-header-right-side">

@@ -1,13 +1,83 @@
 {% extends 'sklep/base/base.html' %}
 
 {% block content %}
-<form method="POST" action="">
-    {% csrf_token %}
-    <h3>zmień dane</h3>
-    {{user_nick_form.as_ul}}
-    {{ user_mod_form.as_ul }}
-    {{klient_mod_form.as_ul}}
-    <hr>
-    <input id="form-button" class="btn btn-success btn-block" type="submit" value="zapisz">
-</form>
+
+<div class="container-uz">
+
+    <form method="POST" action="">
+        {% csrf_token %}
+
+        <div class="ud-align">
+            <div class="user-dat">
+
+                <div class="nh-name">
+                    <h3>Zmiana danych</h3>
+                </div>
+
+                <div class="line-dec">
+                    <div class="text-auto">
+                        Nazwa użytkownika
+                     </div>
+                    <div class="text-data-ud">
+                        {{user_nick_form.username}}
+                    </div>
+                </div>
+           
+                <div class="line-dec">
+                   <div class="text-auto">
+                        Imie 
+                    </div>
+                    <div class="text-data-ud">
+                        {{ user_mod_form.first_name }}
+                    </div>
+                </div>
+            
+                <div class="line-dec">
+                    <div class="text-auto"> 
+                        Nazwisko
+                    </div>
+                    <div class="text-data-ud">
+                        {{ user_mod_form.last_name }}
+                    </div>
+                </div>
+            
+                <div class="line-dec">
+                    <div class="text-auto"> 
+                        Email
+                    </div>
+                    <div class="text-data-ud">
+                        {{ user_mod_form.email}}
+                    </div>
+                </div>
+            
+                <div class="line-dec">
+                    <div class="text-auto"> 
+                        Telefon
+                    </div>
+                    <div class="text-data-ud">
+                        {{klient_mod_form.telefon}}
+                    </div>
+                </div>
+            
+                <div class="line-dec">
+                    <div class="text-auto"> 
+                        Data urodzenia
+                    </div>
+                    <div class="text-data">
+                        {{klient_mod_form.data_urodzenia}}
+                    </div>
+                </div>
+            
+            </div>
+            <div class="bottom">
+                <input id="form-button" class="btn btn-success btn-block" type="submit" value="Zmień dane">
+            </div>
+        </div>
+
+    </form>
+
+</div>
+
 {% endblock %}
+
+

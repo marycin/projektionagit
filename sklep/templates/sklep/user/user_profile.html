@@ -4,14 +4,24 @@
 
 
 {% if user.is_authenticated %}
+<div class="container-nh">
+    <div class="nh-align">
+        <div class="nh-name">
+            Zmiana hasła
+        </div>
+    <form method="post" action="/sklep/update_user_password/">
+        {% csrf_token %}
 
-{{ user.username }}
-<form method="post" action="/sklep/update_user_password/">
-    {% csrf_token %}
-    <input type="password" name="new_password"><br>
-    <input type="submit" value="zmien haslo" />
-</form>
+        <div class="nh-input">
+            <input id="login__password" type="password" name="new_password" class="form__input" placeholder="Nowe hasło" required>
+        </div>
 
+        <div class="bottom">
+        <input type="submit" value="zmień hasło" />
+        </div>
+    </form>
+    </div>
+</div>
 {% else %}
 
 Nie jesteś zalogowany
