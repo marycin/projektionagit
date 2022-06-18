@@ -1,4 +1,5 @@
 {% extends 'sklep/base/base.html' %}
+{% load static %}
 {% block content %}
 {{ klient.user.first_name }}<br>
 {{ klient.user.last_name }}<br>
@@ -20,11 +21,12 @@
    {% if adres.numer_lokalu %}, {{ adres.numer_lokalu }} {% endif %}, {{ adres.kod_pocztowy }}</option>
 {% endfor %}
 </select>
-
-<select name="wysylka">
+<br>
+Wybierz rodzaj wysyłki<br>
+<select id="shipping-selection" name="wysylka">
     {% for wysylka in rodzaje_wysylek %}
-    <option value="{{ wysylka.id }}">
-        {{ wysylka.nazwa }}
+    <option data-shipping="{{ wysylka.id }}" class="shipping-item" value="{{ wysylka.id }}">
+        {{ wysylka.nazwa }}, Cena: {{ wysylka.cena }}
     </option>
     {% endfor %}
 </select>
@@ -33,4 +35,8 @@
 </button>
 </form>
 <br><br>
+{% endblock %}
+
+{% block script %}
+<script src="{% static 'sklep/order/address_selection.js' %}"></script>
 {% endblock %}

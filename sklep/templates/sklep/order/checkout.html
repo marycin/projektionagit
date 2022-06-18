@@ -1,4 +1,5 @@
 {% extends 'sklep/base/base.html' %}
+{% load static %}
 {% block content %}
 {{ klient.user.first_name }}<br>
 {{ klient.user.last_name }}<br>
@@ -8,7 +9,13 @@
     {{ p_z.produkt.nazwa }}<br>
     ilosc: {{ p_z.ilosc }}<br>
 {% endfor %}
+<br>
+suma za produkty
 {{ aktualne_zamowienie.get_kwota_zamowienia }}
+<br>
+oplata za wysylke: {{ aktualne_zamowienie.rodzaj_wysylki.cena }}
+<br>
+suma: {{ full_kwota }}
 
 {{ aktualne_zamowienie.adres.miejscowosc }}
 {{ aktualne_zamowienie.adres.ulica }}
@@ -20,7 +27,7 @@ Dostawa: {{ aktualne_zamowienie.rodzaj_wysylki.nazwa }}
 Wybierz forme platnosci
 <form method="POST" action="{% url 'sklep:order_summary'  %}" >
     {% csrf_token %}
-<select name="rodzaj_platnosci">
+<select name="rodzaj_platnosci" id="rodzaj_platnosci">
     {% for r_p in rodzaje_platnosci %}
     <option value="{{ r_p.id }}">
         {{ r_p.nazwa }}
@@ -28,18 +35,25 @@ Wybierz forme platnosci
     {% endfor %}
 </select>
 <br>
-Wybierz karte platnicza
-<select name="karta_platnicza">
-    {% for k_p in karty_platnicze %}
-    <option value="{{ k_p.id }}">
-        {{ k_p.numer }}
-    </option>
-    {% endfor %}
-</select>
+<div id="platnosc">
+
+    <select name="karta_platnicza" id="karty_platnicze" style="display:none">
+        {% for k_p in karty_platnicze %}
+        <option value="{{ k_p.id }}">
+            {{ k_p.numer }}
+        </option>
+        {% endfor %}
+    </select>
+    <input type='text' name='blik-number' placeholder='Podaj kod BLIK' id="blikInput" />
+</div>
 
 <button type="submit">
     Zamawiam i place
 </button>
 </form>
 
+{% endblock %}
+
+{% block script %}
+<script src="{% static 'sklep/order/checkout.js' %}"></script>
 {% endblock %}

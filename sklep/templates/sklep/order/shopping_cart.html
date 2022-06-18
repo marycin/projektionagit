@@ -1,4 +1,5 @@
 {% extends 'sklep/base/base.html' %}
+{% load static %}
 {% block content %}
     {% if user.is_authenticated %}
         {% if czy_puste %}
@@ -12,6 +13,8 @@
             rozmiar {{ p_z.rozmiar }}<br>
 
             ilosc {{ p_z.ilosc }}<br>
+            <button data-p_z="{{ p_z.id }}" data-action="increase" class="update-cart">^</button>
+            <button data-p_z="{{ p_z.id }}" data-action="decrease" class="update-cart">v</button>
             <form method="POST" action="{% url 'sklep:delete_from_cart' %}">
                 {% csrf_token %}
             <button name="to_delete" value="{{ p_z.id }}" type="submit">
@@ -30,4 +33,8 @@
     {% else %}
         <p>Zaloguj się, aby zobaczyć koszyk</p>
     {% endif %}
+{% endblock %}
+
+{% block script %}
+<script src="{% static 'sklep/order/shopping_cart.js' %}"></script>
 {% endblock %}

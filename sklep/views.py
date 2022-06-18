@@ -8,9 +8,14 @@ from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.models import User
+from django.http import JsonResponse
+import json
 from datetime import datetime
 from decimal import Decimal
 import re
+
+from numpy import full
+
 
 from .forms import  ExtendedUserCreationForm,klientForm,UserDataModification,AdresForm,UserNickMod
 from .models import Adres, Platnosci, PozycjaZamowienia, Produkt, Opinie,Klient, Produkt_Rozmiar, RodzajePlatnosci, Zamowienie, RodzajWysylki,KartyPlatnicze
@@ -195,7 +200,8 @@ def checkout(request):
         zamowienie= Zamowienie.objects.get(
             klient = aktualny_klient,
             czy_zamowione = False)
-            
+        full_kwota = zamowienie.get_kwota_zamowienia() + rodzaj_wysylki.cena
+          
         zamowienie.adres = adres
         zamowienie.rodzaj_wysylki = rodzaj_wysylki
         zamowienie.save()
@@ -203,12 +209,13 @@ def checkout(request):
 
 
         karty_platnicze_klienta = KartyPlatnicze.objects.filter(klient = aktualny_klient)
-        print(zamowienie.adres.miejscowosc)
         context = {
             'klient' : aktualny_klient,
             'aktualne_zamowienie' : zamowienie,
             'rodzaje_platnosci' : platnosci,
-            'karty_platnicze' : karty_platnicze_klienta
+            'karty_platnicze' : karty_platnicze_klienta,
+            'full_kwota' : full_kwota
+
         }
     return render(request, 'sklep/order/checkout.html',context)
 
@@ -217,12 +224,13 @@ def order_summary(request):
     aktualny_klient = get_object_or_404(Klient, user=request.user)
 
     zamowienie= Zamowienie.objects.get(klient = aktualny_klient,czy_zamowione = False)
-    t_kwota = zamowienie.get_kwota_zamowienia()
+    full_kwota = zamowienie.get_kwota_zamowienia() + zamowienie.rodzaj_wysylki.cena
     platnosc = Platnosci.objects.get_or_create(
-        zamowienie = zamowienie, 
-        kwota = t_kwota,
+        zamowienie = zamowienie,
+        data_zaksiegowania = datetime.now(),
         rodzaj_platnosci = rodzaj_platnosci,
-        data_zaksiegowania = datetime.now())
+        kwota = full_kwota
+        )
     zamowienie.czy_zamowione = True
     zamowienie.czy_oplacono = True
     zamowienie.save()
@@ -234,19 +242,35 @@ def order_summary(request):
         
     return render(request, 'sklep/order/summary.html', context)
 
-def increase_amount_of_produkt(request):
-    pozycja = PozycjaZamowienia.objects.get(pk  = request.POST['to_change'])
-    if pozycja.ilosc < pozycja.produkt.ilosc_dostepnego:
-        pozycja.ilosc = pozycja.ilosc + 1
-        pozycja.save()
-    return redirect('sklep:shopping_cart')
+def updateItem(request):
+    data = json.loads(request.body)
+    print(data['pzId'])
+    pz_id = data['pzId']
+    action = data['action']
+    p_z = PozycjaZamowienia.objects.get(id = pz_id)
+    if action=='increase':
+        p_z.ilosc = (p_z.ilosc + 1)
+    elif action == 'decrease' and p_z.ilosc>1:
+        p_z.ilosc = (p_z.ilosc - 1)
 
-def decrease_amount_of_produkt(request):
-    pozycja = PozycjaZamowienia.objects.get(pk  = request.POST['to_change'])
-    if pozycja.ilosc > 1:
-        pozycja.ilosc = pozycja.ilosc - 1
-        pozycja.save()
-    return redirect('sklep:shopping_cart')
+    p_z.save()
+
+    return JsonResponse('Item increased',safe = False)
+
+def updateShippingItem(request):
+    data = json.loads(request.body)
+    wysylka_id = data['wysylkaId']
+    print(wysylka_id)
+
+    klient = Klient.objects.get(user = request.user)
+
+    zamowienie = Zamowienie.objects.get(klient = klient, czy_zamowione = False)
+    wysylka = RodzajWysylki.objects.get(pk = wysylka_id)
+    zamowienie.rodzaj_wysylki = wysylka
+    zamowienie.save()
+
+    return JsonResponse('Item increased',safe = False)
+
 
 
 def searchBar(request):
