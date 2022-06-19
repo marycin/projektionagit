@@ -40,7 +40,8 @@ urlpatterns = [
     path('adres_del/<int:adres_id>/',views.del_adres,name="del_adres"), #Maciek
     path('user_mod/',views.user_dat_mod,name='user_dat_mod'), #Grzesiu
     path('zamowienie_szcz/<int:id_zamowienia>/',views.zamowienie_szcz,name='order_detail'), #Grzesiu
-
-
+    path('add_credit_card/',views.add_credit_card,name='add_credit_card'), #Maciek
+    path('credit/<int:kartyplatnicze_id>/',views.egz_credit_modify_view,name="credit_card_mod"), 
     path('filtr/<str:filter>/',views.filter_view,name='filter_view'),
+    path('credit_del/<int:kartyplatnicze_id>/',views.del_credit,name="del_credit"), 
 ]

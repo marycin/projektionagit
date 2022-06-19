@@ -1,0 +1,13 @@
+{% block content %}
+<form method="POST" action="">
+    {% csrf_token %}
+    <h3>dodaj karte platnicza</h3>
+    {{ kartyplatnicze_form.as_ul }}
+    <hr>
+    <input id="form-button" class="btn btn-success btn-block" type="submit" value="zapisz">
+</form>
+<form method="POST" action="{%url "sklep:del_credit" kartyplatnicze_id %}">
+    {% csrf_token %}
+    <input id="form-button" class="btn btn-success btn-block" type="submit" value="usun">
+</form>
+{% endblock %}

@@ -1,0 +1,81 @@
+{% extends 'sklep/base/base.html' %}
+
+{% block content %}
+<form method="POST" action="">
+    {% csrf_token %}
+    
+    <style>
+h3 {
+    text-align: center;
+    color: black;
+    line-height: 100px;
+    font-size: x-large;
+    font-size: 48px;
+    margin-bottom: 51px;
+}
+
+.btn
+{
+    background-color: black;
+    border: 15px;
+    border-color: black;
+    color: whitesmoke;
+    padding: 16px 140px;
+    text-align: center;
+    display: inline-block;
+    font-size: 32px;
+    margin: 67px 25px;  
+}
+.wpisywanie1
+{
+    border-color: whitesmoke;
+    border-color: black;
+    font-size: 32px;
+    margin: 15px 9px;
+
+}
+.wpisywanie2
+{
+    border-color: whitesmoke;
+    border-color: black;
+    font-size: 32px;
+    margin: 15px 36px;
+
+}
+.wpisywanie3
+{
+    border-color: whitesmoke;
+    border-color: black;
+    font-size: 32px;
+    margin: 15px 1px;
+
+}
+.wpisywanie4
+{
+    border-color: whitesmoke;
+    border-color: black;
+    font-size: 32px;
+    margin: 15px 48px;
+
+}
+
+strong
+{
+    color: black ;
+    font-size: 32px;
+}
+    </style>
+
+    <h3>Dodaj kartę płatniczą</h3>
+    <p><label for="id_numer"><strong>Numer:</strong></label>
+        <input id="id_numer" class="wpisywanie1" type="text" name="numer" maxlength="100" required></p> 
+    <p><label for="id_cvc"><strong>CVC:</strong></label>
+        <input id="id_cvc" class="wpisywanie2" type="text" name="cvc" maxlength="100" required></p> 
+    <p><label for="id_miesiac"><strong>Miesiąc:</strong></label>
+        <input id="id_miesiac" class="wpisywanie3" type="text" name="miesiac" maxlength="100" required></p>
+    <p><label for="id_rok"><strong>Rok:</strong></label>
+        <input id="id_rok" class="wpisywanie4" type="text" name="rok" maxlength="100" required></p>        
+        <hr>
+    <input id="form-button" class="btn btn-success btn-block" type="submit" value="Zapisz">
+</form>
+{% endblock %}

@@ -74,6 +74,10 @@
                 <a class ='user-buttons' href="{% url 'sklep:add_adres' %}">dodaj adres</a>
             </div>
 
+            <div class="link-dec">
+                <a class ='user-buttons' href="{% url 'sklep:add_credit_card' %}">dodaj karte płatniczą</a>
+            </div>
+
     </div>
 
 </div>
@@ -131,6 +135,57 @@
 
                 <td class="adres-dec2">
                     {{adres.kod_pocztowy}}
+                </td>
+
+            </tr>
+            {%endfor%}
+        </table>
+    </div>
+</div>
+
+<div id="prof-uz-adress">
+    <div class="adress-center">
+        <div>
+            zapisane karty płatnicze: {{karty_płatnicze_size}}
+        </div>
+        <table class="user-adres">
+            <tr class="adres-list">
+                <td class="adres-dec"> 
+                    numer
+                </td>
+
+                <td class="adres-dec">
+                    cvc
+                </td>
+
+                <td class="adres-dec">
+                    miesiac
+                </td>
+
+                <td class="adres-dec">
+                    rok
+                </td>
+
+            </tr>
+            {%for karta in karty_płatnicze%}
+            <tr>
+                
+                <td class="adres-dec">
+                    <a class ='user-buttons' href='{% url "sklep:credit_card_mod" karta.id %}'> 
+                        {{karta.numer}} 
+                    </a>
+                </td>
+
+                <td class="adres-dec">
+                    {{karta.cvc}}
+                </td>
+
+                <td class="adres-dec">
+                    {{karta.miesiac}} 
+                </td>
+
+                <td class="adres-dec">
+                    {{karta.rok}}
                 </td>
 
             </tr>
