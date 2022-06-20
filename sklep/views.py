@@ -495,6 +495,7 @@ def zamowienie_szcz(request,id_zamowienia):
         })
     else:
         return redirect('sklep:base')
+
     
 def filter_view(request,filter):
     
@@ -574,3 +575,27 @@ def filter_view(request,filter):
         'marki': marki
     }
     return render(request, 'sklep/base/category.html',context)
+
+
+def del_user(request, id): 
+    if request.user.is_authenticated:   
+        try:
+            a = User.objects.get(id = id)
+            b = Klient.objects.get(user = a)
+            a.delete()
+            b.delete()
+            messages.success(request, "Usunięto konto")            
+
+        except User.DoesNotExist:
+            messages.error(request, "Konto nie istnieje")    
+            return redirect(request, 'sklep:base')
+
+        except Exception as e: 
+            return redirect(request, 'sklep:base',{'err':e.message})
+
+        return redirect('sklep:base') 
+    else:
+        return redirect('sklep:base')
+def del_user_page(request):
+    return render(request,'sklep/user/user_del.html',{})
+

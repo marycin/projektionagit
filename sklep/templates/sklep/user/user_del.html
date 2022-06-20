@@ -1,0 +1,19 @@
+{% extends 'sklep/base/base.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="prof-uz">
+        <p>Usuwanie konta</p>
+    </div>
+    <div class="prof-uz">
+        <p>Czy napewno chcesz usunąć konto: {{user.username}} ?</p>
+    </div>
+
+    <div class="prof-uz-menu">
+        <ul class="horizontal-list">
+            <li><a class ='user-buttons' href="{% url 'sklep:base' %}">Nie</a></li>
+            <li><a class ='user-buttons' href="{% url 'sklep:delete_account' user.id %}">Tak</a></li>
+        </ul>
+    </div>
+
+{% endblock %}
