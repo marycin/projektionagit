@@ -45,4 +45,9 @@ urlpatterns = [
     path('usuwanie_konta/<int:id>/',views.del_user,name='delete_account'),
     path('usuwanie_konta_2',views.del_user_page,name='delete_account_page'),
 
+
+    path('add_credit_card/',views.add_credit_card,name='add_credit_card'), #Maciek
+    path('credit/<int:kartyplatnicze_id>/',views.egz_credit_modify_view,name="credit_card_mod"), 
+    path('credit_del/<int:kartyplatnicze_id>/',views.del_credit,name="del_credit"), 
+
 ]

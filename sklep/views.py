@@ -20,7 +20,7 @@ from django.contrib.sessions.backends.db import SessionStore
 from numpy import full
 
 
-from .forms import  ExtendedUserCreationForm,klientForm,UserDataModification,AdresForm,UserNickMod
+from .forms import  ExtendedUserCreationForm,klientForm,UserDataModification,AdresForm,UserNickMod,KartyPlatniczeForm
 from .models import Adres, Kategoria, Platnosci, PozycjaZamowienia, Produkt, Opinie,Klient, Produkt_Rozmiar, RodzajePlatnosci, Zamowienie, RodzajWysylki,KartyPlatnicze
 from .models import Adres, Platnosci, Podkategoria, PozycjaZamowienia, Produkt, Opinie,Klient, Produkt_Rozmiar, RodzajePlatnosci, Zamowienie, RodzajWysylki,KartyPlatnicze
 # Create your views here.
@@ -344,11 +344,14 @@ def user_view(request):
         except:
             return Http404
         adresy=Adres.objects.filter(klient = uzytkownik)
+        kartyplatnicze=KartyPlatnicze.objects.filter(klient=uzytkownik)
         return render(request,'sklep/user/user_view.html',{
             'data_ur':uzytkownik.data_urodzenia,
             'telefon':uzytkownik.telefon,
             'adresy':adresy,
-            'adres_size':len(adresy)
+            'karty_płatnicze':kartyplatnicze,
+            'adres_size':len(adresy),
+            'karty_płatnicze_size':len(kartyplatnicze)
         })
         
     else:
@@ -598,4 +601,66 @@ def del_user(request, id):
         return redirect('sklep:base')
 def del_user_page(request):
     return render(request,'sklep/user/user_del.html',{})
+
+
+def add_credit_card(request):
+    if request.method=='POST':
+        KartyPlatnicze_form=KartyPlatniczeForm(request.POST)
+        if KartyPlatnicze_form.is_valid():
+            print("dodawanie karty płatniczej")
+            KartyPlatnicze=KartyPlatnicze_form.save()
+            KartyPlatnicze.klient=Klient.objects.get(user=request.user)
+            KartyPlatnicze.save()
+            return redirect('sklep:user_view')
+        else:
+            return render(request,'sklep/user/user_credit_card.html',{
+            'KartyPlatnicze_form':KartyPlatnicze_form,
+            })
+    else:
+        if request.user.is_authenticated:
+            KartyPlatnicze_form=KartyPlatniczeForm()
+        else:
+            return redirect('sklep:base')
+
+    return render(request,'sklep/user/user_credit_card.html',{
+        'KartyPlatnicze_form':KartyPlatnicze_form,
+    })
+
+def egz_credit_modify_view(request,kartyplatnicze_id):
+    kartyplatnicze=KartyPlatnicze.objects.get(id=kartyplatnicze_id)
+    if request.method=='POST':
+        kartyplatnicze_form=KartyPlatniczeForm(request.POST)
+        if kartyplatnicze_form.is_valid():
+            print("modyfikowanie adresu")
+            kartyplatnicze.numer=kartyplatnicze_form.cleaned_data['numer']
+            kartyplatnicze.cvc=kartyplatnicze_form.cleaned_data['cvc']
+            kartyplatnicze.miesiac=kartyplatnicze_form.cleaned_data['miesiac']
+            kartyplatnicze.rok=kartyplatnicze_form.cleaned_data['rok']
+            kartyplatnicze.save()
+            return redirect('sklep:user_view')
+        else:
+            return render(request,'sklep/user/user_egz_credit.html',{
+            'kartyplatnicze_form':kartyplatnicze_form,
+            'kartyplatnicze_id':kartyplatnicze.id,
+            })
+    else:
+        if request.user.is_authenticated:
+            kartyplatnicze_form=KartyPlatniczeForm(initial={
+                'numer':kartyplatnicze.numer,
+                'cvc':kartyplatnicze.cvc,
+                'miesiac':kartyplatnicze.miesiac,
+                'rok':kartyplatnicze.rok,
+            })
+        else:
+            return redirect('sklep:base')
+
+    return render(request,'sklep/user/user_egz_credit.html',{
+        'kartyplatnicze_form':kartyplatnicze_form,
+        'kartyplatnicze_id':kartyplatnicze.id,
+    })
+def del_credit(request,kartyplatnicze_id):
+    kartyplatnicze=KartyPlatnicze.objects.get(id=kartyplatnicze_id)
+    if request.method=='POST':
+        kartyplatnicze.delete()
+    return redirect('sklep:user_view')
 
