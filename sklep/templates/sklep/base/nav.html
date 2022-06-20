@@ -1,8 +1,10 @@
+{% load static %}
 <nav>
     <div class="top-header">
         <div class="logo">
-            <a href="{% url 'sklep:base' %}">logo</a>
-            <img src="logo.svg" />
+            <a href="{% url 'sklep:base' %}">
+                <img src="{% static 'sklep/base/logo.png'  %}" alt="LOGO" />
+            </a>
             </div>
         <div class="login-register-buttons">
             {% if user.is_authenticated %}
