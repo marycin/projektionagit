@@ -1,6 +1,9 @@
 {% extends 'sklep/base/base.html' %}
 {% load static %}
 {% block content %}
+{% if aktualne_zamowienie.czy_zamowione %}
+    Brak produktów w koszyku
+{% else %}
 {{ klient.user.first_name }}<br>
 {{ klient.user.last_name }}<br>
 {{ klient.user.email }}<br>
@@ -47,6 +50,7 @@ Wybierz rodzaj wysyłki<br>
 </button>
 </form>
 <br><br>
+{% endif %}
 {% endblock %}
 
 {% block script %}

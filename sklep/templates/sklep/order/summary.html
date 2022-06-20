@@ -1,6 +1,8 @@
 {% extends 'sklep/base/base.html' %}
 
+
 {% block content %}
+
 Podsumowanie<br>
 {{ zamowienie.klient.user.first_name }}<br>
 {{ zamowienie.klient.user.last_name }}<br>
@@ -10,11 +12,10 @@ Podsumowanie<br>
     {{ p_z.produkt.nazwa }}<br>
     ilosc: {{ p_z.ilosc }}<br>
 {% endfor %}
-{{ zamowienie.get_kwota_zamowienia }}
+{{ platnosc.kwota }}
 
 {{ zamowienie.adres.miejscowosc }}
 {{ zamowienie.adres.ulica }}
 {{ zamowienie.adres.nr_domu }}
-
 
 {% endblock %}

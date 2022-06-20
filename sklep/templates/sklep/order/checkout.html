@@ -1,6 +1,9 @@
 {% extends 'sklep/base/base.html' %}
 {% load static %}
 {% block content %}
+{% if aktualne_zamowienie.czy_zamowione %}
+    Brak zamówien w koszyku
+{% else %}
 {{ klient.user.first_name }}<br>
 {{ klient.user.last_name }}<br>
 {{ klient.user.email }}<br>
@@ -51,7 +54,7 @@ Wybierz forme platnosci
     Zamawiam i place
 </button>
 </form>
-
+{% endif %}
 {% endblock %}
 
 {% block script %}

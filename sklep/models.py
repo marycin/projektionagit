@@ -147,8 +147,6 @@ class PozycjaZamowienia(models.Model):
     def __str__(self):
         return f"{self.produkt.marka} {self.produkt.model} {self.ilosc} {self.data_dodania}"
     
-    
-    
     class Meta:
         verbose_name = "Pozycja zamówienia"
         verbose_name_plural = "Pozycje zamówień"
@@ -169,6 +167,12 @@ class Zamowienie(models.Model):
 
     def get_pozycje_zamowienia(self):
         return self.pozycje_zamowienia.all()
+
+    def czy_puste(self):
+        if self.pozycje_zamowienia.all() is None:
+            return True
+        else:
+            return False
 
     def get_kwota_zamowienia(self):
         return sum([pozycja_zamowienia.produkt.cena * pozycja_zamowienia.ilosc for pozycja_zamowienia in self.pozycje_zamowienia.all()])

@@ -130,6 +130,7 @@ def shopping_cart(request):
             czy_zamowione=False)
         
         czy_puste=False
+        #print(aktualne_zamowienie[0].czy_puste())
         if len(aktualne_zamowienie) ==0:
             czy_puste=True
             return render(request,'sklep/order/shopping_cart.html',{
@@ -179,6 +180,7 @@ def delete_from_cart(request):
     zamowienie = Zamowienie.objects.get(klient = klient, czy_zamowione = False)
     if len(zamowienie.get_pozycje_zamowienia()) ==0:
         zamowienie.delete()
+        print(zamowienie)
     messages.info(request,"Usunięto produkt z koszyka")
     return redirect('sklep:shopping_cart')
 
@@ -208,13 +210,22 @@ def checkout(request):
             czy_zamowione = False)
         full_kwota = zamowienie.get_kwota_zamowienia() + rodzaj_wysylki.cena
         if request.POST['adres'] == 'new-adress':
-            adres = Adres.objects.create(
+            if request.POST['numer_lokalu']:
+                adres = Adres.objects.create(
                 miejscowosc = request.POST['miejscowosc'],
                 ulica = request.POST['ulica'],
                 numer_domu = request.POST['numer_domu'],
                 numer_lokalu = request.POST['numer_lokalu'],
                 kod_pocztowy = request.POST['kod_pocztowy']
             )
+            else:
+                adres = Adres.objects.create(
+                miejscowosc = request.POST['miejscowosc'],
+                ulica = request.POST['ulica'],
+                numer_domu = request.POST['numer_domu'],
+                kod_pocztowy = request.POST['kod_pocztowy']
+            )
+
         else:
             adres = Adres.objects.get(pk = request.POST['adres'])  
         zamowienie.adres = adres
@@ -315,7 +326,7 @@ def orders_view(request):
 
     if request.user.is_authenticated:
         curr_klient=Klient.objects.get(user=request.user.id)
-        zamowienia=Zamowienie.objects.filter(klient=curr_klient)
+        zamowienia=Zamowienie.objects.filter(klient=curr_klient, czy_zamowione = True)
         ilosc=len(zamowienia)
         #return HttpResponse(request.user.id)
         return render(request, 'sklep/user/orders_view.html',{
