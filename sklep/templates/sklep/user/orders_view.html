@@ -1,7 +1,6 @@
 {% extends 'sklep/base/base.html' %}
-
+{% load static %}
 {% block content %}
-    <p>{{ilosc}}</p>
     {%for zamowienie in zamowienia%}
         <p>
             <a href="{% url "sklep:order_detail" zamowienie.id%}">

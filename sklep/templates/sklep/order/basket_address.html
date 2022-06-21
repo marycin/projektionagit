@@ -1,0 +1,68 @@
+{% extends 'sklep/base/base.html' %}
+{% endblock %}
+{% block style %}
+<link href="stylesheet" type="text/css" href="{% static 'sklep/order/basket_address' %}" />
+{% endblock %}
+{% block content %} 
+<ol>
+    <div class = product_summary>
+        <div class = 'product_container'>
+            <img src="lol.jpg">
+            <div class = 'product_container_text'>
+                <h1>Nazwa produktu</h1>
+                <li>Cena Buta</li>
+                <li>Rozmiar</li>
+                <li>Ilość</li>
+                        <div class = 'buttons'>
+                    <button class = 'arrow up'>↑</button>
+                    <button class = 'arrow down'>↓</button>
+            </div>
+                </div>
+        </div>
+        <div class = 'summary'>
+            <div class = summary_items> 
+                <p>Produkty</p>
+                <h1>Cena</h1>
+            </div>
+            <div class = summary_items> 
+                <p>Dostawa,</p>
+                <h1>Cena</h1>
+            </div>
+            <div class = summary_items> 
+                <p>Suma.....</p>
+                <h1>Cena</h1>
+            </div>
+            <button>Przejdz do płatnosci</button>
+        </div>
+    </div>
+<div  class = 'Type_delivery_container'>
+    <h2>Sposób dostawy</h2>
+    <div class = "delivery kur"> 
+        <p>Kurier</p>
+        <p>9.99zl</p>
+    </div>
+    <div class = "delivery oso">
+        <p>Odbiór osobisty</p>
+        <p>Za darmo</p>
+    </div>
+</div>
+    <div class= 'user_address'>
+        <h3>Dane do Wysyłki</h3>
+        <li>Wybierz adres wysylki</li>
+        <select>
+            <option></option>
+        </select>
+        <div class = 'user_address_name'>
+            <div class = 'user_address_Name'><li>Imie*</li> <input type="text"></div>
+            
+            <div class = 'user_address_Name'><li>Nazwisko*</li> <input type="text"></div>
+        </div>
+        <li>Adres*</li> <input type="text">
+        <div class= 'user_address_name'><div class = 'user_address_Name'><li>Kod Pocztowy*</li> <input type="text"></div>
+            
+        <div class = 'user_address_Name'><li>Miejscowość*</li> <input type="text"></div></div>
+        <li>Dodatkowe informacje</li><input type="text">
+    </div>
+    <li><a href = '#'>Dalej</a></li>
+</ol>
+{% endblock %}

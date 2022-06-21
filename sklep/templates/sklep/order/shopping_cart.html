@@ -1,5 +1,8 @@
 {% extends 'sklep/base/base.html' %}
 {% load static %}
+{% block style %}
+<link rel="stylesheet" text="type/css" href="{% static 'sklep/order/basket_address.css' %}">
+{% endblock %}
 {% block content %}
     {% if user.is_authenticated %}
         {% if czy_puste %}
@@ -8,13 +11,56 @@
                 <a href="{% url 'sklep:base' %}">Powrót do zakupów</a>
             </p>
         {% else %}
+            <ol>
+                <div class = product_summary>
+                    {% for p_z in aktualne_zamowienie.get_pozycje_zamowienia %}
+                    <div class = 'product_container'>
+                        <div class="product-photo">
+                            <img src="{{ p_z.produkt.zdjecia.zdjecie.url }}">
+                        </div>
+                        <div class = 'product_container_text'>
+                            <h1>{{ p_z.produkt.marka }} {{ p_z.produkt.model }}</h1>
+                            <li>{{ p_z.cena }}</li>
+                            <li>Rozmiar: {{ p_z.rozmiar }}</li>
+                            <li class="quantity-li">
+                                <div class = 'quantity-product'>
+                                    Ilość: {{ p_z.ilosc }}
+                                </div>
+                                <div class = 'buttons'>
+                                    <button data-p_z="{{ p_z.id }}" data-action="increase" class="arrow up update-cart">↑</button>
+                                    <button data-p_z="{{ p_z.id }}" data-action="decrease" class=" arrow down update-cart">↓</button>
+                                </div>
+                            </li>
+                            
+                        </div>
+                    </div>
+                    {% endfor %}
+                    <div class = 'summary'>
+                        <div class = summary_items> 
+                            <p>Produkty</p>
+                            <h1>Cena</h1>
+                        </div>
+                        <div class = summary_items> 
+                            <p>Dostawa,</p>
+                            <h1>Cena</h1>
+                        </div>
+                        <div class = summary_items> 
+                            <p>Suma.....</p>
+                            <h1>Cena</h1>
+                        </div>
+                        <button>Przejdz do płatnosci</button>
+                    </div>
+                </div>
+            </ol>
+
+
+
             {% for p_z in aktualne_zamowienie.get_pozycje_zamowienia %}
             {{ p_z.produkt.marka }} {{ p_z.produkt.model }}<br>
             rozmiar {{ p_z.rozmiar }}<br>
 
             ilosc {{ p_z.ilosc }}<br>
-            <button data-p_z="{{ p_z.id }}" data-action="increase" class="update-cart">^</button>
-            <button data-p_z="{{ p_z.id }}" data-action="decrease" class="update-cart">v</button>
+            
             <form method="POST" action="{% url 'sklep:delete_from_cart' %}">
                 {% csrf_token %}
             <button name="to_delete" value="{{ p_z.id }}" type="submit">
