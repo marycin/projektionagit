@@ -79,126 +79,110 @@
     <div class="prof-uz-adress">
 
         <div class="adress-center">
-        <div>
-            zapisane adresy: {{adres_size}}
-        </div>
-        <table class="user-adres">
-            <tr class="adres-list">
-                <td class="adres-dec"> 
-                    miejscowość
-                </td>
-
-                <td class="adres-dec">
-                    ulica
-                </td>
-
-                <td class="adres-dec">
-                    numer domu
-                </td>
-
-                <td class="adres-dec">
-                    numer lokalu
-                </td>
-
-                <td class="adres-dec2">
-                    kod pocztowy
-                </td>
-
-            </tr>
-            {%for adres in adresy%}
-                <tr>
-                
-                   <td class="adres-dec">
-                    <a class ='user-buttons' href='{% url "sklep:adres_mod" adres.id %}'> 
-                        {{adres.miejscowosc}} 
-                    </a>
+            <div>
+                zapisane adresy: {{adres_size}}
+            </div>
+            <table class="user-adres">
+                <tr class="adres-list">
+                    <td class="adres-dec"> 
+                        miejscowość
                     </td>
 
                     <td class="adres-dec">
-                        {{adres.ulica}}
+                        ulica
                     </td>
 
                     <td class="adres-dec">
-                        {{adres.numer_domu}} 
+                        numer domu
                     </td>
 
                     <td class="adres-dec">
-                        {% if adres.numer_lokalu != None %}
-                            {{adres.numer_lokalu}}
-                        {% endif %}
+                        numer lokalu
                     </td>
 
                     <td class="adres-dec2">
-                        {{adres.kod_pocztowy}}
+                        kod pocztowy
                     </td>
 
                 </tr>
-            {%endfor%}
-            
-            </table>
+                {%for adres in adresy%}
+                    <tr>
+                    
+                    <td class="adres-dec">
+                        <a class ='user-buttons' href='{% url "sklep:adres_mod" adres.id %}'> 
+                            {{adres.miejscowosc}} 
+                        </a>
+                        </td>
+
+                        <td class="adres-dec">
+                            {{adres.ulica}}
+                        </td>
+
+                        <td class="adres-dec">
+                            {{adres.numer_domu}} 
+                        </td>
+
+                        <td class="adres-dec">
+                            {% if adres.numer_lokalu != None %}
+                                {{adres.numer_lokalu}}
+                            {% endif %}
+                        </td>
+
+                        <td class="adres-dec2">
+                            {{adres.kod_pocztowy}}
+                        </td>
+
+                    </tr>
+                {%endfor%}
+                
+                </table>
 
             <div class="link-dec">
                 <a class ='user-buttons' href="{% url 'sklep:add_adres' %}">dodaj adres</a>
             </div>
+            
         </div>
 
             <div class="prof-uz-adress">
                 <div class="adress-center">
-                <div>
-                    zapisane karty: {{adres_size}}
-                </div>
-                <table class="user-adres">
-                    <tr class="adres-list">
-                        <td class="adres-dec"> 
-                            miejscowość
-                        </td>
-        
-                        <td class="adres-dec">
-                            ulica
-                        </td>
-        
-                        <td class="adres-dec">
-                            numer domu
-                        </td>
-        
-                        <td class="adres-dec">
-                            numer lokalu
-                        </td>
-        
-                        <td class="adres-dec2">
-                            kod pocztowy
-                        </td>
-        
-                    </tr>
-                    {%for adres in adresy%}
-                        <tr>
-                        
-                           <td class="adres-dec">
-                            <a class ='user-buttons' href='{% url "sklep:adres_mod" adres.id %}'> 
-                                {{adres.miejscowosc}} 
-                            </a>
+                    <div>
+                        zapisane karty płatnicze: {{karty_płatnicze_size}}
+                    </div>
+                    <table class="user-adres">
+                        <tr class="adres-list">
+                            <td class="adres-dec"> 
+                                numer
                             </td>
-        
+            
                             <td class="adres-dec">
-                                {{adres.ulica}}
+                                cvc
                             </td>
-        
-                            <td class="adres-dec">
-                                {{adres.numer_domu}} 
-                            </td>
-        
-                            <td class="adres-dec">
-                                {% if adres.numer_lokalu != None %}
-                                    {{adres.numer_lokalu}}
-                                {% endif %}
-                            </td>
-        
+            
                             <td class="adres-dec2">
-                                {{adres.kod_pocztowy}}
+                                data
                             </td>
-        
+
+            
                         </tr>
-                    {%endfor%}
+                        {%for karta in karty_płatnicze%}
+                        <tr>
+                            
+                            <td class="adres-dec">
+                                <a class ='user-buttons' href='{% url "sklep:credit_card_mod" karta.id %}'> 
+                                    {{karta.numer}} 
+                                </a>
+                            </td>
+            
+                            <td class="adres-dec">
+                                {{karta.cvc}}
+                            </td>
+            
+                            <td class="adres-dec2">
+                                {{karta.miesiac}} / {{karta.rok}}
+                            </td>
+            
+                        </tr>
+                        {%endfor%}
                     </table>
                 </div>
             </div>
