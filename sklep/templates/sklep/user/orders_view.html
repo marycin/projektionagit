@@ -1,16 +1,48 @@
 {% extends 'sklep/base/base.html' %}
+{% load static %}
+
+{% block style %}
+<link rel="stylesheet" text="type/css" href="{% static 'sklep/user/hist_zamowien.css' %}">
+{% endblock %}
+
+
 
 {% block content %}
-    <p>{{ilosc}}</p>
-    {%for zamowienie in zamowienia%}
-        <p>
-            <a href="{% url "sklep:order_detail" zamowienie.id%}">
-                zamowienie 
-                {{zamowienie.data_zamowienia}} 
-                {{zamowienie.adres.miejscowosc}} 
-                {{zamowienie.adres.ulica}} 
-                {{zamowienie.adres.numer_domu}}
-            </a>
-        </p>
-    {% endfor %}
+
+<div class="container-his">
+
+    <div class="align-his">
+        
+        <div class="name">
+            Twoje zamowienia
+        </div>
+
+        <div class="det-count">
+            <div class="text-count">
+                Liczba zamówień: 
+            </div>
+            <div class="count">
+                <p>{{ilosc}}</p>
+            </div>
+        </div>
+
+        <div class="orders">
+            {%for zamowienie in zamowienia%}
+                <p>
+                    <a href="{% url "sklep:order_detail" zamowienie.id%}">
+                        <div class="order">
+                            <div class="text-date">
+                                zamowienie z 
+                            </div>
+
+                            <div class"det-order">
+                                {{zamowienie.data_zamowienia}} 
+                            </div>
+                        </div>
+                    </a>
+                </p>
+            {% endfor %}
+        </div>
+    </div>
+</div>
 {%endblock%}

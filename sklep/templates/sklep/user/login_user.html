@@ -14,7 +14,11 @@
 <body class="align">
 
   <div class="grid">
-      <div class="logo"> <a href="{% url 'sklep:base' %}"> logo </a> </div>
+    <div class="logo">
+      <a href="{% url 'sklep:base' %}">
+          <img src="{% static 'sklep/base/logo.png'  %}" alt="LOGO" />
+      </a>
+  </div>
     <form method="POST" class="form login">
       {% csrf_token %}
       <div class="form__field">

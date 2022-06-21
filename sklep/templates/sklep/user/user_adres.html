@@ -1,91 +1,81 @@
 {% extends 'sklep/base/base.html' %}
+{% load static %}
+
+{% block style %}
+<link rel="stylesheet" text="type/css" href="{% static 'sklep/user/dod_adres.css' %}">
+{% endblock %}
 
 {% block content %}
-<form method="POST" action="">
-    {% csrf_token %}
-    
-    <style>
-h3 {
-    text-align: center;
-    color: black;
-    line-height: 100px;
-    font-size: x-large;
-    font-size: 48px;
-    margin-bottom: 51px;
-}
 
-.btn
-{
-    background-color: black;
-    border: 15px;
-    border-color: black;
-    color: whitesmoke;
-    padding: 16px 140px;
-    text-align: center;
-    display: inline-block;
-    font-size: 32px;
-    margin: 67px 25px;  
-}
-.wpisywanie1
-{
-    border-color: whitesmoke;
-    border-color: black;
-    font-size: 32px;
-    margin: 15px 23px;
+<div class="container-uz">
 
-}
-.wpisywanie2
-{
-    border-color: whitesmoke;
-    border-color: black;
-    font-size: 32px;
-    margin: 15px 124px;
+    <form method="POST" action="">
+        {% csrf_token %}
 
-}
-.wpisywanie3
-{
-    border-color: whitesmoke;
-    border-color: black;
-    font-size: 32px;
-    margin: 15px 1px;
+        <div class="ud-align">
+            <div class="user-dat">
 
-}
-.wpisywanie4
-{
-    border-color: whitesmoke;
-    border-color: black;
-    font-size: 32px;
-    margin: 15px 14px;
+                <div class="nh-name">
+                    <h3>Dodawanie adresu</h3>
+                </div>
 
-}
-.wpisywanie5
-{
-    border-color: whitesmoke;
-    border-color: black;
-    font-size: 32px;
-    margin: 15px 7px;
+                <div class="line-dec">
+                    <div class="text-auto"> 
+                        Numer domu
+                    </div>
+                    <div class="text-data">
+                        {{ adres_form.numer_domu }}
+                    </div>
+                </div>
+            
+                <div class="line-dec">
+                    <div class="text-auto"> 
+                        Numer lokalu
+                    </div>
+                    <div class="text-data">
+                        {{ adres_form.numer_lokalu }}
+                    </div>
+                </div>
 
-}
+                <div class="line-dec">
+                    <div class="text-auto">
+                        Miejscowość
+                     </div>
+                    <div class="text-data">
+                        {{ adres_form.miejscowosc }}
+                    </div>
+                </div>
+           
+                <div class="line-dec">
+                   <div class="text-auto">
+                        Ulica
+                    </div>
+                    <div class="text-data">
+                        {{ adres_form.ulica }}
+                    </div>
+                </div>
+            
+                <div class="line-dec">
+                    <div class="text-auto"> 
+                        Kod pocztowy
+                    </div>
+                    <div class="text-data">
+                        {{ adres_form.kod_pocztowy }}
+                    </div>
+                </div>
 
-strong
-{
-    color: black ;
-    font-size: 32px;
-}
-    </style>
+            </div>
+            <div class="bottom">
+                <input id="form-button" type="submit" value="Dodaj adres">
+            </div>
+        </div>
 
-    <h3>Dodaj adres</h3>
-    <p><label for="id_miejscowosc"><strong>Miejscowość:</strong></label>
-        <input id="id_miejscowosc" class="wpisywanie1" type="text" name="miejscowosc" maxlength="100" required></p> 
-    <p><label for="id_ulica"><strong>Ulica:</strong></label>
-        <input id="id_ulica" class="wpisywanie2" type="text" name="ulica" maxlength="100" required></p> 
-    <p><label for="id_kod_pocztowy"><strong>Kod pocztowy:</strong></label>
-        <input id="id_kod_pocztowy" class="wpisywanie3" type="text" name="kod_pocztowy" maxlength="100" required></p>
-    <p><label for="id_numer_domu"><strong>Numer domu:</strong></label>
-        <input id="id_numer_domu" class="wpisywanie4" type="text" name="numer_domu" maxlength="100" required></p>
-    <p><label for="id_numer_lokalu"><strong>Numer lokalu:</strong></label>
-        <input id="id_numer_lokalu" class="wpisywanie5" type="text" name="numer_lokalu" maxlength="100" required></p>         
-        <hr>
-    <input id="form-button" class="btn btn-success btn-block" type="submit" value="Zapisz">
-</form>
+    </form>
+
+</div>
+
 {% endblock %}
+
+
+
+

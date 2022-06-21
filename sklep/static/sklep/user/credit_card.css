@@ -1,0 +1,59 @@
+h3 {
+    text-align: center;
+    color: black;
+    line-height: 100px;
+    font-size: x-large;
+    font-size: 48px;
+    margin-bottom: 51px;
+}
+
+.btn
+{
+    background-color: black;
+    border: 15px;
+    border-color: black;
+    color: whitesmoke;
+    padding: 16px 140px;
+    text-align: center;
+    display: inline-block;
+    font-size: 32px;
+    margin: 67px 25px;  
+}
+.wpisywanie1
+{
+    border-color: whitesmoke;
+    border-color: black;
+    font-size: 32px;
+    margin: 15px 9px;
+
+}
+.wpisywanie2
+{
+    border-color: whitesmoke;
+    border-color: black;
+    font-size: 32px;
+    margin: 15px 36px;
+
+}
+.wpisywanie3
+{
+    border-color: whitesmoke;
+    border-color: black;
+    font-size: 32px;
+    margin: 15px 1px;
+
+}
+.wpisywanie4
+{
+    border-color: whitesmoke;
+    border-color: black;
+    font-size: 32px;
+    margin: 15px 48px;
+
+}
+
+strong
+{
+    color: black ;
+    font-size: 32px;
+}

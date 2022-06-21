@@ -1,0 +1,105 @@
+.container-uz{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start;
+  align-content: flex-start;
+  width: 70rem;
+  margin: auto;
+}
+
+.ud-align{
+  position: relative;
+  top: 2rem;
+  left: 2.5rem;
+  
+
+  background: white;
+  font-size: 17px;
+  line-height: 2;
+  width: 40rem;
+  height: 23rem;
+  padding: 5px 10px 5px 10px;
+  border-radius: 10px 10px 10px 10px;
+  -webkit-box-shadow: 0px 0px 11px -7px rgba(66, 68, 90, 1);
+  -moz-box-shadow: 0px 0px 11px -7px rgba(66, 68, 90, 1);
+  box-shadow: 0px 0px 11px -7px rgba(66, 68, 90, 1);
+}
+
+.nh-name{
+  font-size: 2rem;
+  text-align: center;
+}
+
+
+.text-auto{
+float:left;
+color: rgb(46, 46, 46);
+font-weight: 600;
+width: 40%;
+}
+
+.text-data{
+text-align: center;
+}
+
+.line-dec{
+border-top: 1px solid rgba(109, 109, 109, 0.375);
+}
+
+.nh-input input[type="password"]::placeholder {  
+                
+  padding-left: 20px; 
+} 
+
+input {
+  background-image: none;
+  border-right: 1px solid rgba(0, 0, 0, 0.375);
+  color: inherit;
+  font: inherit;
+  margin: 0;
+  outline: 0;
+  padding: 0;
+  transition: background-color 0.3s;
+}
+
+input[type="submit"] {
+  cursor: pointer;
+}
+
+.bottom, .nh-input{
+  position: relative;
+  top: 0.5rem;
+  color:black;
+  margin: 1rem 0.5rem 2rem 0.5rem;
+}
+
+
+.bottom input[type="submit"] {
+  background-color: black;
+  color: white;
+  font-weight: 700;
+  text-transform: uppercase;
+  width: 100%;
+}
+
+.bottom input[type="submit"]:focus,
+.bottom input[type="submit"]:hover {
+  background-color: #2b2b2b;
+}
+
+
+.text-data input{
+  width: 20rem;
+  margin: 2px 1rem;
+  padding: 0 1rem;
+  border: rgba(0, 0, 0, 0.522) solid 1px;
+}
+
+.text-data input{
+width: 50%;
+margin: 2px 1rem;
+padding: 0 1rem;
+border: rgba(0, 0, 0, 0.522) solid 1px;
+}
