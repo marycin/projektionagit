@@ -7,6 +7,7 @@
 
 {% block content %}
 
+<!--
 <div class="container-card">
     <form method="POST" action="">
         {% csrf_token %}
@@ -22,6 +23,67 @@
             <hr>
         <input id="form-button" class="btn btn-success btn-block" type="submit" value="Zapisz">
     </form>
+</div>
+-->
+
+
+
+<div class="container-uz">
+
+    <form method="POST" action="">
+        {% csrf_token %}
+
+        <div class="ud-align">
+            <div class="user-dat"> 
+
+                <div class="nh-name">
+                    <h3>Dodawanie karty płatniczej</h3>
+                </div>
+
+                <div class="line-dec">
+                    <div class="text-auto"> 
+                        Numer
+                    </div>
+                    <div class="text-data">
+                        {{ kartyplatnicze_form.numer}}
+                    </div>
+                </div>
+            
+                <div class="line-dec">
+                    <div class="text-auto"> 
+                        CVC
+                    </div>
+                    <div class="text-data">
+                        {{ kartyplatnicze_form.cvc }}
+                    </div>
+                </div>
+
+                <div class="line-dec">
+                    <div class="text-auto">
+                        Miesiac
+                     </div>
+                    <div class="text-data">
+                        {{ kartyplatnicze_form.miesiac }}
+                    </div>
+                </div>
+           
+                <div class="line-dec">
+                   <div class="text-auto">
+                        Rok
+                    </div>
+                    <div class="text-data">
+                        {{ kartyplatnicze_form.rok }}
+                    </div>
+                </div>
+
+            </div>
+            <div class="bottom">
+                <input id="form-button" type="submit" value="Dodaj kartę">
+            </div>
+        </div>
+
+    </form>
+
 </div>
 
 {% endblock %}

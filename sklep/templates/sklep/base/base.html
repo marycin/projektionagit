@@ -30,6 +30,7 @@
     </script>
     
 </head>
+
 <body>
     <div class="header">
         {%include 'sklep/base/nav.html'%}
@@ -63,12 +64,18 @@
             </div>
             {% endblock %}
         </div>
+        <!--
         <div class="stopka">
             <p>Kerch sp. z o.o. od 1831 roku</p>
         </div>
+    -->
     </div>
-<script src="{% static 'sklep/base/base.js' %}"></script>
-{% block script %}
-{% endblock %}
+
+    <script src="{% static 'sklep/base/base.js' %}"></script>
+    {% block script %}
+    {% endblock %}
+
+
+
 </body>
 </html>
