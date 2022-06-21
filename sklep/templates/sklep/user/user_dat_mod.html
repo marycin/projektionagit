@@ -1,4 +1,10 @@
 {% extends 'sklep/base/base.html' %}
+{% load static%}
+
+
+{% block style %}
+<link rel="stylesheet" text="type/css" href="{% static 'sklep/user/mod_danych.css' %}">
+{% endblock %}
 
 {% block content %}
 
@@ -18,7 +24,7 @@
                     <div class="text-auto">
                         Nazwa użytkownika
                      </div>
-                    <div class="text-data-ud">
+                    <div class="text-data">
                         {{user_nick_form.username}}
                     </div>
                 </div>
@@ -27,7 +33,7 @@
                    <div class="text-auto">
                         Imie 
                     </div>
-                    <div class="text-data-ud">
+                    <div class="text-data">
                         {{ user_mod_form.first_name }}
                     </div>
                 </div>
@@ -36,7 +42,7 @@
                     <div class="text-auto"> 
                         Nazwisko
                     </div>
-                    <div class="text-data-ud">
+                    <div class="text-data">
                         {{ user_mod_form.last_name }}
                     </div>
                 </div>
@@ -45,7 +51,7 @@
                     <div class="text-auto"> 
                         Email
                     </div>
-                    <div class="text-data-ud">
+                    <div class="text-data">
                         {{ user_mod_form.email}}
                     </div>
                 </div>
@@ -54,7 +60,7 @@
                     <div class="text-auto"> 
                         Telefon
                     </div>
-                    <div class="text-data-ud">
+                    <div class="text-data">
                         {{klient_mod_form.telefon}}
                     </div>
                 </div>

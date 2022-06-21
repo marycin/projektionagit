@@ -1,12 +1,12 @@
 {% extends 'sklep/base/base.html' %}
 {% load static %}
 
+{% block style %}
+<link rel="stylesheet" text="type/css" href="{% static 'sklep/user/user_view.css' %}">
+{% endblock %}
+
 {% block content %}
-<!--
-    <div class="prof-uz">
-        <p>Twój profil</p>
-    </div>
--->
+
 <div class="container-uz">
     <div id="prof-uz-dane">
         <div class="user-dat">
@@ -71,22 +71,14 @@
             </div>
 
             <div class="link-dec">
-                <a class ='user-buttons' href="{% url 'sklep:add_adres' %}">dodaj adres</a>
+                <a class ='user-buttons' href="{% url 'sklep:add_credit_card' %}">dodaj kartę płatniczą</a>
             </div>
-            <div class="link-dec">
-                <a class ='user-buttons' href="{% url 'sklep:delete_account_page' %}">usuń konto</a>
-            </div>
-
-            <div class="link-dec">
-                <a class ='user-buttons' href="{% url 'sklep:add_credit_card' %}">dodaj karte płatniczą</a>
-            </div>
-
     </div>
-
 </div>
 
-<div id="prof-uz-adress">
-    <div class="adress-center">
+    <div class="prof-uz-adress">
+
+        <div class="adress-center">
         <div>
             zapisane adresy: {{adres_size}}
         </div>
@@ -114,86 +106,101 @@
 
             </tr>
             {%for adres in adresy%}
-            <tr>
+                <tr>
                 
-                <td class="adres-dec">
+                   <td class="adres-dec">
                     <a class ='user-buttons' href='{% url "sklep:adres_mod" adres.id %}'> 
                         {{adres.miejscowosc}} 
                     </a>
-                </td>
+                    </td>
 
-                <td class="adres-dec">
-                    {{adres.ulica}}
-                </td>
+                    <td class="adres-dec">
+                        {{adres.ulica}}
+                    </td>
 
-                <td class="adres-dec">
-                    {{adres.numer_domu}} 
-                </td>
+                    <td class="adres-dec">
+                        {{adres.numer_domu}} 
+                    </td>
 
-                <td class="adres-dec">
-                    {% if adres.numer_lokalu != None %}
-                        {{adres.numer_lokalu}}
-                    {% endif %}
-                </td>
+                    <td class="adres-dec">
+                        {% if adres.numer_lokalu != None %}
+                            {{adres.numer_lokalu}}
+                        {% endif %}
+                    </td>
 
-                <td class="adres-dec2">
-                    {{adres.kod_pocztowy}}
-                </td>
+                    <td class="adres-dec2">
+                        {{adres.kod_pocztowy}}
+                    </td>
 
-            </tr>
+                </tr>
             {%endfor%}
-        </table>
-    </div>
-</div>
+            
+            </table>
 
-<div id="prof-uz-adress">
-    <div class="adress-center">
-        <div>
-            zapisane karty płatnicze: {{karty_płatnicze_size}}
+            <div class="link-dec">
+                <a class ='user-buttons' href="{% url 'sklep:add_adres' %}">dodaj adres</a>
+            </div>
         </div>
-        <table class="user-adres">
-            <tr class="adres-list">
-                <td class="adres-dec"> 
-                    numer
-                </td>
 
-                <td class="adres-dec">
-                    cvc
-                </td>
+            <div class="prof-uz-adress">
+                <div class="adress-center">
+                <div>
+                    zapisane karty: {{adres_size}}
+                </div>
+                <table class="user-adres">
+                    <tr class="adres-list">
+                        <td class="adres-dec"> 
+                            miejscowość
+                        </td>
+        
+                        <td class="adres-dec">
+                            ulica
+                        </td>
+        
+                        <td class="adres-dec">
+                            numer domu
+                        </td>
+        
+                        <td class="adres-dec">
+                            numer lokalu
+                        </td>
+        
+                        <td class="adres-dec2">
+                            kod pocztowy
+                        </td>
+        
+                    </tr>
+                    {%for adres in adresy%}
+                        <tr>
+                        
+                           <td class="adres-dec">
+                            <a class ='user-buttons' href='{% url "sklep:adres_mod" adres.id %}'> 
+                                {{adres.miejscowosc}} 
+                            </a>
+                            </td>
+        
+                            <td class="adres-dec">
+                                {{adres.ulica}}
+                            </td>
+        
+                            <td class="adres-dec">
+                                {{adres.numer_domu}} 
+                            </td>
+        
+                            <td class="adres-dec">
+                                {% if adres.numer_lokalu != None %}
+                                    {{adres.numer_lokalu}}
+                                {% endif %}
+                            </td>
+        
+                            <td class="adres-dec2">
+                                {{adres.kod_pocztowy}}
+                            </td>
+        
+                        </tr>
+                    {%endfor%}
+                    </table>
+                </div>
+            </div>
 
-                <td class="adres-dec">
-                    miesiac
-                </td>
-
-                <td class="adres-dec">
-                    rok
-                </td>
-
-            </tr>
-            {%for karta in karty_płatnicze%}
-            <tr>
-                
-                <td class="adres-dec">
-                    <a class ='user-buttons' href='{% url "sklep:credit_card_mod" karta.id %}'> 
-                        {{karta.numer}} 
-                    </a>
-                </td>
-
-                <td class="adres-dec">
-                    {{karta.cvc}}
-                </td>
-
-                <td class="adres-dec">
-                    {{karta.miesiac}} 
-                </td>
-
-                <td class="adres-dec">
-                    {{karta.rok}}
-                </td>
-
-            </tr>
-            {%endfor%}
-        </table>
-    </div>
-</div>
 {% endblock %}

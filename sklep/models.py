@@ -39,7 +39,7 @@ class Adres(models.Model):
     ulica = models.CharField(max_length=50, blank=True, null=True)
     kod_pocztowy = models.CharField(max_length=6)
     numer_domu = models.CharField(max_length=5)
-    numer_lokalu = models.IntegerField(blank=True,null=True)
+    numer_lokalu = models.CharField(max_length = 5, blank=True,null=True)
     imie = models.CharField(max_length=50,blank=True,null=True)
     nazwisko = models.CharField(max_length=50,blank=True,null=True)
     klient = models.ForeignKey(Klient,on_delete=models.CASCADE,null=True,blank=True)

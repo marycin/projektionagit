@@ -1,36 +1,36 @@
 {% extends 'sklep/base/base.html'%}
+{% load static %}
+
+{% block style %}
+<link rel="stylesheet" text="type/css" href="{% static 'sklep/base/search.css' %}">
+{% endblock %}
 
 {% block content %}
 
-<p style="
-    font-size:1.5rem;
-    padding: 50px 0px 50px 0px;
-    max-width: 1280px;
-    margin:0 auto;
-">
-    Wyniki wyszukiwania 
-</p>
+    <p class="search-text">
+        Wyniki wyszukiwania 
+    </p>
 
 
-<div class="container">
-    <div class="product-wrapper" id="product-wrapper">
-        <div id="products">
-            {% for produkt in produkt_list %}
-            <div id="product">
-                <div class="product-image">
-                    <img src="{{ produkt.zdjecia.zdjecie.url }}">
-                </div>
-                <div class="product-information">
-                    <div class="product-name">
-                        <a class="product-name-style" href="{% url 'sklep:produkt_details' produkt.id %}">{{ produkt.marka }} {{ produkt.model }}</a>
+    <div class="container">
+        <div class="product-wrapper" id="product-wrapper">
+            <div id="products">
+                {% for produkt in produkt_list %}
+                <div id="product">
+                    <div class="product-image">
+                        <img src="{{ produkt.zdjecia.zdjecie.url }}">
                     </div>
-                    <div class="product-price">{{ produkt.cena }} zł</div>
-                    <div class="product-category">{{ produkt.podkategoria.nazwa }}</div>
+                    <div class="product-information">
+                        <div class="product-name">
+                            <a class="product-name-style" href="{% url 'sklep:produkt_details' produkt.id %}">{{ produkt.marka }} {{ produkt.model }}</a>
+                        </div>
+                        <div class="product-price">{{ produkt.cena }} zł</div>
+                        <div class="product-category">{{ produkt.podkategoria.nazwa }}</div>
+                    </div>
                 </div>
+                {% endfor %}
             </div>
-            {% endfor %}
         </div>
     </div>
-</div>
 
 {% endblock %}
