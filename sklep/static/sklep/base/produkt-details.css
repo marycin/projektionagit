@@ -38,7 +38,7 @@
     flex-direction: column;
     align-content: flex-start;
     justify-content: space-between;
-    height: 730px;
+    height:auto;
 }
 
 .produkt-name{
