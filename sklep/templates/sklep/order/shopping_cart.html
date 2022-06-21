@@ -1,5 +1,8 @@
 {% extends 'sklep/base/base.html' %}
 {% load static %}
+{% block style %}
+<link rel="stylesheet" text="type/css" href="{% static 'sklep/order/koszyk.css' %}" />
+{% endblock %}
 {% block content %}
     {% if user.is_authenticated %}
         {% if czy_puste %}
@@ -8,27 +11,59 @@
                 <a href="{% url 'sklep:base' %}">Powrót do zakupów</a>
             </p>
         {% else %}
-            {% for p_z in aktualne_zamowienie.get_pozycje_zamowienia %}
-            {{ p_z.produkt.marka }} {{ p_z.produkt.model }}<br>
-            rozmiar {{ p_z.rozmiar }}<br>
-
-            ilosc {{ p_z.ilosc }}<br>
-            <button data-p_z="{{ p_z.id }}" data-action="increase" class="update-cart">^</button>
-            <button data-p_z="{{ p_z.id }}" data-action="decrease" class="update-cart">v</button>
-            <form method="POST" action="{% url 'sklep:delete_from_cart' %}">
-                {% csrf_token %}
-            <button name="to_delete" value="{{ p_z.id }}" type="submit">
-                Usun z koszyka
-            </button>
-            </form>
-        {% endfor %}
-        {{ aktualne_zamowienie.get_kwota_zamowienia }}
-        <p>
-            <a href="{% url 'sklep:base' %}">Powrót do zakupów</a>
-        </p>
-        <p>
-            <a href="{% url 'sklep:address_selection' %}">Wybór adresu</a>
-        </p>
+        <div class="shopping-cart">
+            <div class="product-summary">
+                {% for p_z in aktualne_zamowienie.get_pozycje_zamowienia %}
+                <div class="product">
+                    
+                    <div class="product-info">
+                        <div class="product-img">
+                            <img src="{{ p_z.produkt.zdjecia.zdjecie.url }}" alt="produkt">
+                        </div>
+                        <div class="product-desc-sh">
+                            <div class="product-name">
+                                <h2><a href='#'>{{ p_z.produkt.marka }} {{ p_z.produkt.model }}</a></h2>
+                            </div>
+                            <div class="product-size">
+                                Rozmiar: {{ p_z.rozmiar }}
+                            </div>
+                            <div class="product-price-sh">
+                                Cena: {{ p_z.produkt.cena }}
+                            </div>
+                            <div class="product-quantity">
+                                <div class="product-quantity-desc">
+                                    Ilość: {{ p_z.ilosc }}
+                                </div>
+                                <div class="product-quantity-buttons">
+                                <button data-p_z="{{ p_z.id }}" data-action="increase" class="update-cart increase"><i class="fa fa-caret-up" aria-hidden="true"></i></button>
+                                <button class="decrease update-cart" data-p_z="{{ p_z.id }}" data-action="decrease" ><i class="fa fa-caret-down" aria-hidden="true"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <form method="POST" action="{% url 'sklep:delete_from_cart' %}">
+                        {% csrf_token %}
+                        <div class="product-delete" >
+                            <button class="delete-btn" name="to_delete" value="{{ p_z.id }}" type="submit">
+                                <i class="fa fa-trash-o" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="order-summary">
+                <div class="order-panel">
+                    <div class="order-price">
+                        <h2>Podsumowanie</h2>
+                        <p> Koszt: {{ aktualne_zamowienie.get_kwota_zamowienia }} zł</p>
+                    </div>
+                    <div class='go-next'>
+                        <a class="go-next-btn" href="{% url 'sklep:address_selection' %}">Przejdź dalej</a>
+                    </div>
+                </div>
+            </div>
+        </div>
         {% endif %}
     {% else %}
         <p>Zaloguj się, aby zobaczyć koszyk</p>

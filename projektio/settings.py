@@ -77,7 +77,7 @@ WSGI_APPLICATION = 'projektio.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'sklep',
+        'NAME': 'projektio',
         'USER': 'postgres',
         'PASSWORD': 'admin',
         'HOST': 'localhost',
