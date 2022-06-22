@@ -38,16 +38,16 @@ urlpatterns = [
     path('add_adres/',views.add_adres,name='add_adres'), #Maciek
     path('adres/<int:adres_id>/',views.egz_adres_modify_view,name="adres_mod"), #Maciek
     path('adres_del/<int:adres_id>/',views.del_adres,name="del_adres"), #Maciek
-    path('user_mod/',views.user_dat_mod,name='user_dat_mod'), #Grzesiu
+    path('user_mod/',views.user_dat_mod,name='user_dat_mod'), #Maciek
     path('zamowienie_szcz/<int:id_zamowienia>/',views.zamowienie_szcz,name='order_detail'), #Grzesiu
 
-    path('filtr/<str:filter>/',views.filter_view,name='filter_view'),
-    path('usuwanie_konta/<int:id>/',views.del_user,name='delete_account'),
-    path('usuwanie_konta_2',views.del_user_page,name='delete_account_page'),
+    path('filtr/<str:filter>/',views.filter_view,name='filter_view'),#Kercz
+    path('usuwanie_konta/<int:id>/',views.del_user,name='delete_account'),#Grzesiu
+    path('usuwanie_konta_2',views.del_user_page,name='delete_account_page'),#Grzesiu
 
 
-    path('add_credit_card/',views.add_credit_card,name='add_credit_card'), #Maciek
-    path('credit/<int:kartyplatnicze_id>/',views.egz_credit_modify_view,name="credit_card_mod"), 
-    path('credit_del/<int:kartyplatnicze_id>/',views.del_credit,name="del_credit"), 
+    path('add_credit_card/',views.add_credit_card,name='add_credit_card'), #Kercz
+    path('credit/<int:kartyplatnicze_id>/',views.egz_credit_modify_view,name="credit_card_mod"), #Grzesiu
+    path('credit_del/<int:kartyplatnicze_id>/',views.del_credit,name="del_credit"), #Grzesiu
 
 ]
