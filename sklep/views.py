@@ -21,7 +21,7 @@ from numpy import full
 
 
 from .forms import  ExtendedUserCreationForm,klientForm,UserDataModification,AdresForm,UserNickMod,KartyPlatniczeForm
-from .models import Adres, Kategoria, Platnosci, PozycjaZamowienia, Produkt, Opinie,Klient, Produkt_Rozmiar, RodzajePlatnosci, Zamowienie, RodzajWysylki,KartyPlatnicze
+from .models import Adres, Kategoria, Platnosci, PozycjaZamowienia, Produkt, Opinie,Klient, Produkt_Rozmiar, RodzajePlatnosci, Zamowienie, RodzajWysylki,KartyPlatnicze, Zdjecia
 from .models import Adres, Platnosci, Podkategoria, PozycjaZamowienia, Produkt, Opinie,Klient, Produkt_Rozmiar, RodzajePlatnosci, Zamowienie, RodzajWysylki,KartyPlatnicze
 # Create your views here.
 
@@ -44,12 +44,15 @@ def produkt_details(request,produkt_id):
         produkt = Produkt.objects.get(pk=produkt_id)
         rozmiar = Produkt_Rozmiar.objects.filter(produkt = produkt)
         opinie = Opinie.objects.all()
+        zdjecia=Zdjecia.objects.filter(produkt=produkt)
+        print(len(zdjecia))
     except:
         raise Http404('Produkt nie istnieje, łooot?')
     return render(request, 'sklep/base/produkt-details.html',{
         'produkt' : produkt,
         'rozmiar' : rozmiar,
-        'opinie' : opinie
+        'opinie' : opinie,
+        'zdjecia':zdjecia
     })
 
 def add_opinion_on_produkt(request, produkt_id):

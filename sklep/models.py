@@ -92,7 +92,7 @@ class Opinie(models.Model):
 
 class Zdjecia(models.Model):
     zdjecie = models.ImageField(upload_to = 'images',null=True) #sciezka w staticu, poczytaj jeszcze
-
+    produkt = models.ForeignKey('Produkt',on_delete=models.CASCADE,null=True)
     class Meta:
         verbose_name = "Zdjecie"
         verbose_name_plural = "Zdjecia"
@@ -124,7 +124,7 @@ class Produkt(models.Model):
     model = models.CharField(max_length=50)
     cena = models.DecimalField(max_digits=9,decimal_places=2)
     opis = models.CharField(max_length=500, blank=True)
-    zdjecia = models.ForeignKey('Zdjecia',on_delete=models.CASCADE,null=True)
+    zdjecie_glowne = models.ImageField(upload_to = 'images',null=True)
     podkategoria = models.ForeignKey('Podkategoria',on_delete=models.CASCADE,null=True)
 
 
