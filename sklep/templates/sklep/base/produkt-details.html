@@ -11,20 +11,12 @@
 <div class="show-produkt">
     <div class="produkt-left-side">
         <div class="photo-slider">
-
-            <div class="produkt-photo">
-                <div class="button-left">
-                    <button id="slider-left"> <b>&#60;</b> </button>
-                </div>
+            <div class="main-photo">
                 <img src="{{ produkt.zdjecia.zdjecie.url }}" alt="{{ produkt.marka }} {{ produkt.model }} ">
-                <div class="button-right">
-                    <button id="slider-left"><b>&#62;</b></button>
-                </div>
-                <div class="radio-photo-buttons">
-                    <input type="radio" checked name="produkt-photo">
-                    <input type="radio" name="produkt-photo">
-                    <input type="radio" name="produkt-photo">
-                </div>
+            </div>
+            <div class="produkt-photos">
+                <img src="{{ produkt.zdjecia.zdjecie.url }}" alt="{{ produkt.marka }} {{ produkt.model }} ">
+                <img src="{{ produkt.zdjecia.zdjecie.url }}" alt="{{ produkt.marka }} {{ produkt.model }} ">
             </div>
             
         </div>

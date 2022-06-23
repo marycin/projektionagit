@@ -17,8 +17,6 @@ for(let i=0; i<updateBtns.length; i++){
         }
     })
 }
-
-
 function updateUserOrder(pzId, action){
     console.log('User logged in, sending data...')
 
