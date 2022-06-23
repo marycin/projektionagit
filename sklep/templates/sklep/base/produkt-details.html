@@ -12,13 +12,12 @@
     <div class="produkt-left-side">
         <div class="photo-slider">
             <div class="main-photo">
-                <img src="{{ produkt.zdjecia_glowne.url }}" alt="{{ produkt.marka }} {{ produkt.model }} ">
+                <img src="{{ produkt.zdjecie_glowne.url }}" alt="{{ produkt.marka }} {{ produkt.model }} ">
             </div>
             <div class="produkt-photos">
                 {%for z in zdjecia%}
                     <img src="{{ z.zdjecie.url }}" alt="{{ produkt.marka }} {{ produkt.model }} ">
                 {%endfor%}
-                <img src="{{ produkt.zdjecia.zdjecie.url }}" alt="{{ produkt.marka }} {{ produkt.model }} ">
             </div>
             
         </div>
