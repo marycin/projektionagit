@@ -264,12 +264,19 @@ def order_summary(request):
     zamowienie.czy_oplacono = True
     zamowienie.save()
 
+    full_kwota = zamowienie.get_kwota_zamowienia() + zamowienie.rodzaj_wysylki.cena
+    nazwa_platnosci = rodzaj_platnosci.nazwa
+
+
     context = {
         'zamowienie' : zamowienie,
-        'platnosc' : platnosc
+        'platnosc' : platnosc,
+        'full_kwota' : full_kwota,
+        'nazwa_platnosci' : nazwa_platnosci
     }
-        
     return render(request, 'sklep/order/summary.html', context)
+            
+    
 
 def updateItem(request):
     data = json.loads(request.body)
