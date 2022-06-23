@@ -216,6 +216,7 @@
     -webkit-box-shadow: inset 0px 15px 27px -20px rgba(66, 68, 90, 1);
     -moz-box-shadow: inset 0px 15px 27px -20px rgba(66, 68, 90, 1);
     box-shadow: inset 0px 15px 27px -20px rgba(66, 68, 90, 1);
+    padding-bottom: 20px;
 }
 
 .container{
@@ -230,8 +231,6 @@
 }
 
 .stopka{
-    position:absolute;
-    bottom:0;
     width:100%;
     height:60px;
     text-align: center;
