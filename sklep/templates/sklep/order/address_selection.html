@@ -1,56 +1,142 @@
 {% extends 'sklep/base/base.html' %}
 {% load static %}
+{% block style %}
+<link rel="stylesheet" type="text/css" href="{% static 'sklep/order/address-selection.css' %}" />
+{% endblock %}
 {% block content %}
-{% if aktualne_zamowienie.czy_zamowione %}
-    Brak produktów w koszyku
-{% else %}
-{{ klient.user.first_name }}<br>
-{{ klient.user.last_name }}<br>
-{{ klient.user.email }}<br>
-{{ klient.telefon }}<br>
-<br><br>
 
-{% for p_z in aktualne_zamowienie.get_pozycje_zamowienia %}
-    <br>{{ p_z.produkt.marka }} {{ p_z.produkt.model }}<br>
-    ilosc: {{ p_z.ilosc }}<br>
-    rozmiar: {{ p_z.rozmiar }}
-{% endfor %}
-<br>{{ aktualne_zamowienie.get_kwota_zamowienia }}<br><br>
-<form method="POST" action="{% url 'sklep:checkout' %}">
-{% csrf_token %}
-<select name="adres" id="adres-selection">
-{% for adres in lista_adresow %}
-<option value="{{ adres.id }}">{{ adres.miejscowosc }}, {{ adres.ulica }} {{ adres.numer_domu }} 
-   {% if adres.numer_lokalu %}, {{ adres.numer_lokalu }} {% endif %}, {{ adres.kod_pocztowy }}</option>
-{% endfor %}
-<option class="adres-item" value="new-adress">
-    Dodaj adres
-</option>
-</select>
-<br>
-Wybierz rodzaj wysyłki<br>
-<select id="shipping-selection" name="wysylka">
-    {% for wysylka in rodzaje_wysylek %}
-    <option data-shipping="{{ wysylka.id }}" class="shipping-item" value="{{ wysylka.id }}">
-        {{ wysylka.nazwa }}, Cena: {{ wysylka.cena }}
-    </option>
-    
-    {% endfor %}
-</select>
+<div class="shopping-cart">
+    <div class="left-side-address">
+        <div class="product-summary">
+            {% for p_z in aktualne_zamowienie.get_pozycje_zamowienia %}
+            <div class="product">
+                <div class="product-info">
+                    <div class="product-img">
+                    <img src="{{ p_z.produkt.zdjecie_glowne.url }}" alt="produkt">
+                </div>
+                <div class="product-desc-sh">
+                    <div class="product-name">
+                        <h2><a href='#'>{{ p_z.produkt.marka }} {{ p_z.produkt.model}}</a></h2>
+                    </div>
+                    <div class="product-size">
+                        Rozmiar: {{ p_z.rozmiar }}
+                    </div>
+                    <div class="product-price-sh">
+                        Cena: {{ p_z.produkt.cena }} zł
+                    </div>
+                    <div class="product-quantity">
+                        <div class="product-quantity-desc">
+                            Ilość: {{ p_z.ilosc }}
+                        </div>
+                    </div>
+                </div>
+                </div>
 
-<div id="new-adress" style="display:none"><br>
-    Miejscowosc <input type="text" name="miejscowosc"/><br>
-    ulica<input type="text" name="ulica"/><br>
-    numer domu <input type="text" name="numer_domu"/><br>
-    numer lokalu <input type="text" name="numer_lokalu"/><br>
-    kod pocztowy <input type="text" name="kod_pocztowy"/><br>
+            </div>
+            {% endfor %}
+        </div>
+    <form method="POST" action="{% url 'sklep:checkout' %}">
+        {% csrf_token %}
+        <div class="address-shipment-selection">
+            <div class="address-title">
+                <h2>Wybierz dane do wysyłki</h2>
+            </div>
+            <div class="address-selection">
+                <select name="adres" id="adres-selection">                  
+                    {% for adres in lista_adresow %}
+                    <option value="{{ adres.id }}">{{ adres.miejscowosc }}, {{ adres.ulica }} {{ adres.numer_domu }} 
+                        {% if adres.numer_lokalu %}, {{ adres.numer_lokalu }} {% endif %}, {{ adres.kod_pocztowy }}</option>
+                    {% endfor %}
+                    <option class="adres-item" value="new-adress">
+                        Dodaj adres
+                    </option>
+                </select>
+            </div>
+            {% if not lista_adresow %}
+            <div id="new-address" >
+                <div class="input-desc">
+                    <div class="input-desc-element">
+                        <p>Miejscowosc</p>
+                        <input type="text" name="miejscowosc" class="input-address-particular">
+                    </div>
+                    <div class="input-desc-element">
+                        <p>Ulica</p>
+                        <input type="text" name="ulica" class="input-address-particular">
+                    </div>
+                    <div class="input-desc-element">
+                        <p>Numer domu</p>
+                        <input type="text" name="numer_domu" class="input-address-particular">
+                    </div>
+                    <div class="input-desc-element">
+                        <p>Numer Lokalu</p>
+                        <input type="text" name="numer_lokalu" class="input-address-particular">
+                    </div>
+                    <div class="input-desc-element">
+                        <p>Kod pocztowy</p>
+                        <input type="text" name="kod_pocztowy" class="input-address-particular">
+                    </div>
+
+                </div>
+
+            </div>
+            {% else %}
+            <div id="new-address" class="hide">
+                <div class="input-desc">
+                    <div class="input-desc-element">
+                        <p>Miejscowosc</p>
+                        <input type="text" name="miejscowosc" class="input-address-particular">
+                    </div>
+                    <div class="input-desc-element">
+                        <p>Ulica</p>
+                        <input type="text" name="ulica" class="input-address-particular">
+                    </div>
+                    <div class="input-desc-element">
+                        <p>Numer domu</p>
+                        <input type="text" name="numer_domu" class="input-address-particular">
+                    </div>
+                    <div class="input-desc-element">
+                        <p>Numer Lokalu</p>
+                        <input type="text" name="numer_lokalu" class="input-address-particular">
+                    </div>
+                    <div class="input-desc-element">
+                        <p>Kod pocztowy</p>
+                        <input type="text" name="kod_pocztowy" class="input-address-particular">
+                    </div>
+
+                </div>
+
+            </div>
+            {% endif %}  
+            <div class="shipment-title">
+                <h2>Wybierz rodzaj wysyłki </h2>
+            </div>
+            <div class="shipment-selection" >
+                <select name="wysylka">
+                    {% for wysylka in rodzaje_wysylek %}
+                    <option data-shipping="{{ wysylka.id }}" class="shipping-item" value="{{ wysylka.id }}">
+                        {{ wysylka.nazwa }}, Cena: {{ wysylka.cena }}
+                    </option>
+                    
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div class="order-summary">
+        <div class="order-panel">
+            <div class="order-price">
+                <h2>Podsumowanie</h2>
+                <p> Koszt: {{ aktualne_zamowienie.get_kwota_zamowienia }} zł</p>
+            </div>
+            <div class='go-next'>
+                <button type="submit" class="go-next-btn">Przejdź dalej</button>
+            </div>
+        </div>
+    </form>
+    </div>
+    </div>
 </div>
-<button type="submit">
-    Przejdz dalej
-</button>
-</form>
-<br><br>
-{% endif %}
 {% endblock %}
 
 {% block script %}
