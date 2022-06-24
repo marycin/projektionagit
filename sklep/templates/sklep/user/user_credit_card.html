@@ -2,31 +2,10 @@
 {% load static %}
 
 {% block style %}
-<link rel="stylesheet" text="type/css" href="{% static 'sklep/user/credit_card.css' %}">
+<link rel="stylesheet" text="type/css" href="{% static 'sklep/user/dod_credit.css' %}">
 {% endblock %}
 
 {% block content %}
-
-<!--
-<div class="container-card">
-    <form method="POST" action="">
-        {% csrf_token %}
-        <h3>Dodaj kartę płatniczą</h3>
-        <p><label for="id_numer"><strong>Numer:</strong></label>
-            <input id="id_numer" class="wpisywanie1" type="text" name="numer" maxlength="100" required></p> 
-        <p><label for="id_cvc"><strong>CVC:</strong></label>
-            <input id="id_cvc" class="wpisywanie2" type="text" name="cvc" maxlength="100" required></p> 
-        <p><label for="id_miesiac"><strong>Miesiąc:</strong></label>
-            <input id="id_miesiac" class="wpisywanie3" type="text" name="miesiac" maxlength="100" required></p>
-        <p><label for="id_rok"><strong>Rok:</strong></label>
-            <input id="id_rok" class="wpisywanie4" type="text" name="rok" maxlength="100" required></p>        
-            <hr>
-        <input id="form-button" class="btn btn-success btn-block" type="submit" value="Zapisz">
-    </form>
-</div>
--->
-
-
 
 <div class="container-uz">
 
@@ -42,7 +21,7 @@
 
                 <div class="line-dec">
                     <div class="text-auto"> 
-                        Numer
+                        Numer 
                     </div>
                     <div class="text-data">
                         {{ kartyplatnicze_form.numer}}
@@ -54,16 +33,16 @@
                         CVC
                     </div>
                     <div class="text-data">
-                        {{ kartyplatnicze_form.cvc }}
+                        {{ kartyplatnicze_form.cvc}}
                     </div>
                 </div>
 
                 <div class="line-dec">
                     <div class="text-auto">
-                        Miesiac
+                        Miesiąc
                      </div>
                     <div class="text-data">
-                        {{ kartyplatnicze_form.miesiac }}
+                        {{ kartyplatnicze_form.miesiac}}
                     </div>
                 </div>
            
@@ -72,13 +51,13 @@
                         Rok
                     </div>
                     <div class="text-data">
-                        {{ kartyplatnicze_form.rok }}
+                        {{ kartyplatnicze_form.rok}}
                     </div>
                 </div>
 
             </div>
             <div class="bottom">
-                <input id="form-button" type="submit" value="Dodaj kartę">
+                <input id="form-button" type="submit" value="Dodaj karte">
             </div>
         </div>
 

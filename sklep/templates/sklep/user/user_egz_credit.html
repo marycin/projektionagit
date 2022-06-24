@@ -1,13 +1,70 @@
+{% extends 'sklep/base/base.html' %}
+{% load static %}
+
+{% block style %}
+<link rel="stylesheet" text="type/css" href="{% static 'sklep/user/mod_card.css' %}">
+{% endblock %}
+
 {% block content %}
-<form method="POST" action="">
-    {% csrf_token %}
-    <h3>dodaj karte platnicza</h3>
-    {{ kartyplatnicze_form.as_ul }}
-    <hr>
-    <input id="form-button" class="btn btn-success btn-block" type="submit" value="zapisz">
-</form>
-<form method="POST" action="{%url "sklep:del_credit" kartyplatnicze_id %}">
-    {% csrf_token %}
-    <input id="form-button" class="btn btn-success btn-block" type="submit" value="usun">
-</form>
+
+<div class="container-uz">
+    <div class="ud-align">
+        <div class="user-dat">
+            <form method="POST" action="">
+                {% csrf_token %} 
+                <div class="nh-name">
+                    <h3>Modyfikacja karty płatniczej</h3>
+                </div>
+
+                <div class="line-dec">
+                    <div class="text-auto"> 
+                        Numer
+                    </div>
+                    <div class="text-data">
+                        {{ kartyplatnicze_form.numer}}
+                    </div>
+                </div>
+            
+                <div class="line-dec">
+                    <div class="text-auto"> 
+                        CVC
+                    </div>
+                    <div class="text-data">
+                        {{ kartyplatnicze_form.cvc}}
+                    </div>
+                </div>
+
+                <div class="line-dec">
+                    <div class="text-auto">
+                        Miesiac
+                     </div>
+                    <div class="text-data">
+                        {{ kartyplatnicze_form.miesiac }}
+                    </div>
+                </div>
+           
+                <div class="line-dec">
+                   <div class="text-auto">
+                        Rok
+                    </div>
+                    <div class="text-data">
+                        {{ kartyplatnicze_form.rok}}
+                    </div>
+                </div>
+            
+                <div>
+                    <div class="bottom">
+                     <input id="form-button" type="submit" value="Zapisz">
+                    </div>
+                </div>
+            </form>
+            <div class="bottom">
+                <form method="POST" action="{%url "sklep:del_credit" kartyplatnicze_id %}">
+                    {% csrf_token %}
+                    <input id="form-button"  type="submit" value="Usuń">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

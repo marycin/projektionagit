@@ -615,25 +615,26 @@ def del_user_page(request):
 
 def add_credit_card(request):
     if request.method=='POST':
-        KartyPlatnicze_form=KartyPlatniczeForm(request.POST)
-        if KartyPlatnicze_form.is_valid():
+        kartyplatnicze_form=KartyPlatniczeForm(request.POST)
+        if kartyplatnicze_form.is_valid():
             print("dodawanie karty płatniczej")
-            KartyPlatnicze=KartyPlatnicze_form.save()
-            KartyPlatnicze.klient=Klient.objects.get(user=request.user)
-            KartyPlatnicze.save()
+            kartyplatnicze=kartyplatnicze_form.save()
+            kartyplatnicze.klient=Klient.objects.get(user=request.user)
+            
+            kartyplatnicze.save()
             return redirect('sklep:user_view')
         else:
             return render(request,'sklep/user/user_credit_card.html',{
-            'KartyPlatnicze_form':KartyPlatnicze_form,
+            'kartyplatnicze_form':kartyplatnicze_form,
             })
     else:
         if request.user.is_authenticated:
-            KartyPlatnicze_form=KartyPlatniczeForm()
+            kartyplatnicze_form=KartyPlatniczeForm()
         else:
             return redirect('sklep:base')
 
     return render(request,'sklep/user/user_credit_card.html',{
-        'KartyPlatnicze_form':KartyPlatnicze_form,
+        'kartyplatnicze_form':kartyplatnicze_form,
     })
 
 def egz_credit_modify_view(request,kartyplatnicze_id):
