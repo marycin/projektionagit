@@ -79,7 +79,6 @@
     font-family: var(--bodyFontFamily), var(--bodyFontFamilyFallback);
     font-size: var(--bodyFontSize);
     font-weight: var(--bodyFontWeight);
-    line-height: var(--bodyLineHeight);
     margin: 0;
     min-block-size: 100vh;
   }
@@ -248,7 +247,9 @@
 
   #message {
     display:none;
-    background: #f1f1f1;
+    background: #ffffff;
+    border: #363b41 solid 1px;
+    font-size: 15px;
     color: #000;
     position: relative;
     padding: 20px;
@@ -256,8 +257,8 @@
   }
   
   #message p {
-    padding: 10px 35px;
-    font-size: 18px;
+    font-size: 15px;
+    padding: 0 35px;
   }
 
   .valid {
@@ -267,15 +268,27 @@
   .valid:before {
     position: relative;
     left: -35px;
-    content: "&#10004;";
+    content: "✔";
   }
 
   .invalid {
     color: red;
-  }
-  
+  }  
+
   .invalid:before {
     position: relative;
     left: -35px;
-    content: "&#10006;";
+    content: "✖";
+  }
+
+  #id_data_urodzenia_month{
+    width: 45%;
+  }
+
+  #id_data_urodzenia_day{
+    width: 20%;
+  }
+
+  #id_data_urodzenia_year{
+    width: 35%;
   }
