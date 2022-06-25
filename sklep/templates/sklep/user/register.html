@@ -18,7 +18,7 @@
           <img src="{% static 'sklep/base/logo.png'  %}" alt="LOGO" />
       </a>
   </div>
-    <form method="POST" class="form login">
+    <form method="POST" class="form login" onsubmit = "return verifyPassword()">
       {% csrf_token %}
       <div class="form__field">
         <label for="login__username"><svg class="icon">
@@ -59,11 +59,14 @@
       <div class="form__field">
         <label for="login__password"><svg class="icon">
             <use xlink:href="#icon-lock"></use>
-          </svg><span class="hidden">Hasło</span>
+          </svg><span class="hidden" id="password">Hasło</span>
         </label>
+        
         {{ form.password1 }}
         
       </div>
+
+
       <div class="form__field">
         <label for="login__password"><svg class="icon">
             <use xlink:href="#icon-lock"></use>
@@ -96,6 +99,16 @@
       </div>
 
     </form>
+
+
+    <div id="message">
+      <h3>Password must contain the following:</h3>
+      <p id="letter" class="invalid">A <b>lowercase</b> letter</p>
+      <p id="capital" class="invalid">A <b>capital (uppercase)</b> letter</p>
+      <p id="number" class="invalid">A <b>number</b></p>
+      <p id="length" class="invalid">Minimum <b>8 characters</b></p>
+    </div>
+
 
       <p class="text--center">Masz już konto? <a href="{% url 'sklep:login_user' %}">Zaloguj się</a> <svg class="icon">
         <use xlink:href="#icon-arrow-right"></use>
@@ -130,22 +143,8 @@
     </symbol>
     </svg>
 
+    <script src="{% static 'sklep/user/register.js' %}"></script>
 
-  <script>
-    var form_fields = document.getElementsByTagName('input')
-    form_fields[1].placeholder='Nazwa użytkownika...';
-    form_fields[2].placeholder='Email...';
-    form_fields[3].placeholder='Imie...';
-    form_fields[4].placeholder='Nazwisko...';
-    form_fields[5].placeholder='Hasło...';
-    form_fields[6].placeholder='Powtórz hasło...';
-    form_fields[7].placeholder='Telefon...';
-    
-    
-    for (var field in form_fields){	
-    form_fields[field].className += ' form-control'
-    }
-    </script>
 </body>
 
 

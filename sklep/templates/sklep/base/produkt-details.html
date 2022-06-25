@@ -28,7 +28,7 @@
                 <h3>Dodaj opinię</h3>
                 <form method="POST" action="{% url 'sklep:add_opinion_on_produkt' produkt.id %}">
                     {% csrf_token %}
-                    <textarea id="text-opinion" name="komentarz" cols="40" rows="5" maxlength="400" ></textarea>
+                    <textarea id="text-opinion" name="komentarz" placeholder="Podziel się z nami swoją opinią..." cols="40" rows="5" maxlength="400" ></textarea>
 
                     <div class="rating">
                        
@@ -67,17 +67,72 @@
             </div>
             <div class="opinion">
                 {% for opinia in opinie %}
+                <div class="slot">
                     {% if produkt.pk == opinia.produkt.pk %}
-                    <div class="user-first-and-last-name">
-                        {{ opinia.klient.user.first_name }} {{ opinia.klient.user.last_name }}
+                    <div class="opinion-main">
+                        <div class="user-first-and-last-name">
+                            {{ opinia.klient.user.username }}
+                        </div>
+                        <div class="opinion-rate">
+
+                            {% if opinia.ocena == 1 %}
+                            <div class="kom-gwiazdki">
+                                <p class="ocena-dod">
+                                    ☆
+                                </p>
+                                <p class="ocena-brak">
+                                    ☆☆☆☆
+                                </p>
+                            </div>
+
+                            {% elif opinia.ocena == 2 %}
+                            <div class="kom-gwiazdki">
+                                <p class="ocena-dod">
+                                    ☆☆
+                                </p>
+                                <p class="ocena-brak">
+                                    ☆☆☆
+                                </p>
+                            </div>
+
+                            {% elif opinia.ocena == 3 %}
+                            <div class="kom-gwiazdki">
+                                <p class="ocena-dod">
+                                    ☆☆☆
+                                </p>
+                                <p class="ocena-brak">
+                                    ☆☆
+                                </p>
+                            </div>
+
+                            {% elif  opinia.ocena  == 4 %}
+                            <div class="kom-gwiazdki">
+                                <p class="ocena-dod">
+                                    ☆☆☆☆
+                                </p>
+                                <p class="ocena-brak">
+                                    ☆
+                                </p>
+                            </div>
+
+                            {% elif opinia.ocena == 5 %}
+                            <div class="kom-gwiazdki">
+                                <p class="ocena-dod">
+                                    ☆☆☆☆☆
+                                </p>
+                            </div>
+                                </br>
+                            {% endif %}
+
+                        </div>
                     </div>
-                    <div class="opinion-rate">
-                        {{ opinia.ocena }}
-                    </div>
+
                     <div class="opinion-description">
                         {{ opinia.komentarz }}
                     </div>
                     {% endif %}
+
+                </div>
                 {% endfor %}
             </div>
         </div>

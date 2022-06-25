@@ -72,7 +72,6 @@
     width: 50px;
     height: 50px;
     text-align: center;
-    border: 1px solid #ddd;
     line-height: 50px;
     cursor: pointer
   }
@@ -220,8 +219,13 @@
 }
 
 .produkt-opinions h2 {
-    margin-bottom: 10px;
+    margin: 0.5rem 0 2rem 0;
     border-bottom: 1px solid #ddd;
+
+}
+
+.produkt-opinions h3 {
+    margin: 0.5rem 0 0.5rem 0;
 
 }
 
@@ -243,12 +247,12 @@
 
   /*Gwiazdki - product-detail */
 
+
   .rating{
     width:30rem;
     margin: 1rem 0 1rem -10rem;
     font-size: 45px;
     overflow: hidden;
-    border:none;
     }
     
     .rating input{
@@ -259,9 +263,13 @@
     
     .rating a,
     .rating label{
-        float:right;
+        float: right;
         color: #aaa;
         text-decoration: none;
+        -webkit-transition: color .4s;
+        -moz-transition: color .4s;
+        -o-transition: color .4s;
+        transition: color .4s;
     }
         
     .rating label:hover ~ label,
@@ -275,3 +283,39 @@
         cursor: pointer;
     }
     
+    
+    .ocena-dod{
+        float: left;
+        color: orange;
+    }
+
+    .ocena-brak{
+        color: grey;
+        opacity: 50%;
+    }
+
+    .slot{
+        display: flex;
+        width: 100%;
+        margin: 0 0 0.5rem 0;
+        border: rgba(0, 0, 0, 0.156) solid 1px;
+    }
+
+    .opinion-main{
+        width: 20%;
+        height: 20%;
+        margin: 0.5rem;
+    }
+    
+
+
+    .opinion-description{
+        display:flex; 
+        align-items:center;
+
+        font-size: 20px;
+        width: 80%;
+        margin: 0.5rem;
+        color: rgb(52, 52, 52);
+        font-size: 20px;
+    }
