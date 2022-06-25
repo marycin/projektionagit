@@ -43,23 +43,15 @@
                 </button>
                 <p>Kategorie</p>
             </div>
+            
             <div class="categories" id="category-list">
+                {%for kat in request.session.nav_cat%}
                 <div class="category-element">
                     <p class="main-category">
-                        <a href= "{%url 'sklep:filter_view' 'Damskie'%}" >damskie</a>
+                        <a href= "{%url 'sklep:filter_view' kat%}" >{{kat}}</a>
                     </p>
                 </div>
-                <div class="category-element">
-                    <p class="main-category">
-                        <a href= "{%url 'sklep:filter_view' 'Męskie'%}" >męskie</a>
-                    </p>
-                </div>
-                <div class="category-element">
-                    <p class="main-category">
-                        <a href= "{%url 'sklep:filter_view' 'Dziecięce'%}" >dziecięce</a>
-                    </p>
-                </div>
-
+                {%endfor%}
             </div>
         </div>
         <div class="bottom-header-right-side">

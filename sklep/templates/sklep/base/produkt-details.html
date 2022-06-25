@@ -101,10 +101,15 @@
                 {% csrf_token %}
             <div class="select-size">
                 {% for r in rozmiar %}
-                {% if r.ilosc_dostepnego > 0 %}
-                <input type="radio" name="produkt-size" id="s{{ r.rozmiar }}" value="{{ r.rozmiar }}" />
-                <label for="s{{ r.rozmiar }}">{{ r.rozmiar }}</label>
-                {% endif %}
+                    {% if r.ilosc_dostepnego > 0 %}
+                        {%if forloop.first%}
+                            <input type="radio" name="produkt-size" id="s{{ r.rozmiar }}" value="{{ r.rozmiar }}" checked='true'/>
+                            <label for="s{{ r.rozmiar }}">{{ r.rozmiar }}</label>
+                        {%else%}
+                            <input type="radio" name="produkt-size" id="s{{ r.rozmiar }}" value="{{ r.rozmiar }}" />
+                            <label for="s{{ r.rozmiar }}">{{ r.rozmiar }}</label>
+                        {%endif%}
+                    {% endif %}
                 {% endfor %}
             </div>
         </div>
