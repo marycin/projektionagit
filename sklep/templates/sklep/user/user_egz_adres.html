@@ -1,13 +1,78 @@
+{% extends 'sklep/base/base.html' %}
+{% load static %}
+
+{% block style %}
+<link rel="stylesheet" text="type/css" href="{% static 'sklep/user/mod_adres.css' %}">
+{% endblock %}
+
 {% block content %}
-<form method="POST" action="">
-    {% csrf_token %}
-    <h3>dodaj adres</h3>
-    {{ adres_form.as_ul }}
-    <hr>
-    <input id="form-button" class="btn btn-success btn-block" type="submit" value="zapisz">
-</form>
-<form method="POST" action="{%url "sklep:del_adres" adres_id %}">
-    {% csrf_token %}
-    <input id="form-button" class="btn btn-success btn-block" type="submit" value="usun">
-</form>
+
+<div class="container-uz">
+    <div class="ud-align">
+        <div class="user-dat">
+            <form method="POST" action="">
+                {% csrf_token %} 
+                <div class="nh-name">
+                    <h3>Modyfikacja adresu</h3>
+                </div>
+
+                <div class="line-dec">
+                    <div class="text-auto"> 
+                        Numer domu
+                    </div>
+                    <div class="text-data">
+                        {{ adres_form.numer_domu}}
+                    </div>
+                </div>
+            
+                <div class="line-dec">
+                    <div class="text-auto"> 
+                        Numer lokalu
+                    </div>
+                    <div class="text-data">
+                        {{ adres_form.numer_lokalu}}
+                    </div>
+                </div>
+
+                <div class="line-dec">
+                    <div class="text-auto">
+                        Miejscowość
+                     </div>
+                    <div class="text-data">
+                        {{ adres_form.miejscowosc }}
+                    </div>
+                </div>
+           
+                <div class="line-dec">
+                   <div class="text-auto">
+                        Ulica
+                    </div>
+                    <div class="text-data">
+                        {{ adres_form.ulica }}
+                    </div>
+                </div>
+            
+                <div class="line-dec">
+                    <div class="text-auto"> 
+                        Kod pocztowy
+                    </div>
+                    <div class="text-data">
+                        {{ adres_form.kod_pocztowy}}
+                    </div>
+                </div>
+                <div>
+                    <div class="bottom">
+                     <input id="form-button" type="submit" value="Zapisz">
+                    </div>
+                </div>
+            </form>
+            <div class="bottom">
+                <form method="POST" action="{%url "sklep:del_adres" adres_id %}">
+                    {% csrf_token %}
+                    <input id="form-button"  type="submit" value="Usuń">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

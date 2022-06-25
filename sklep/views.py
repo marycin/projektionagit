@@ -428,6 +428,7 @@ def egz_adres_modify_view(request,adres_id):
     })
 
 def del_adres(request,adres_id):
+    print(adres_id)
     adres=Adres.objects.get(id=adres_id)
     if request.method=='POST':
         adres.delete()
