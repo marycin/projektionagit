@@ -61,7 +61,7 @@ class Podkategoria(models.Model):
         verbose_name_plural = "Podkategorie"
 
     def __str__(self):
-        return f"{self.nazwa}"
+        return f"{self.nazwa} {self.kategoria.nazwa}"
 
 
 

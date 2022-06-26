@@ -26,11 +26,11 @@ from .models import Adres, Platnosci, Podkategoria, PozycjaZamowienia, Produkt, 
 # Create your views here.
 
 def initialize(request):
-    if not ( 'nav_cat' in request.session ):
-        request.session['nav_cat']=[]
-        kategorie=Kategoria.objects.all()
-        for k in kategorie:
-             request.session['nav_cat'].append(k.nazwa)
+    request.session['nav_cat']=[]
+    kategorie=Kategoria.objects.all()
+    for k in kategorie:
+        print(k.nazwa)
+        request.session['nav_cat'].append(k.nazwa)
 
 
 def base(request): #
