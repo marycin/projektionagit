@@ -20,7 +20,7 @@ urlpatterns = [
     path('logout_user/',views.logout_view,name='logout_user'), #Marcin
 
     path('shopping_cart/',views.shopping_cart,name='shopping_cart'), #Basznianin
-    path('shopping_cart/update__item/',views.updateItem,name='update_item'),
+    path('shopping_cart/update__item/',views.updateItem,name='update_item'),#Basznianin
     path('delete_from_cart/',views.delete_from_cart,name='delete_from_cart'), #Basznianin
     path('address_selection/',views.address_selection,name='address_selection'), #Kateryna
     path('address_selection/update_shipping_item/',views.updateShippingItem,name='update_shipping_item'), #Kateryna
