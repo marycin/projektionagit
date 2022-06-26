@@ -66,6 +66,13 @@
         
       </div>
 
+      <div id="message">
+        <h3>Hasło musi zawierać:</h3>
+        <p id="letter" class="invalid"><b>Małe</b> litery</p>
+        <p id="capital" class="invalid"><b>Wielkie</b> litery</p>
+        <p id="number" class="invalid"><b>Cyfry</b></p>
+        <p id="length" class="invalid">Minimum <b>8 znaków</b></p>
+      </div>
 
       <div class="form__field">
         <label for="login__password"><svg class="icon">
@@ -101,13 +108,7 @@
     </form>
 
 
-    <div id="message">
-      <h3>Password must contain the following:</h3>
-      <p id="letter" class="invalid">A <b>lowercase</b> letter</p>
-      <p id="capital" class="invalid">A <b>capital (uppercase)</b> letter</p>
-      <p id="number" class="invalid">A <b>number</b></p>
-      <p id="length" class="invalid">Minimum <b>8 characters</b></p>
-    </div>
+
 
 
       <p class="text--center">Masz już konto? <a href="{% url 'sklep:login_user' %}">Zaloguj się</a> <svg class="icon">

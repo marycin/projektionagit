@@ -67,12 +67,14 @@
             </div>
 
             <div class="link-dec">
-                <a class ='user-buttons' href="{% url 'sklep:user_profile' %}">zmiana hasła</a>
+                <a class ='user-buttons' href="{% url 'sklep:user_profile' %}">zmień hasło</a>
             </div>
 
             <div class="link-dec">
-                <a class ='user-buttons' href="{% url 'sklep:add_credit_card' %}">dodaj kartę płatniczą</a>
+                <a class ='user-buttons' href="{% url 'sklep:delete_account_page' %}">usuń konto</a>
             </div>
+
+
     </div>
 </div>
 
@@ -184,6 +186,11 @@
                         </tr>
                         {%endfor%}
                     </table>
+
+                    <div class="link-dec">
+                        <a class ='user-buttons' href="{% url 'sklep:add_credit_card' %}">dodaj kartę płatniczą</a>
+                    </div>
+
                 </div>
             </div>
 
