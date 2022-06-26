@@ -71,6 +71,9 @@ TEMPLATES = [
 WSGI_APPLICATION = 'projektio.wsgi.application'
 
 
+EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
+EMAIL_FILE_PATH = BASE_DIR / "sent_emails"
+
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
@@ -79,7 +82,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'projektio',
         'USER': 'postgres',
-        'PASSWORD': 'admin',
+        'PASSWORD': 'michalSmierdzi1',
         'HOST': 'localhost',
         'PORT': '5432'
     }

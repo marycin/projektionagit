@@ -1,0 +1,20 @@
+{% extends 'sklep/base/base.html' %}
+{% load static %}
+
+{% block style %}
+<link rel="stylesheet" text="type/css" href="{% static 'sklep/user/mod_adres.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<form method="POST" action="{%url "sklep:kontakt"%}">
+    {% csrf_token %}
+    <input type="text" placeholder="temat" name="temat">
+    <input type="text" placeholder="treść" name="treść">
+    <div class="bottom">
+        <input id="form-button" type="submit" value="Wyślij">
+    </div>
+</form>
+
+{% endblock %}
+
