@@ -1,0 +1,78 @@
+.sorted{
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    justify-content: center;
+    padding-top: 10px;
+    
+    
+}
+#button{
+    padding:10px;
+    color: aliceblue;
+    background-color: black;
+    -webkit-box-shadow: 2px 4px 44px -4px rgba(66, 68, 90, 1);
+    -moz-box-shadow: 2px 4px 44px -4px rgba(66, 68, 90, 1);
+    box-shadow: 2px 4px 44px -4px rgba(66, 68, 90, 1);
+    width: 10vw;
+    margin-top: 15px;
+    text-align: center;
+}
+#button:hover{
+    color: black;
+    background-color:aliceblue;
+    transition: 0.3s;
+    
+}
+.sort h{
+    text-align: center;
+    padding:5px;
+}
+.sort{
+   
+    
+    width: 30vw;
+    padding :10px;
+    
+}
+.hide{
+    display: none;
+}
+.sort{
+    padding:10px;
+    margin: 10px;
+    text-align: center;
+    text-transform:uppercase;
+    background-color: white;
+    box-shadow: 0px 12px 27px -14px rgba(66, 68, 90, 1);
+    
+    
+    
+}
+.sort p{
+    padding:10px;
+    margin-top: 5px;
+    
+}
+.sort h{
+    font-size:18px;
+    text-align: center;
+    font-weight: bold;
+    border-bottom:1px solid black;
+     
+}
+.kasa{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    
+}
+.kasa input{
+    width: 15vw;
+    margin: 10px;
+    padding: 10px;
+    text-align: center;
+}
+.minmax{
+    text-align: center;
+}

@@ -1,11 +1,13 @@
 {% extends 'sklep/base/base.html' %}
 {% load static %}
-
+{% block style %}
+<link rel="stylesheet" type="text/css" href="{% static 'sklep/base/category.css' %}" />
+{% endblock %}
 {% block content %}
 <div class='grid_container'>
     <div class='sidebar'>
         <form action="" method="GET">
-            <div>
+            <!-- <div>
                 <h>kolor</h>
                 <p><input type="radio" name="color" value="" placeholder="kolor" checked='true'>dowolny</p>
                 <p><input type="radio" name="color" value="czarny" placeholder="kolor">czarny</p>
@@ -49,7 +51,51 @@
                     thisRadio.addClass("imChecked");
                 };
             })
-            </script>
+            </script> -->
+            <div class = "animation">
+                <p id = 'button'>Kategorie</p>
+                   
+                   
+           </div>
+           <div class = 'sorted' id = sorted_fun>
+               
+               
+               <div class = "sort">
+               
+               <h>kolor</h>
+               
+               <p><input type="radio" name="color" value="" placeholder="kolor" checked='true'>dowolny</p>
+               <p><input type="radio" name="color" value="czarny" placeholder="kolor">czarny</p>
+               <p><input type="radio" name="color" value="brązowy" placeholder="kolor">brązowy</p>
+           </div>
+           <div class = "sort">
+               <h>podkategoria</h>
+               <p><input type="radio" name="podkategoria" value="" placeholder="podkategoria" checked='true'>dowolna</p>
+               {%for podkategoria in podkategorie%}
+                   <p><input type="radio" name="podkategoria" value="{{podkategoria.nazwa}}" placeholder="podkategoria">{{podkategoria.nazwa}}</p>
+               {%endfor%}
+           </div>
+           <div class = "sort">
+               <h>marka</h>
+               <p><input type="radio" name="marka" value="" placeholder="marka" checked='true'>dowolna</p>
+               {%for marka in marki%}
+                   <p><input type="radio" name="marka" value="{{marka}}" placeholder="marka">{{marka}}</p>
+               {%endfor%}
+           </div>
+           <div class = 'kasa'>
+               <div class= "minmax">
+               <p>
+                   
+                   <input type='number'id='cena_min' name='cena_min' placeholder="cena min">
+               </p>
+               <p>
+                   
+                   <input type='number'id='cena_max' name='cena_max' placeholder="cena max">
+               </p>
+                   </div>
+               <p> <input type="submit" value="Wyszukaj"></p>
+           </div>
+           </div>
         <form>
     </div>
     <div class='body_text'>
@@ -79,4 +125,8 @@
         </div>
     </div>
 </div>
+{% endblock %}
+
+{% block script %}
+<script src="{% static 'sklep/base/category.js' %}"></script>
 {% endblock %}
