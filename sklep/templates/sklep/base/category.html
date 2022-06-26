@@ -72,7 +72,7 @@
                <h>podkategoria</h>
                <p><input type="radio" name="podkategoria" value="" placeholder="podkategoria" checked='true'>dowolna</p>
                {%for podkategoria in podkategorie%}
-                   <p><input type="radio" name="podkategoria" value="{{podkategoria.nazwa}}" placeholder="podkategoria">{{podkategoria.nazwa}}</p>
+                   <p><input type="radio" name="podkategoria" value="{{podkategoria.id}}" placeholder="podkategoria">{{podkategoria.nazwa}}</p>
                {%endfor%}
            </div>
            <div class = "sort">

@@ -569,7 +569,6 @@ def filter_view(request,filter):
             produkt_list.extend(produkty)
     except:
         produkt_list=[]
-    
     marki=[]
     for produkt in produkt_list:
         if not(produkt.marka in marki):
@@ -582,7 +581,7 @@ def filter_view(request,filter):
     cena_max=request.GET.get("cena_max")
 
     if podkategoria_nazwa !='' and podkategoria_nazwa is not None:
-        podkategoria=Podkategoria.objects.get(nazwa=podkategoria_nazwa)
+        podkategoria=Podkategoria.objects.get(id=podkategoria_nazwa)
         lista_buf=[]
         for produkt in produkt_list:
             if podkategoria==produkt.podkategoria:
