@@ -155,7 +155,7 @@ class Zamowienie(models.Model):
     pozycje_zamowienia = models.ManyToManyField(PozycjaZamowienia)
     data_zamowienia = models.DateField()
     data_wyslania = models.DateField(null=True)
-    data_dostarczenia = models.DateField(null=True)
+    data_dostarczenia = models.DateField()
     czy_zamowione = models.BooleanField(default=False)
     czy_oplacono = models.BooleanField(default=False)
     adres = models.ForeignKey(Adres,on_delete=models.CASCADE,null=True)

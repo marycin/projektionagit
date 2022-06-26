@@ -538,11 +538,15 @@ def zamowienie_szcz(request,id_zamowienia):
         zamowienie=Zamowienie.objects.get(id=id_zamowienia)
         Pozycja_Zamowienia=zamowienie.pozycje_zamowienia.all()
         kwota_zamowienia=zamowienie.get_kwota_zamowienia()
-        
+        platnosc = Platnosci.objects.get(
+        zamowienie = zamowienie,
+        )
         return render(request,'sklep/user/order_detail.html',{
             'zamowienie':zamowienie,
             'pozycja_zamowienia':Pozycja_Zamowienia,
             'kwota':kwota_zamowienia,
+            'platnosc':platnosc,
+            
         })
     else:
         return redirect('sklep:base')
