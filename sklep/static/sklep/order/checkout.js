@@ -14,7 +14,7 @@ rodzajPlatnosci.addEventListener('change',function(){
         divBlikPayment.classList.add('hide')
         divCardPayment.classList.remove('hide')
     }
-    if(this.value == 3){
+    else{
         divBlikPayment.classList.add('hide')
         divCardPayment.classList.add('hide')
     }
