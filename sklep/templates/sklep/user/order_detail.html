@@ -1,18 +1,99 @@
 {% extends 'sklep/base/base.html' %}
-
+{% load static %}
+{% block style %}
+<link rel="stylesheet" type="text/css" href="{% static 'sklep/order/order_detail.css' %}" />
+{% endblock %}
 {% block content %}
-    <p> kwota za całe zamówienie: {{kwota}}</p>
-    <p> data zamówienia {{zamowienie.data_zamowienia}}</p>
-    <p> data wysłania {{zamowienie.data_wysłania}}</p>
-    <p> data dostarczenia {{zamowienie.data_dostarczenia}}</p>
-    <p> adres {{zamowienie.adres.miejscowosc}} {{zamowienie.adres.ulica}} {{zamowienie.adres.numer_domu}}</p>
-    <p> rodzaj wysyłki {{zamowienie.rodzaj_wysylki.nazwa}}</p>
-    <p>zamówione produkty
-    {%for pozycja in pozycja_zamowienia %}
-        <li>
-            {{pozycja.ilosc}}
-            <a href="{%url "sklep:produkt_details" pozycja.produkt.id%}">{{pozycja.produkt.nazwa}}</a>
-        </li>
-    {% endfor %}
-    </p>
-{%endblock%}
+
+<div class="shopping-cart">
+    <div class="left-side-address">
+        <div class="product-summary">
+            {% for p_z in zamowienie.get_pozycje_zamowienia %}
+            <div class="product">
+                <div class="product-info">
+                    <div class="product-img">
+                    <img src="{{ p_z.produkt.zdjecie_glowne.url }}" alt="produkt">
+                </div>
+                <div class="product-desc-sh">
+                    <div class="product-name">
+                        <h2><a href='#'>{{ p_z.produkt.marka }} {{ p_z.produkt.model}}</a></h2>
+                    </div>
+                    <div class="product-size">
+                        Rozmiar: {{ p_z.rozmiar }}
+                    </div>
+                    <div class="product-price-sh">
+                        Cena: {{ p_z.produkt.cena }} zł
+                    </div>
+                    <div class="product-quantity">
+                        <div class="product-quantity-desc">
+                            Ilość: {{ p_z.ilosc }}
+                        </div>
+                    </div>
+                </div>
+                </div>
+
+            </div>
+            {% endfor %}
+        </div>
+        <div class="address-shipment-info">
+            <div class="delivery-info">
+                <h2>Dane do wysyłki</h2>
+                <div class="delivery-element">
+                    <p><b>Imie:</b> {{ zamowienie.klient.user.first_name }}</p>
+                    <p><b>Miejscowosc:</b> {{ zamowienie.adres.miejscowosc }}</p>
+                </div>
+                <div class="delivery-element">
+                    <p><b>Nazwisko:</b> {{ zamowienie.klient.user.last_name }}</p>
+                    <p><b>Ulica:</b> {{ zamowienie.adres.ulica }}</p>
+
+                </div>
+                <div class="delivery-element">
+                    <p><b>E-mail:</b> {{ zamowienie.klient.user.email }}</p>
+                    <p><b>Numer domu:</b> {{ zamowienie.adres.numer_domu }}</p>
+
+                </div>
+                <div class="delivery-element">
+                    <p><b>Telefon:</b> {{ zamowienie.klient.telefon }}</p>
+                    <p><b>Numer Lokalu:</b> {% if zamowienie.adres.numer_lokalu %}
+                        {{ zamowienie.adres.numer_lokalu }}{% endif %} </p>
+                </div>
+                <div class="delivery-element">
+                    <p></p>
+                    <p><b>Kod pocztowy:</b> {{ zamowienie.adres.kod_pocztowy }}</p>
+                </div>
+                <div class="delivery-element">
+                    <p></p>
+                    <p><b>Wysyłka:</b> {{ zamowienie.rodzaj_wysylki.nazwa }}</p>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="payment-info">
+            <div class="payment-title">
+                <h2>Podsumowanie płatności</h2>
+            </div>
+            <div class="payment-element">
+                <p><b>Rodzaj płatności: </b> {{ platnosc.rodzaj_platnosci.nazwa }}</p>
+            </div>
+            <div class="payment-element">
+                <p><b>Data zamówienia: </b> {{zamowienie.data_zamowienia}}</p>
+            </div>
+            <div class="payment-element">
+                <p><b>Data wysłania: </b> {{zamowienie.data_zamowienia}}</p>
+            </div>
+            <div class="payment-element">
+                <p><b>Data dostarczenia: </b> {{zamowienie.data_dostarczenia}}</p>
+            </div>
+            <div class="payment-element">
+                <p><b>Kwota: </b> {{kwota}} zł</p>
+            </div>  
+        </div>
+        
+    </div>
+    
+    
+</div>
+
+{% endblock %}
+

@@ -1,19 +1,35 @@
 {% extends 'sklep/base/base.html' %}
 {% load static %}
 
-{% block content %}
-    <div class="prof-uz">
-        <p>Usuwanie konta</p>
-    </div>
-    <div class="prof-uz">
-        <p>Czy napewno chcesz usunąć konto: {{user.username}} ?</p>
-    </div>
+{% block style %}
+<link rel="stylesheet" text="type/css" href="{% static 'sklep/user/del_card.css' %}">
+{% endblock %}
 
-    <div class="prof-uz-menu">
-        <ul class="horizontal-list">
-            <li><a class ='user-buttons' href="{% url 'sklep:base' %}">Nie</a></li>
-            <li><a class ='user-buttons' href="{% url 'sklep:delete_account' user.id %}">Tak</a></li>
-        </ul>
+{% block content %}
+
+<div class="container-uz">
+    <div class="ud-align">
+        <div class="user-dat">
+           
+                
+                <div class="nh-name">
+                    <h3>Czy napewno chcesz usunąć konto: {{user.username}}</h3>
+                </div>
+
+            <div class="bottom">
+                <form method="POST" action="{%url "sklep:base"  %}">
+                    {% csrf_token %}
+                    <input id="form-button"  type="submit" value="Nie">
+                </form>
+            </div>
+            <div class="bottom">
+                <form method="POST" action="{%url "sklep:delete_account" user.id  %}">
+                    {% csrf_token %}
+                    <input id="form-button"  type="submit" value="Tak">
+                </form>
+            </div>
+        </div>
     </div>
+</div>
 
 {% endblock %}
