@@ -89,6 +89,8 @@
     height: 70px;
 }
 
+
+
 .delete-btn{
     width:100%;
     height:100%;
@@ -166,3 +168,22 @@
     text-decoration: underline 1px solid black;
 }
 
+.icon-trash{
+    width: 30px;
+    height: 30px;
+}
+
+.icon-trash:hover{
+    cursor: pointer;
+}
+
+.icon-plus,
+.icon-minus{
+    width: 20px;
+    height: 20px;
+}
+
+.icon-plus:hover,
+.icon-minus:hover{
+    cursor: pointer;
+}
