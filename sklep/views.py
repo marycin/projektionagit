@@ -25,12 +25,22 @@ from .models import Adres, Kategoria, Platnosci, PozycjaZamowienia, Produkt, Opi
 from .models import Adres, Platnosci, Podkategoria, PozycjaZamowienia, Produkt, Opinie,Klient, Produkt_Rozmiar, RodzajePlatnosci, Zamowienie, RodzajWysylki,KartyPlatnicze
 # Create your views here.
 
+def initialize(request):
+    if not ( 'nav_cat' in request.session ):
+        request.session['nav_cat']=[]
+        kategorie=Kategoria.objects.all()
+        for k in kategorie:
+             request.session['nav_cat'].append(k.nazwa)
+
+
 def base(request): #
+    initialize(request)
     produkt_list = Produkt.objects.all().order_by('-id')[:10]
     context = {'produkt_list' : produkt_list}
     return render(request, 'sklep/base/base.html',context)
 
 def detail(request, produkt_id):
+    initialize(request)
     try:
         produkt = Produkt.objects.get(pk = produkt_id)
     except Produkt.DoesNotExist:
@@ -40,6 +50,7 @@ def detail(request, produkt_id):
     })
 
 def produkt_details(request,produkt_id):
+    initialize(request)
     try:
         produkt = Produkt.objects.get(pk=produkt_id)
         rozmiar = Produkt_Rozmiar.objects.filter(produkt = produkt)
@@ -56,13 +67,17 @@ def produkt_details(request,produkt_id):
     })
 
 def add_opinion_on_produkt(request, produkt_id):
+    initialize(request)
     print('Dodano opinie o produkcie',produkt_id)
     produkt = Produkt.objects.get(pk=produkt_id)
     opinie = Opinie.objects.all()
     if request.method =='POST':
-        komentarz = request.POST['komentarz']
-        ocena = request.POST['ocena']
-        klient = Klient.objects.get(user = request.user)
+        try:
+            komentarz = request.POST['komentarz']
+            ocena = request.POST['ocena']
+            klient = Klient.objects.get(user = request.user)
+        except:
+            return redirect('sklep:produkt_details', produkt_id)
 
         opinia = Opinie(komentarz = komentarz, ocena = ocena, produkt = produkt, klient = klient)
         opinia.save()
@@ -74,6 +89,7 @@ def add_opinion_on_produkt(request, produkt_id):
 
 
 def register(request):
+    initialize(request)
     if request.method =='POST':
         form = ExtendedUserCreationForm(request.POST)
         klient_form = klientForm(request.POST)
@@ -94,9 +110,11 @@ def register(request):
     return render(request, 'sklep/user/register.html', context)
 
 def user_profile_view(request):
+    initialize(request)
     return render(request,'sklep/user/user_profile.html')
 
 def update_user_password(request):
+    initialize(request)
     if request.method == 'POST':
         usr = User.objects.get(username = request.user.username)
         new_password = request.POST['new_password']
@@ -105,6 +123,7 @@ def update_user_password(request):
         return redirect('sklep:base')
 
 def login_view(request):
+    initialize(request)
     if request.method=="POST":
         username = request.POST['username']
         password = request.POST['password']
@@ -121,10 +140,12 @@ def login_view(request):
 
 
 def logout_view(request):
+    initialize(request)
     logout(request)
     return redirect('sklep:base')
 
 def shopping_cart(request):
+    initialize(request)
     context = {}
     if request.user.is_authenticated:
         aktualny_klient = Klient.objects.get(user=request.user)
@@ -149,6 +170,7 @@ def shopping_cart(request):
 
 
 def add_to_cart(request, produkt_id):
+    initialize(request)
     klient = get_object_or_404(Klient, user=request.user)
     produkt = Produkt.objects.get(id=produkt_id)
     wybrany_rozmiar = request.POST['produkt-size']
@@ -164,6 +186,7 @@ def add_to_cart(request, produkt_id):
         data_dodania = datetime.now())
 
     for p_z in klient_zamowienie.get_pozycje_zamowienia():
+        initialize(request)
         print(p_z.produkt.pk, p_z.rozmiar)
         print(pozycja_zamowienia.produkt.pk, pozycja_zamowienia.rozmiar)
         if (int(p_z.produkt.pk) == int(pozycja_zamowienia.produkt.pk) and int(p_z.rozmiar) == int(pozycja_zamowienia.rozmiar)):
@@ -178,6 +201,7 @@ def add_to_cart(request, produkt_id):
     return redirect('sklep:shopping_cart')
 
 def delete_from_cart(request):
+    initialize(request)
     klient = get_object_or_404(Klient, user=request.user)
     PozycjaZamowienia.objects.get(pk  = request.POST['to_delete']).delete()
     zamowienie = Zamowienie.objects.get(klient = klient, czy_zamowione = False)
@@ -188,6 +212,7 @@ def delete_from_cart(request):
     return redirect('sklep:shopping_cart')
 
 def address_selection(request):
+    initialize(request)
     aktualny_klient = get_object_or_404(Klient, user=request.user)
     lista_adresow = Adres.objects.filter(klient = aktualny_klient)
     zamowienie= Zamowienie.objects.get(klient = aktualny_klient,czy_zamowione = False)
@@ -202,6 +227,7 @@ def address_selection(request):
     return render(request,'sklep/order/address_selection.html', context)
 
 def checkout(request):
+    initialize(request)
     if request.method=='POST':
         aktualny_klient = get_object_or_404(Klient, user=request.user)
         platnosci = RodzajePlatnosci.objects.all()
@@ -249,6 +275,7 @@ def checkout(request):
     return render(request, 'sklep/order/checkout.html',context)
 
 def order_summary(request):
+    initialize(request)
     rodzaj_platnosci = RodzajePlatnosci.objects.get(pk = request.POST['rodzaj_platnosci'])
     aktualny_klient = get_object_or_404(Klient, user=request.user)
 
@@ -279,6 +306,7 @@ def order_summary(request):
     
 
 def updateItem(request):
+    initialize(request)
     data = json.loads(request.body)
     print(data['pzId'])
     pz_id = data['pzId']
@@ -294,6 +322,7 @@ def updateItem(request):
     return JsonResponse('Item increased',safe = False)
 
 def updateShippingItem(request):
+    initialize(request)
     data = json.loads(request.body)
     wysylka_id = data['wysylkaId']
     print(wysylka_id)
@@ -310,6 +339,7 @@ def updateShippingItem(request):
 
 
 def searchBar(request):
+    initialize(request)
     if request.method == 'GET':
         query = request.GET.get('query')
         dopasowanie = re.search(' ', query)
@@ -333,6 +363,7 @@ def searchBar(request):
                 return render(request, 'sklep/base/searchProduct.html', {})
 
 def orders_view(request):
+    initialize(request)
 
     if request.user.is_authenticated:
         curr_klient=Klient.objects.get(user=request.user.id)
@@ -348,6 +379,7 @@ def orders_view(request):
         #return render(request, 'sklep/user_view.html')
 
 def user_view(request):
+    initialize(request)
     if request.user.is_authenticated:
         try: 
             uzytkownik=Klient.objects.get(user=request.user.id)
@@ -368,6 +400,7 @@ def user_view(request):
         return redirect('sklep:base')
 
 def add_adres(request):
+    initialize(request)
     if request.method=='POST':
         adres_form=AdresForm(request.POST)
         if adres_form.is_valid():
@@ -393,6 +426,7 @@ def add_adres(request):
     })
 
 def egz_adres_modify_view(request,adres_id):
+    initialize(request)
     adres=Adres.objects.get(id=adres_id)
     if request.method=='POST':
         adres_form=AdresForm(request.POST)
@@ -428,13 +462,15 @@ def egz_adres_modify_view(request,adres_id):
     })
 
 def del_adres(request,adres_id):
-    print(adres_id)
+
+    initialize(request)
     adres=Adres.objects.get(id=adres_id)
     if request.method=='POST':
         adres.delete()
     return redirect('sklep:user_view')
 
 def user_dat_mod(request):
+    initialize(request)
     if request.user.is_authenticated:
         klient=Klient.objects.get(user=request.user)
         if request.method=='POST':
@@ -497,6 +533,7 @@ def user_dat_mod(request):
         return redirect('sklep:base')
 
 def zamowienie_szcz(request,id_zamowienia):
+    initialize(request)
     if request.user.is_authenticated:
         zamowienie=Zamowienie.objects.get(id=id_zamowienia)
         Pozycja_Zamowienia=zamowienie.pozycje_zamowienia.all()
@@ -512,6 +549,7 @@ def zamowienie_szcz(request,id_zamowienia):
 
     
 def filter_view(request,filter):
+    initialize(request)
     
     produkt_list=[]
     try:
@@ -591,7 +629,8 @@ def filter_view(request,filter):
     return render(request, 'sklep/base/category.html',context)
 
 
-def del_user(request, id): 
+def del_user(request, id):
+    initialize(request)
     if request.user.is_authenticated:   
         try:
             a = User.objects.get(id = id)
@@ -610,11 +649,14 @@ def del_user(request, id):
         return redirect('sklep:base') 
     else:
         return redirect('sklep:base')
+
 def del_user_page(request):
+    initialize(request)
     return render(request,'sklep/user/user_del.html',{})
 
 
 def add_credit_card(request):
+    initialize(request)
     if request.method=='POST':
         kartyplatnicze_form=KartyPlatniczeForm(request.POST)
         if kartyplatnicze_form.is_valid():
@@ -639,6 +681,7 @@ def add_credit_card(request):
     })
 
 def egz_credit_modify_view(request,kartyplatnicze_id):
+    initialize(request)
     kartyplatnicze=KartyPlatnicze.objects.get(id=kartyplatnicze_id)
     if request.method=='POST':
         kartyplatnicze_form=KartyPlatniczeForm(request.POST)
@@ -670,7 +713,10 @@ def egz_credit_modify_view(request,kartyplatnicze_id):
         'kartyplatnicze_form':kartyplatnicze_form,
         'kartyplatnicze_id':kartyplatnicze.id,
     })
+
+
 def del_credit(request,kartyplatnicze_id):
+    initialize(request)
     kartyplatnicze=KartyPlatnicze.objects.get(id=kartyplatnicze_id)
     if request.method=='POST':
         kartyplatnicze.delete()
