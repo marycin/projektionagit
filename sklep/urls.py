@@ -1,4 +1,4 @@
-from django.urls import path, include
+from django.urls import path
 
 from . import views
 from django.contrib.auth import views as auth_views
@@ -49,5 +49,6 @@ urlpatterns = [
     path('add_credit_card/',views.add_credit_card,name='add_credit_card'), #Kercz
     path('credit/<int:kartyplatnicze_id>/',views.egz_credit_modify_view,name="credit_card_mod"), #Grzesiu
     path('credit_del/<int:kartyplatnicze_id>/',views.del_credit,name="del_credit"), #Grzesiu
+    path('kontakt/',views.kontakt, name='kontakt') #Sroczyk
 
 ]

@@ -1,5 +1,6 @@
 from ast import Str
 from email import message
+import email
 from lib2to3.pgen2.token import OP
 from mimetypes import common_types
 from multiprocessing import context
@@ -16,9 +17,9 @@ from datetime import datetime
 from decimal import Decimal
 import re
 from django.contrib.sessions.backends.db import SessionStore
-
+from django.core.mail import mail_admins
 from numpy import full
-
+from django.core.mail import send_mail
 
 from .forms import  ExtendedUserCreationForm,klientForm,UserDataModification,AdresForm,UserNickMod,KartyPlatniczeForm
 from .models import Adres, Kategoria, Platnosci, PozycjaZamowienia, Produkt, Opinie,Klient, Produkt_Rozmiar, RodzajePlatnosci, Zamowienie, RodzajWysylki,KartyPlatnicze, Zdjecia
@@ -721,3 +722,22 @@ def del_credit(request,kartyplatnicze_id):
         kartyplatnicze.delete()
     return redirect('sklep:user_view')
 
+def kontakt(request):
+    if request.user.is_authenticated:
+        klient=Klient.objects.get(user=request.user)
+        if request.method=='POST':
+            wiadomosc=request.GET.get("temat")
+            wiadomosc2=request.GET.get("treść")
+            
+            
+            print(wiadomosc)
+            print(wiadomosc2)
+            if wiadomosc != '' and wiadomosc is not None and wiadomosc2 != '' and wiadomosc2 is not None:
+                send_mail(wiadomosc,wiadomosc2,klient.user.email,
+                ['tenobok54@gmail.com'],fail_silently=False,)
+            return redirect('sklep:user_view')
+            
+        return render(request,'sklep/user/kontakt.html')
+    else:
+        return redirect('sklep:base')
+    
