@@ -20,6 +20,7 @@ from django.contrib.sessions.backends.db import SessionStore
 from django.core.mail import mail_admins
 from numpy import full
 from django.core.mail import send_mail
+from django.contrib.auth import update_session_auth_hash
 
 from .forms import  ExtendedUserCreationForm,klientForm,UserDataModification,AdresForm,UserNickMod,KartyPlatniczeForm
 from .models import Adres, Kategoria, Platnosci, PozycjaZamowienia, Produkt, Opinie,Klient, Produkt_Rozmiar, RodzajePlatnosci, Zamowienie, RodzajWysylki,KartyPlatnicze, Zdjecia
@@ -118,10 +119,17 @@ def update_user_password(request):
     initialize(request)
     if request.method == 'POST':
         usr = User.objects.get(username = request.user.username)
-        new_password = request.POST['new_password']
-        usr.set_password(new_password)
-        usr.save()
-        return redirect('sklep:base')
+        old_password = request.POST['old_password']
+        new_password1 = request.POST['new_password1']
+        new_password2 = request.POST['new_password2']
+        if new_password1 and new_password2 and new_password1 != new_password2 and usr.password != old_password:
+             return redirect('sklep:user_profile')
+        else:
+            usr.set_password(new_password1)
+            usr.save()
+            update_session_auth_hash(request, usr)
+            return redirect('sklep:base')
+
 
 def login_view(request):
     initialize(request)
@@ -726,16 +734,15 @@ def kontakt(request):
     if request.user.is_authenticated:
         klient=Klient.objects.get(user=request.user)
         if request.method=='POST':
-            wiadomosc=request.GET.get("temat")
-            wiadomosc2=request.GET.get("treść")
-            
-            
-            print(wiadomosc)
-            print(wiadomosc2)
+            wiadomosc=request.POST.get('temat')
+            wiadomosc2=request.POST.get('treść')
+
             if wiadomosc != '' and wiadomosc is not None and wiadomosc2 != '' and wiadomosc2 is not None:
                 send_mail(wiadomosc,wiadomosc2,klient.user.email,
                 ['tenobok54@gmail.com'],fail_silently=False,)
-            return redirect('sklep:user_view')
+                return redirect('sklep:user_view')
+            else:
+                return redirect('sklep:kontakt')
             
         return render(request,'sklep/user/kontakt.html')
     else:

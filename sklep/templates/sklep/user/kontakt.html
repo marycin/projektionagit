@@ -2,15 +2,18 @@
 {% load static %}
 
 {% block style %}
-<link rel="stylesheet" text="type/css" href="{% static 'sklep/user/mod_adres.css' %}">
+<link rel="stylesheet" text="type/css" href="{% static 'sklep/user/kontakt.css' %}">
 {% endblock %}
 
 {% block content %}
 
 <form method="POST" action="{%url "sklep:kontakt"%}">
     {% csrf_token %}
-    <input type="text" placeholder="temat" name="temat">
-    <input type="text" placeholder="treść" name="treść">
+
+    <div>
+        <input type="text" placeholder="Wprowadź temat..." name="temat" required>
+    </div>
+    <textarea placeholder="Treść..." name="treść" rows="8" cols="50" required></textarea>
     <div class="bottom">
         <input id="form-button" type="submit" value="Wyślij">
     </div>

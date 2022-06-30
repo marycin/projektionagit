@@ -16,9 +16,15 @@
         </div>
     <form method="post" action="/sklep/update_user_password/">
         {% csrf_token %}
-
+        
         <div class="nh-input">
-            <input id="login__password" type="password" name="new_password" class="form__input" placeholder="Nowe hasło" required>
+            <input id="login__password1" type="password" name="old_password" class="form__input" placeholder="Stare hasło..." required>
+        </div>
+        <div class="nh-input">
+            <input id="login__password2" type="password" name="new_password1" class="form__input" placeholder="Nowe hasło..." required>
+        </div>
+        <div class="nh-input">
+            <input id="login__password3" type="password" name="new_password2" class="form__input" placeholder="Potwierdź hasło..." required>
         </div>
 
         <div class="bottom">

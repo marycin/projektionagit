@@ -232,4 +232,6 @@ class Platnosci(models.Model):
 
     class Meta:
         verbose_name = "Płatności"
-        verbose_name_plural = "Płatności"    
+        verbose_name_plural = "Płatności" 
+
+   
